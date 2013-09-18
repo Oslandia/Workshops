@@ -1,4 +1,0 @@
-Workshops
-=========
-
-Oslandia Workshops
