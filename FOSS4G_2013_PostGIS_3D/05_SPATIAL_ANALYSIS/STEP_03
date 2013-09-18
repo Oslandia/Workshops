@@ -1,0 +1,9 @@
+SELECT gid, ST_Extrude(
+               ST_Buffer(geom, 20),
+               0, 0, nbbornette::integer * 30
+            ) AS geom
+FROM bike
+
+
+-- On your own modify this previous one to fit on the DEM 
+-- (yeah with ST_Translate and altitude)

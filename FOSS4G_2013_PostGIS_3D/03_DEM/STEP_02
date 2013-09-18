@@ -1,0 +1,8 @@
+# .ive creation on both subset and whole data
+
+osgdem -d /tmp/data/subset/mnt.tif -l 6 -o /tmp/data/subset/mnt.ive
+
+osgdem -d /tmp/data/MNT2009_Altitude_10m_CC46.tif -l 6 -o /tmp/data/MNT2009_Altitude_10m_CC46.ive
+
+# Check now again with canvas and 's' key
+

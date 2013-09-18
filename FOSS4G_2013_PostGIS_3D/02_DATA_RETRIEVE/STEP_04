@@ -1,0 +1,8 @@
+/* OGC SFS Validity Check */
+
+SELECT gid FROM cadbatiment WHERE NOT ST_IsValid(geom);
+
+UPDATE cadbatiment SET geom = ST_CollectionExtract(ST_MakeValid(geom),3) 
+WHERE NOT ST_IsValid(geom);
+
+SELECT gid FROM cadbatiment WHERE NOT ST_IsValid(geom);

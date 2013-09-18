@@ -1,0 +1,60 @@
+/* LOD 1 Building Data Computation */
+
+ALTER TABLE cadbatiment ADD COLUMN lod1 geometry('POLYHEDRALSURFACEZ',3946);
+
+WITH p AS (
+  SELECT gid,
+         ST_xmin(lod2) AS x1, ST_xmax(lod2) AS x2,
+         ST_ymin(lod2) AS y1, ST_ymax(lod2) AS y2,
+         ST_zmin(lod2) AS z1, ST_zmax(lod2) AS z2
+  FROM cadbatiment
+)
+
+UPDATE cadbatiment SET lod1 = 'SRID=3946;POLYHEDRALSURFACE(
+(('||x1||' '||y1||' '||z1||','
+  ||x1||' '||y1||' '||z2||','
+  ||x2||' '||y1||' '||z2||','
+  ||x2||' '||y1||' '||z1||','
+  ||x1||' '||y1||' '||z1||'))
+,
+(('||x1||' '||y1||' '||z2||','
+  ||x1||' '||y2||' '||z2||','
+  ||x2||' '||y2||' '||z2||','
+  ||x2||' '||y1||' '||z2||','
+  ||x1||' '||y1||' '||z2||'))
+,
+(('||x2||' '||y1||' '||z2||','
+  ||x2||' '||y2||' '||z2||','
+  ||x2||' '||y2||' '||z1||','
+  ||x2||' '||y1||' '||z1||','
+  ||x2||' '||y1||' '||z2||'))
+,
+(('||x1||' '||y1||' '||z1||','
+  ||x1||' '||y2||' '||z1||','
+  ||x1||' '||y2||' '||z2||','
+  ||x1||' '||y1||' '||z2||','
+  ||x1||' '||y1||' '||z1||'))
+,
+(('||x1||' '||y2||' '||z1||','
+  ||x2||' '||y2||' '||z1||','
+  ||x2||' '||y2||' '||z2||','
+  ||x1||' '||y2||' '||z2||','
+  ||x1||' '||y2||' '||z1||'))
+,
+(('||x1||' '||y1||' '||z1||','
+  ||x2||' '||y1||' '||z1||','
+  ||x2||' '||y2||' '||z1||','
+  ||x1||' '||y2||' '||z1||','
+  ||x1||' '||y1||' '||z1||'))
+)'
+
+FROM p
+WHERE p.gid = cadbatiment.gid
+;
+
+-- LOD 1 Reverse orientation.
+UPDATE cadbatiment SET lod1=st_reverse(lod1);
+
+
+-- Create spatial indexes
+CREATE INDEX cadbatiment_lod1_idx ON cadbatiment USING GIST(lod1);

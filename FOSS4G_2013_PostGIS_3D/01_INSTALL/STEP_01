@@ -1,0 +1,15 @@
+# Install latest stable PostGIS version from source and compile it
+# Imply SFCGAL, GEOS, LibXML2, and Proj4 libs and headers are already installed
+# SFCGAL itself imply to have CGAL and Boost
+
+wget http://download.osgeo.org/postgis/source/postgis-2.1.0.tar.gz
+tar xvzf postgis-2.1.0.tar.gz
+cd postgis-2.1.0
+./configure
+make
+
+sudo make install
+sudo ldconfig
+
+cd ..
+rm -rf postgis-2.1.0.tar.gz postgis-2.1.0

@@ -1,0 +1,38 @@
+/* Compute Buldingd elevation from DEM */
+
+-- Compute height for each geometry
+
+ALTER TABLE cadbatiment ADD COLUMN altitude integer;
+
+WITH hh 
+AS (
+SELECT gid, min(px) AS height
+FROM (
+    SELECT
+        gid, st_value(rast,
+            st_setsrid( (st_dumppoints(pts)).geom, 3946)
+            ) as px
+    FROM
+        (
+            select gid, geom as pts
+            from cadbatiment
+        ) as t,
+        dem
+        WHERE st_intersects(rast, pts)
+) AS tt
+GROUP BY gid
+)
+UPDATE cadbatiment SET altitude=height FROM hh WHERE cadbatiment.gid = hh.gid;
+
+
+-- Update cadbatiment Height
+UPDATE cadbatiment
+SET
+    lod1 = st_translate(lod1, 0, 0, altitude),
+    lod2 = st_translate(lod2, 0, 0, altitude);
+
+
+
+
+-- Check altitude generated
+SELECT min(altitude), max(altitude), avg(altitude) FROM cadbatiment;

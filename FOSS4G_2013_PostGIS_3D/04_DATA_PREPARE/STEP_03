@@ -1,0 +1,12 @@
+/* LOD 2 Building Data Extrusion */
+
+ALTER TABLE cadbatiment 
+ADD COLUMN lod2 geometry('POLYHEDRALSURFACEZ',3946);
+
+UPDATE cadbatiment 
+SET lod2=ST_GeometryN(ST_Extrude(geom, 0, 0, hauteur),1);
+
+
+-- Create spatial indexes
+
+CREATE INDEX cadbatiment_lod2_idx ON cadbatiment USING GIST(lod2);

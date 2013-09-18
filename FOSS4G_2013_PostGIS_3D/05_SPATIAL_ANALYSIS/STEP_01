@@ -1,0 +1,14 @@
+-- 3D Extrude
+
+
+SELECT gid, ST_Translate(
+                 ST_Extrude(
+                     ST_Buffer(geom, 250)
+                 , 0, 0, 100)
+           , 0, 0, altitude) AS geom
+FROM lands 
+WHERE type='forest';
+
+
+-- geometry column must be called geom
+-- A PK (e.g gid) is mandatory with QGIS

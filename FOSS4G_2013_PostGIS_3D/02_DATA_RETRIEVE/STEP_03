@@ -1,0 +1,12 @@
+# Load data into Spatial Database
+
+cd /tmp/data
+
+# Load vector subset
+shp2pgsql -d -D -W LATIN1 -s 3946 -I subset/cadbatiment.shp cadbatiment | psql ws
+shp2pgsql -d -D -W LATIN1 -s 3946 -I subset/fpctoit.shp fpctoit | psql ws 
+shp2pgsql -d -D -W LATIN1 -s 3946 -I subset/lands.shp lands | psql ws 
+shp2pgsql -d -D -W LATIN1 -s 3946 -I subset/bike.shp bike | psql ws 
+
+# Load raster subset
+raster2pgsql -d -t 25x25 -s 3946 -I subset/mnt.tif dem | psql ws

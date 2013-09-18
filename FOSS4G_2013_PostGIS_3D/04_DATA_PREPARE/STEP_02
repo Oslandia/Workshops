@@ -1,0 +1,9 @@
+/* Remove interior shell (orientation issue with extrude) */
+
+
+UPDATE cadbatiment SET geom = ST_Multi(
+                                 ST_MakePolygon(
+                                    ST_ExteriorRing(
+                                       ST_GeometryN(geom, 1))))
+
+WHERE ST_NumInteriorRings(ST_GeometryN(geom, 1)) > 0;

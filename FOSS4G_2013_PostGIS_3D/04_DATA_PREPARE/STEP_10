@@ -1,0 +1,8 @@
+-- Load LOD2, lands , bike and mnt layer together
+-- in both 2D and 3D
+
+-- Still use a subset extent to display it in 3D
+
+-- Change color symbology
+
+-- Save your QGIS project

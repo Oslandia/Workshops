@@ -1,0 +1,3 @@
+# Check that our spatial DB is OK and SFCGAL enabled:
+
+psql ws -t -c "SELECT postgis_full_version()"

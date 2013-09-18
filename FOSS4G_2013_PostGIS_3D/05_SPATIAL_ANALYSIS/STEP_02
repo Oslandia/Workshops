@@ -1,0 +1,32 @@
+-- 3D Intersection
+
+SET postgis.backend = 'sfcgal';
+WITH 
+ f1 AS (
+
+   SELECT gid, ST_Translate(
+                 ST_Extrude(
+                     ST_Buffer(geom, 250)
+                 , 0, 0, 100)
+           , 0, 0, altitude) AS geom
+   FROM lands 
+   WHERE type='forest'
+   AND gid = 7
+ ),
+
+ f2 AS (
+
+   SELECT gid, ST_Translate(
+                 ST_Extrude(
+                     ST_Buffer(geom, 250)
+                 , 0, 0, 100)
+           , 0, 0, altitude) AS geom
+   FROM lands 
+   WHERE type='forest'
+   AND gid = 12
+ )
+ 
+
+SELECT ST_3DIntersection(f1.geom, f2.geom) AS geom, 
+       1 AS gid
+FROM f1, f2 

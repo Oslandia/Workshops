@@ -1,0 +1,31 @@
+# Horao install step
+# imply to have OSG, OpenGL already install
+
+
+# cleanup
+rm -rf ~/horao 
+rm ~/.qgis2/python/plugins/qgis_plugin
+
+# Retrieve (latest) source
+cd ~
+git clone https://github.com/Oslandia/horao
+cd horao
+
+# compile core and qgis plugins
+mkdir build
+cd build
+cmake ..
+sudo make install
+cd ../qgis_plugin
+make
+cd ..
+
+# Activate QGIS plugins
+cd ~/.qgis2/python/plugins/
+ln -s ~/horao/qgis_plugin
+
+# Switch to Debug to Release mode
+cd ~/.qgis2/python/plugins/qgis_plugin
+sed -i -e 's/simpleViewerd/simpleViewer/' canvas3d.py
+
+# Check if canvas 3d is enabled on QGIS plugin

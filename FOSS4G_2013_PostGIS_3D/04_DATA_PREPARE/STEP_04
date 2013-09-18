@@ -1,0 +1,6 @@
+-- Load lod2 geometry with QGIS
+-- Render it both in 2D, and with canvas 3d renderer
+
+
+-- Note that this Virtual Machine is a low performance one
+-- You should zoom enough on your data to avoid to load all  at once

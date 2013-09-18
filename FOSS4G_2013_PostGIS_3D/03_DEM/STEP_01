@@ -1,0 +1,11 @@
+# Open QGIS 
+
+# In a new project keep only the whole DEM raster data 
+# (/tmp/data/*tif)
+
+# Open 3D Canvas plugin
+
+# Be sure to zoom on the whole extent
+
+# Use 's' key to have look on framebuffer rate 
+# (if QGIS don't hang up before)

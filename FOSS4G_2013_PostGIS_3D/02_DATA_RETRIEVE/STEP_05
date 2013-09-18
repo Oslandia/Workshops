@@ -1,0 +1,18 @@
+-- Open QGIS
+
+-- Add DEM raster layer as PostGIS raster layer
+
+-- Create a new PostGIS database connection 
+-- (user postgres, no host, no password)
+
+-- Add new PostGIS Layer: cadbatiment
+-- Add new PostGIS Layer: fpctoit
+
+-- Add new PostGIS Layer: bike
+
+-- Add new PostGIS Layer: lands
+-- Use DB Manager to load only lands having 'park' as type value
+
+-- Save as a new QGIS project
+
+-- Quit QGIS and relaunch it with the project already saved

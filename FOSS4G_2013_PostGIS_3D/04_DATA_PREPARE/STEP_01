@@ -1,0 +1,31 @@
+/* Compute Building Height */
+
+ALTER TABLE cadbatiment ADD COLUMN hauteur numeric(10);
+
+WITH hh AS (
+  SELECT b.gid AS bgid, t.gid AS tgid, htotale, hfacade
+  FROM cadbatiment b, fpctoit t
+  WHERE ST_Intersects(t.geom, b.geom)
+)
+
+UPDATE cadbatiment SET hauteur=htotale::numeric(10) 
+FROM hh WHERE hh.bgid = gid;
+
+-- Check if we took all features
+SELECT count(*) FROM cadbatiment WHERE hauteur IS NULL;
+
+-- Use a buffer and order by to retrieve the NN
+UPDATE cadbatiment
+SET hauteur = (
+  SELECT htotale FROM fpctoit t 
+  WHERE ST_Intersects(t.geom, ST_Buffer(geom, 0.0004))
+  AND t.geom && ST_Expand(geom, 0.0004)
+  ORDER BY ST_Distance(t.geom, geom) ASC
+  LIMIT 1
+)::numeric(10)
+WHERE hauteur IS NULL;
+
+-- Check
+SELECT count(*) FROM cadbatiment WHERE hauteur IS NULL;
+
+SELECT min(hauteur), max(hauteur), avg(hauteur) FROM cadbatiment;

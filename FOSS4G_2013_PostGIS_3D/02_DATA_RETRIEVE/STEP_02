@@ -1,0 +1,12 @@
+# Clip and reproject a data subset 
+
+cd /tmp/data
+rm -rf subset
+mkdir subset
+
+echo "Launch OGR clipping" 
+ogr2ogr -t_srs EPSG:3946 -clipdst 1840466 5171713 1844973 5176038 subset/cadbatiment.shp cad_cadastre.cadbatiment.shp
+ogr2ogr -t_srs EPSG:3946 -clipdst 1840466 5171713 1844973 5176038 subset/fpctoit.shp fpc_fond_plan_communaut.fpctoit.shp
+ogr2ogr -t_srs EPSG:3946 -clipdst 1840466 5171713 1844973 5176038 subset/lands.shp natural.shp
+ogr2ogr -t_srs EPSG:3946 -clipdst 1840466 5171713 1844973 5176038 subset/bike.shp pvo_patrimoine_voirie.pvostationvelov.shp
+gdalwarp -te 1840466 5171713 1844973 5176038 MNT2009_Altitude_10m_CC46.tif subset/mnt.tif

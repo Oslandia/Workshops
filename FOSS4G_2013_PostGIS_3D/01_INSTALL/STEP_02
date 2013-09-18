@@ -1,0 +1,7 @@
+# Create a Spatial DB
+dropdb ws
+createdb ws
+psql ws < /usr/local/pgsql/share/contrib/postgis-2.1/postgis.sql
+psql ws < /usr/local/pgsql/share/contrib/postgis-2.1/spatial_ref_sys.sql
+psql ws < /usr/local/pgsql/share/contrib/postgis-2.1/sfcgal.sql
+psql ws < /usr/local/pgsql/share/contrib/postgis-2.1/rtpostgis.sql

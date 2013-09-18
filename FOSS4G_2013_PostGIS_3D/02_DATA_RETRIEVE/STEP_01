@@ -1,0 +1,21 @@
+# Retrieve Data from Lyon Open Data Web Service (WFS)
+# This step took several minutes and imply decent network
+
+# Data dir
+rm -rf /tmp/data
+mkdir /tmp/data
+cd /tmp/data
+
+# Building data
+wget -O out.zip "http://ogc.data.grandlyon.com/grandlyon?SERVICE=WFS&VERSION=1.0.0&reQUEST=GetFeature&Typename=cad_cadastre.cadbatiment&outputFormat=SHAPEZIP" && unzip out.zip
+wget -O out.zip "http://ogc.data.grandlyon.com/grandlyon?SERVICE=WFS&VERSION=1.0.0&reQUEST=GetFeature&Typename=fpc_fond_plan_communaut.fpctoit&outputFormat=SHAPEZIP" && unzip out.zip
+
+# Shared Bikes
+wget -O out.zip "http://ogc.data.grandlyon.com/grandlyon?SERVICE=WFS&VERSION=1.0.0&reQUEST=GetFeature&Typename=pvo_patrimoine_voirie.pvostationvelov&outputFormat=SHAPEZIP" && unzip out.zip
+
+# Lands data (meaning rivers and parks)
+wget http://download.geofabrik.de/europe/france/rhone-alpes-latest.shp.zip
+unzip rhone-alpes-latest.shp.zip
+
+# DEM data
+wget http://opendata.data.grandlyon.com/imagerie/mnt2009/MNT2009_Altitude_10m_CC46.tif
