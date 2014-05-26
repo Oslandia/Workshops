@@ -1,0 +1,285 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Développer au grand jour &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="5e partie - Développer au grand jour" href="index.html" />
+    <link rel="next" title="Rudiments de Git" href="git.html" />
+    <link rel="prev" title="5e partie - Développer au grand jour" href="index.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">5e partie - Développer au grand jour</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="git.html"
+                        title="next chapter">Rudiments de Git</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/developper/git_plugin.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="developper-au-grand-jour">
+<h1>Développer au grand jour<a class="headerlink" href="#developper-au-grand-jour" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="environnement-de-developpement-de-plugin">
+<h2>Environnement de développement de plugin<a class="headerlink" href="#environnement-de-developpement-de-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Comme nous l&#8217;avons vu, il y a plusieurs options pour maintenir un environnement de développement de plugins:</p>
+<p>Copier le modèle du plugin dans le répertoire de plugin QGIS et travailler à partir de cet endroit.
+Travailler dans le répertoire où on a créé nos modèles et faire un lien à partir du répertoire de plugin.</p>
+<p>Le problème avec la première option est que si on veut tester la fonction de désinstallation des plugins, cela va supprimer tout le répertoire du plugin, et on risque de perdre notre code.
+Avec la seconde option on a pas ce risque, mais il faut à chaque fois que l&#8217;on veut tester la désinstallation refaire le lien à partir du répertoire de plugin.</p>
+<p>Il y a deux autres solutions pour régler ce problème.</p>
+<p>La première est d&#8217;utiliser un gestionnaire de versionnement de code tel que <em>git</em> et de faire des commits à partir du répertoire de travail et des <em>pull</em> dans le répertoire de plugins. Ce n&#8217;est pas beaucoup plus pratique que de copier le code dans le répertoire de plugin à chaque modification.</p>
+<p>La seconde est la meilleure solution. Il s&#8217;agit de travailler dans un répertoire externe au répertoire des plugins, et d&#8217;utiliser la variable d&#8217;environnement QGIS_PLUGINPATH en la faisant pointer vers le répertoire de développement. Lorsque cette variable est présente, QGIS_PLUGINPATH indique à QGIS d&#8217;aller chercher les plugins dans des répertoires supplémentaires. Cela permet d&#8217;utiliser le répertoire de développement et de tester le plugin sans avoir à faire de lien ni de copie. Le plugin n&#8217;étant dans ce cas pas installé avec l&#8217;installateur de plugins, il ne peut pas être désinstallé, et donc ne peut pas être supprimé par erreur. Lorsqu&#8217;on est prêt à tester l&#8217;installation et la désinstallation du plugin, on peut alors le copier dans le répertoire de QGIS ou créer un dépôt pour cela.</p>
+</div>
+<div class="section" id="qu-est-ce-que-c-est-que-git">
+<h2>Qu&#8217;est ce que c&#8217;est que Git ?<a class="headerlink" href="#qu-est-ce-que-c-est-que-git" title="Permalink to this headline">¶</a></h2>
+<p>Git est un système de gestion de version de code source distribué. Il permet de gérer différents flux de production de développement de code source. Git est aujourd&#8217;hui un des outils de développement les plus utilisés dans le monde du développement opensource. Il est notamment utilisé pour gérer les sources du noyau Linux.</p>
+<p>Une bonne ressource sur git est le livre disponible librement <em>Pro Git</em> (<a class="reference external" href="http://progit.org">http://progit.org</a>). Une version en cours de traduction en français est disponible : <a class="reference external" href="http://progit.org/book/fr/">http://progit.org/book/fr/</a></p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="git.html">Rudiments de Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git.html#des-instantanes-pas-des-differences">Des instantanés, pas des différences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#presque-toutes-les-operations-sont-locales">Presque toutes les opérations sont locales</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#git-gere-l-integrite">Git gère l&#8217;intégrité</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#generalement-git-ne-fait-qu-ajouter-des-donnees">Généralement, Git ne fait qu&#8217;ajouter des données</a></li>
+<li class="toctree-l2"><a class="reference internal" href="git.html#les-trois-etats">Les trois états</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="creer-un-depot-git">
+<h2>Créer un dépot git<a class="headerlink" href="#creer-un-depot-git" title="Permalink to this headline">¶</a></h2>
+<p>Le développement logiciel nécessite un certain nombre d&#8217;outils pour pouvoir conserver une certaine qualité. Parmi ceux-ci, le bug tracker et le gestionnaire de versionnement de code sont les deux outils indispensables aux développeurs. L&#8217;infrastructure du projet QGIS fournit ces outils lorsqu&#8217;on veut publier publiquement notre travail.</p>
+<p>On peut créer un compte sur le hub QGIS (<a class="reference external" href="http://hub.qgis.org">http://hub.qgis.org</a>) ou bien également sur GitHub (<a class="reference external" href="http://www.github.com">http://www.github.com</a>), afin de pouvoir bénéficier d&#8217;un dépôt de code source <em>git</em>.</p>
+<p>Voici les étapes nécessaires pour créer un plugin avec gestion du code source avec git:</p>
+<ol class="arabic">
+<li><p class="first">Installez le Plugin Builder</p>
+</li>
+<li><p class="first">Créez un répertoire qui va contenir tous vos plugins, par exemple <em>my_plugins</em></p>
+</li>
+<li><p class="first">Créez un modèle de plugin en utilisant le Plugin Builder, et indiquez lui le répertoire précédemment créé comme base</p>
+</li>
+<li><p class="first">Allez dans le répertoire du plugin (e.g. my_plugins/zoomer) créé par le Plugin Builder, et créez un dépôt git comme ceci</p>
+<div class="highlight-python"><pre>git init</pre>
+</div>
+</li>
+<li><p class="first">Réglez la variable d&#8217;environnement QGIS_PLUGINPATH pour pointer vers le répertoire contenant les plugins (my_plugins). Attention de bien spécifier le chemin entier.</p>
+</li>
+<li><p class="first">Démarrez QGIS et utilisez le gestionnaire de plugins pour activer le plugin. Si le plugin n&#8217;est pas visible dans la liste, vérifiez la variable QGIS_PLUGINPATH.</p>
+</li>
+<li><p class="first">Développez, testez. N&#8217;oubliez pas de commiter les changements régulièrement et de faire des <em>push</em> vers le dépôt public hub.qgis.org ou vers github.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="developper-avec-git">
+<h2>Développer avec git<a class="headerlink" href="#developper-avec-git" title="Permalink to this headline">¶</a></h2>
+<p>Voici les quelques commandes git que vous allez devoir utiliser pour développer des plugins de QGIS.</p>
+<p>Créer un nouveau dépôt git:</p>
+<div class="highlight-python"><pre>git init</pre>
+</div>
+<p>Ajouter des fichiers au système git:</p>
+<div class="highlight-python"><pre>git add -A</pre>
+</div>
+<p>Voir l&#8217;état des fichiers:</p>
+<div class="highlight-python"><pre>git status</pre>
+</div>
+<p>Commiter toutes les modifications:</p>
+<div class="highlight-python"><pre>git commit -a</pre>
+</div>
+<p>Attention de bien spécifier un message explicite sur les modifications que vous avez effectuées.</p>
+<p>Pousser les modifications sur le serveur distant:</p>
+<div class="highlight-python"><pre>git push</pre>
+</div>
+<p>Récupérer un dépôt source distant en local:</p>
+<div class="highlight-python"><pre>git clone git://github.com/schacon/grit.git</pre>
+</div>
+<p>Mettre à jour un dépôt git local à partir du dépôt distant:</p>
+<div class="highlight-python"><pre>git fetch</pre>
+</div>
+</div>
+<div class="section" id="creer-un-depot-source-qgis">
+<h2>Créer un dépôt source QGIS<a class="headerlink" href="#creer-un-depot-source-qgis" title="Permalink to this headline">¶</a></h2>
+<p>Le projet QGIS met à disposition une infrastructure d&#8217;hébergement de projets. On peut y créer des nouveaux projets de plugins, et gérer les sources avec git.</p>
+<div class="section" id="phase-preparatoire-creer-des-clefs-ssh">
+<h3>Phase préparatoire : créer des clefs ssh<a class="headerlink" href="#phase-preparatoire-creer-des-clefs-ssh" title="Permalink to this headline">¶</a></h3>
+<p>Pour pouvoir utiliser git correctement, il faut disposer de clefs d&#8217;authentification SSH.</p>
+<p>On vérifie tout d&#8217;abord si on dispose déjà de clefs:</p>
+<div class="highlight-python"><pre>$ cd ~/.ssh</pre>
+</div>
+<p>Si le répertoire existe, on sauvegarde les clefs existantes:</p>
+<div class="highlight-python"><pre>$ ls
+config      id_rsa  id_rsa.pub      known_hosts
+$ mkdir key_backup
+$ cp id_rsa* key_backup
+$ rm id_rsa*</pre>
+</div>
+<p>Créons une nouvelle clef SSH. On prend les réglages par défaut:</p>
+<div class="highlight-python"><pre>$ ssh-keygen -t rsa -C "your_email@youremail.com"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/formation/.ssh/id_rsa):</pre>
+</div>
+<p>Il faut donner un mot de passe pour valider la clef:</p>
+<div class="highlight-python"><pre>Enter passphrase (empty for no passphrase):&lt;enter a passphrase&gt;
+Enter same passphrase again:&lt;enter passphrase again&gt;</pre>
+</div>
+<p>On obtient alors quelque chose comme:</p>
+<div class="highlight-python"><pre>Your identification has been saved in /Users/your_user_directory/.ssh/id_rsa.
+Your public key has been saved in /Users/your_user_directory/.ssh/id_rsa.pub.
+The key fingerprint is:01:0f:f4:3b:ca:85:d6:17:a1:7d:f0:68:9d:f0:a2:db user_name@username.com
+The key's randomart image is:
++--[ RSA 2048]----+
+|     .+   +      |
+|       = o O .   |
+|        = * *    |
+|       o = +     |
+|      o S .      |
+|     o o =       |
+|      o . E      |
+|                 |
+|                 |
++-----------------+</pre>
+</div>
+<p>Vous avez créé votre clef, qu&#8217;on utilisera ensuite pour se connecter sur GitHub ou le Hub QGIS.</p>
+</div>
+<div class="section" id="configurer-git">
+<h3>Configurer Git<a class="headerlink" href="#configurer-git" title="Permalink to this headline">¶</a></h3>
+<p>Il reste à configurer quelques options de Git</p>
+<p>Configuration de git:</p>
+<div class="highlight-python"><pre>git config --global user.name "VincentP"
+git config --global user.email vincent.picavet@oslandia.com</pre>
+</div>
+<p>Il est également possible de configurer ces champs pour chaque dépôt en utilisant:</p>
+<div class="highlight-python"><pre>$ cd my_other_repo
+$ git config user.name "Different Name"
+$ git config user.email "differentemail@email.com"</pre>
+</div>
+</div>
+<div class="section" id="creer-un-compte-github">
+<h3>Créer un compte GitHub<a class="headerlink" href="#creer-un-compte-github" title="Permalink to this headline">¶</a></h3>
+<p>Il faut au préalable créer un compte GitHub sur <a class="reference external" href="http://www.github.com">http://www.github.com</a></p>
+<p>Puis dans &#8220;Account Settings&#8221; &gt; &#8220;SSH Public Keys&#8221; &gt; &#8220;Add another public key&#8221;</p>
+<p>Ouvrez le fichier id_rsa.pub avec un éditeur de texte. C&#8217;est votre clef SSH publique. Vous aurez peut être à activer l&#8217;affichage des fichiers cachés car le répertoire .ssh est un répertoire caché. Il est important de copier la clef SSH exactement telle qu&#8217;elle est dans le fichier sans ajouter de retour à la ligne ni d&#8217;espace.</p>
+<p>On la copie dans le champ &#8220;Key&#8221; sur GitHub et on clique sur &#8220;Add key&#8221;.</p>
+<p>Pour tester on se connecte au serveur ssh de GitHub en utilisant la commande shell suivante (telle quelle):</p>
+<div class="highlight-python"><pre>$ ssh -T git@github.com</pre>
+</div>
+<p>On obtient:</p>
+<div class="highlight-python"><pre>The authenticity of host 'github.com (207.97.227.239)' can't be established.RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.Are you sure you want to continue connecting (yes/no)?</pre>
+</div>
+<p>Ce qui est normal, il faut répondre <em>yes</em>. On obtient alors:</p>
+<div class="highlight-python"><pre>Hi username! You've successfully authenticated, but GitHub does not provide shell access.</pre>
+</div>
+<p>Si vous avez correctement réglé git comme ci-dessus, vous pouvez maintenant créer un dépot dans GitHub et y pousser un projet, ou forker un projet existant et y faire des modifications.</p>
+</div>
+<div class="section" id="creer-un-compte-hub-qgis">
+<h3>Créer un compte Hub QGIS<a class="headerlink" href="#creer-un-compte-hub-qgis" title="Permalink to this headline">¶</a></h3>
+<p>Pour pouvoir interagir avec la plateforme de développement QGIS, il faut tout d&#8217;abord créer un compte OSGeo. Cela peut se faire à l&#8217;adresse suivante : <a class="reference external" href="https://www2.osgeo.org/cgi-bin/ldap_create_user.py">https://www2.osgeo.org/cgi-bin/ldap_create_user.py</a></p>
+<p>La page centrale du Hub QGIS est à <a class="reference external" href="http://hub.qgis.org">http://hub.qgis.org</a></p>
+<p>Il est ensuite possible de créer un nouveau projet sur le hub à l&#8217;adresse <a class="reference external" href="http://hub.qgis.org/projects/new">http://hub.qgis.org/projects/new</a></p>
+<p>Des options permettent d&#8217;activer les diverses fonctionnalités voulues pour l&#8217;interface de gestion de projet. On y trouve :</p>
+<ul class="simple">
+<li>un bugtracker (avec gestion de bounty ou de feature en plus des bugs)</li>
+<li>Des champs spécifiques pour la gestion du bug</li>
+<li>un dépot de fichier</li>
+<li>un calendrier</li>
+<li>un Wiki</li>
+</ul>
+<p>Lorsqu&#8217;on crée un projet on peut activer le dépôt de code, et choisir git comme gestionnaire de code source.</p>
+<p>Ensuite dans la page du projet on accède à l&#8217;onglet <em>Repository</em> qui donne les instructions pour créer le dépôt <em>git</em>.</p>
+<ul class="simple">
+<li>configuration de la gestion des permissions
+* Upload de la clé publique ssh. À l&#8217;adresse <a class="reference external" href="http://hub.qgis.org/my/public_keys">http://hub.qgis.org/my/public_keys</a> vous pouvez comme pour GitHub envoyer votre clef publique (cliquer sur New Value).
+* ajout des membres développeurs (dans l&#8217;onglet settings/members du projet, éditer l&#8217;utilisateur ou en ajouter un)</li>
+<li>création du dépôt et envoi vers le hub</li>
+</ul>
+<div class="highlight-python"><pre>cd pyqgis-tutofr
+git init
+git add .
+git commit -m 'Initializing Tutoriel Python QGIS repository'
+git remote add origin gitosis@qgis.org:pyqgis-tutofr.git
+git push origin master</pre>
+</div>
+<p>Si on a déjà un dépôt git existant et que l&#8217;on souhaite le pousser vers le projet sur le hub qgis:</p>
+<div class="highlight-python"><pre>cd existing_git_repo
+git remote add origin gitosis@qgis.org:pyqgis-tutofr.git
+git push origin master</pre>
+</div>
+<p>On peut alors voir que le projet est bien en ligne sur le Hub, et utiliser l&#8217;interface de gestion de projet pour collaborer.</p>
+<p>Si votre projet est un plugin, il faut créer un sous-projet du projet global &#8220;User Plugins&#8221;.</p>
+</div>
+</div>
+<div class="section" id="distribuer-avec-le-depot-centralise-de-plugins">
+<h2>Distribuer avec le dépôt centralisé de plugins<a class="headerlink" href="#distribuer-avec-le-depot-centralise-de-plugins" title="Permalink to this headline">¶</a></h2>
+<p>Maintenant que notre projet est développé, et possède un environnement de développement correct, nous pouvons distribuer notre plugin. Le site <a class="reference external" href="http://plugins.qgis.org/">http://plugins.qgis.org/</a> regroupe tous les plugins de QGIS et permet de faire de la recherche par mot-clef, d&#8217;évaluer les plugins suivant leur état de développement, leur popularité, etc.</p>
+<p>Le site regroupe également des snippets de code Python qui peuvent être intéressant à partager.</p>
+<p>Le login se fait avec le compte OSGeo.</p>
+<p>Pour uploader un plugin, le bouton &#8220;Share a plugin&#8221; permet d&#8217;accéder à la page.
+On peut ensuite envoyer le fichier zip contenant notre plugin vers le site pour que les utilisateurs puissent le charger. On peut vérifier qu&#8217;il apparaît bien dans la liste des plugins de l&#8217;installateur de plugins de QGIS.</p>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutorial #1 – Installation de Plugins QGIS &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="1ere partie - Exploration de l’utilisation de Python dans QGIS" href="index.html" />
+    <link rel="next" title="Tutoriel #2 – Exploration de la Console Python QGIS" href="python_in_qgis_tutorial2.html" />
+    <link rel="prev" title="Python dans QGIS" href="python_in_qgis_intro.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python_in_qgis_intro.html"
+                        title="previous chapter">Python dans QGIS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="python_in_qgis_tutorial2.html"
+                        title="next chapter">Tutoriel #2 &#8211; Exploration de la Console Python QGIS</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/explorer/python_in_qgis_tutorial1.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="tutorial-1-installation-de-plugins-qgis">
+<h1>Tutorial #1 &#8211; Installation de Plugins QGIS<a class="headerlink" href="#tutorial-1-installation-de-plugins-qgis" title="Permalink to this headline">¶</a></h1>
+<p>Observons rapidement comment on installe des plugins Python. Nous ajouterons aussi le dépôt PyQGIS FOSS4G.</p>
+<p> <strong>1.</strong> Sur la barre de menu QGIS cliquer sur <tt class="docutils literal"><span class="pre">Extensions</span> <span class="pre">&gt;</span> <span class="pre">Installateur</span> <span class="pre">d'extensions</span> <span class="pre">Python</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/plugins_menu_click_1.png"><img alt="../../_images/plugins_menu_click_1.png" class="align-center" src="../../_images/plugins_menu_click_1.png" style="width: 451.0px; height: 479.0px;" /></a>
+<p> <strong>2.</strong> Une nouvelle boite de dialogue s&#8217;ouvre et tente de récupérer les extensions Python à partir de dépôts tierces. Si il n&#8217;arrive pas à récupérer tous les plugins il peut bloquer. Cliquer sur le bouton <tt class="docutils literal"><span class="pre">Abandonner</span> <span class="pre">la</span> <span class="pre">recherche</span> <span class="pre">de</span> <span class="pre">dépôt</span></tt> si cela commence à bloquer:</p>
+<a class="reference internal image-reference" href="../../_images/Abort_Fetching.png"><img alt="../../_images/Abort_Fetching.png" class="align-center" src="../../_images/Abort_Fetching.png" style="width: 551.0px; height: 385.0px;" /></a>
+<p> <strong>3.</strong> Maintenant vous devriez voir une liste des plugins Python disponibles pour l&#8217;installation. Si les dépôts tierces ne sont pas activés, peu de plugins sont disponibles. Pour les activer, il faut cliquer sur l&#8217;onglet <tt class="docutils literal"><span class="pre">Dépôts</span></tt> . Il liste l&#8217;ensemble des dépôts où QGIS va chercher les plugins. Le bouton du bas permet d&#8217;ajouter les dépôts non officiels du projet :</p>
+<a class="reference internal image-reference" href="../../_images/add_3rd_partyplugins_new.png"><img alt="../../_images/add_3rd_partyplugins_new.png" class="align-center" src="../../_images/add_3rd_partyplugins_new.png" style="width: 810.0px; height: 444.0px;" /></a>
+<p> <strong>4.</strong> Nous allons ajouter un nouveau dépôt. Ce dépôt contient le code d&#8217;exemple pour ce tutoriel. Cliquer sur le bouton <tt class="docutils literal"><span class="pre">Ajouter</span></tt> en bas à droite de l&#8217;onglet <tt class="docutils literal"><span class="pre">Dépôts</span></tt> . Ensuite ajouter l&#8217;URL suivante et un nom pour ce dépôt:</p>
+<div class="highlight-python"><pre>http://www.qgisworkshop.org/plugins/plugins.xml</pre>
+</div>
+<a class="reference internal image-reference" href="../../_images/add_repo.png"><img alt="../../_images/add_repo.png" class="align-center" src="../../_images/add_repo.png" style="width: 586.6px; height: 329.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/add_repo_url.png"><img alt="../../_images/add_repo_url.png" class="align-center" src="../../_images/add_repo_url.png" style="width: 578.9px; height: 325.5px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Vous pouvez aussi ouvrir l&#8217;adresse du dépôt avec un <a class="reference external" href="http://www.qgisworkshop.org/plugins/plugins.xml">navigateur web</a> </p>
+</div>
+<p> <strong>5.</strong> Si vous revenez à l&#8217;onglet <tt class="docutils literal"><span class="pre">Extensions</span></tt> vous pouvez alors filtrer avec la liste déroulante sur le dépôt ajouté, à côté de la boîte de texte de filtre:</p>
+<a class="reference internal image-reference" href="../../_images/filter_foss4g.png"><img alt="../../_images/filter_foss4g.png" class="align-center" src="../../_images/filter_foss4g.png" style="width: 580.3px; height: 318.5px;" /></a>
+<p> <strong>6.</strong> Selectionnez chaque plugin de ce dépôt et cliquer sur <tt class="docutils literal"><span class="pre">Installer</span> <span class="pre">l'extension</span></tt> en bas à droite:</p>
+<a class="reference internal image-reference" href="../../_images/install_foss4g_plugin.png"><img alt="../../_images/install_foss4g_plugin.png" class="align-center" src="../../_images/install_foss4g_plugin.png" style="width: 700.0px; height: 333.9px;" /></a>
+<p> <strong>7.</strong> Dans le shell bash ou dans un explorateur de fichiers, déplacez vous dans  <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins</span></tt> . Le code des plugins devrait être présent à cet endroit:</p>
+<div class="highlight-python"><pre>$ cd /home/formation/.qgis/python/plugins/
+$ ls -lah
+total 28K
+drwxr-xr-x 7 formation formation 4.0K 2011-09-02 10:24 .
+drwxr-xr-x 4 formation formation 4.0K 2011-07-07 13:41 ..
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:21 foss4g2011_example1_starter
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:21 foss4g2011_example1_solution
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:21 foss4g2011_example2_starter
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:21 foss4g2011_example2_solution
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:24 foss4g2011_example3_starter
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:24 foss4g2011_example3_solution
+drwxr-xr-x 2 formation formation 4.0K 2011-09-02 10:21 foss4g2011_tutorial1_solution
+drwxr-xr-x 3 formation formation 4.0K 2011-07-07 13:41 pluginbuilder</pre>
+</div>
+<p> <strong>8.</strong> Pour activer ou désactiver un plugin l&#8217;interface dédiée est accessible en cliquant sur <tt class="docutils literal"><span class="pre">Extensions</span> <span class="pre">&gt;</span> <span class="pre">Gérer</span> <span class="pre">les</span> <span class="pre">extensions</span></tt> . La boite de dialogue de gestion des plugins de QGIS apparait alors avec des cases à cocher à côté des plugins pour les activer ou les désactiver:</p>
+<a class="reference internal image-reference" href="../../_images/plugin_manager_console.png"><img alt="../../_images/plugin_manager_console.png" class="align-center" src="../../_images/plugin_manager_console.png" style="width: 567.0px; height: 409.0px;" /></a>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

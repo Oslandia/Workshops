@@ -1,0 +1,687 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Qt et PyQt &mdash; Plugins Python QGIS v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plugins Python QGIS v1.0 documentation" href="index.html" />
+    <link rel="prev" title="Le langage Python, bases" href="python.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="python.html" title="Le langage Python, bases"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="qt-et-pyqt">
+<h1>Qt et PyQt<a class="headerlink" href="#qt-et-pyqt" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="qt">
+<h2>Qt<a class="headerlink" href="#qt" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="generalites">
+<h3>Généralités<a class="headerlink" href="#generalites" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>LGPL C++/java application framework</li>
+<li>Orienté vers la création d&#8217;interfaces</li>
+<li>multiplateforme</li>
+<li>TrollTech puis Nokia</li>
+<li>&gt; 300 classes, &gt; 6000 fonctions</li>
+</ul>
+<p>On y trouve des composants principalement pour réaliser des interfaces graphiques, mais aussi pour :</p>
+<ul class="simple">
+<li>la gestion et l&#8217;interrogation des bases de données</li>
+<li>la gestion et la manipulation de données XML</li>
+<li>Le graphisme et le multimédia</li>
+<li>Le réseau et la navigation web</li>
+</ul>
+</div>
+<div class="section" id="bases">
+<h3>Bases<a class="headerlink" href="#bases" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>modèle objet</li>
+<li>Tous les objets Qt héritent de QObject</li>
+<li>Tous les objets liés à l&#8217;interface héritent de QWidget</li>
+</ul>
+<p>par exemple on peut trouver:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># une case à cocher</span>
+<span class="n">checkbox</span> <span class="o">=</span> <span class="n">QCheckBox</span><span class="p">(</span><span class="s">&quot;C&amp;ase à cocher&quot;</span><span class="p">)</span>
+<span class="c"># une combobox</span>
+<span class="n">combo</span> <span class="o">=</span> <span class="n">QComboBox</span><span class="p">()</span>
+<span class="n">combo</span><span class="o">.</span><span class="n">addItem</span><span class="p">(</span><span class="s">&quot;Premier Choix&quot;</span><span class="p">)</span>
+<span class="c"># une spinbox</span>
+<span class="n">spinbox</span> <span class="o">=</span> <span class="n">QSpinBox</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="boucle-evenementielle">
+<h3>Boucle évènementielle<a class="headerlink" href="#boucle-evenementielle" title="Permalink to this headline">¶</a></h3>
+<p>Dans Qt comme dans la plupart des frameworks d&#8217;interface graphique, une application consiste en un ensemble de définition de composants, puis du lancement d&#8217;une boucle évènementielle. L&#8217;application communique avec le système par des évènements.</p>
+<ul class="simple">
+<li>on ne gère pas l&#8217;ensemble des évènements par nous-même</li>
+<li>On demande à l&#8217;application d&#8217;entrer dans une boucle évènementielle</li>
+<li>Cette boucle contrôle l&#8217;exécution de l&#8217;application</li>
+<li>On donne le contrôle à la boucle, mais celle ci appelle des fonctions et des méthodes que l&#8217;on a écrites</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Une application ne fonctionnera pas tant que l&#8217;on aura pas démarré la boucle évènementielle en appelant la méthode <strong>exec_()</strong> de l&#8217;objet <strong>QApplication</strong>.</p>
+</div>
+</div>
+<div class="section" id="layouts-et-parente">
+<h3>Layouts et parenté<a class="headerlink" href="#layouts-et-parente" title="Permalink to this headline">¶</a></h3>
+<p>Les <em>widgets</em> peuvent être utilisés comme conteneurs pour gérer d&#8217;autres widgets:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">window</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">label</span> <span class="o">=</span> <span class="n">QLabel</span><span class="p">(</span><span class="s">&quot;Name:&quot;</span><span class="p">)</span>
+<span class="n">editor</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">label</span><span class="p">)</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Le label, l&#8217;éditeur de ligne et la fenêtre sont créés de la même façon</li>
+<li>Le layout met le label et l&#8217;éditeur de ligne dans le widget</li>
+<li>la fenêtre est parente du label et de l&#8217;éditeur de ligne</li>
+</ul>
+<p>Les conteneurs sont les parents des widgets qui sont à l&#8217;intérieur:</p>
+<ul class="simple">
+<li>les fenêtres n&#8217;ont pas de parent</li>
+<li>Les widgets enfant peuvent avoir leurs propres enfants</li>
+<li>les enfants d&#8217;un widget ne sont visibles que si leur parent l&#8217;est</li>
+</ul>
+<p>Les widgets parents sont propriétaires de leurs enfants:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">create_window</span><span class="p">():</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+    <span class="n">editor</span> <span class="o">=</span> <span class="n">QLineEdit</span><span class="p">()</span>
+    <span class="n">layout</span> <span class="o">=</span> <span class="n">QHBoxLayout</span><span class="p">(</span><span class="n">window</span><span class="p">)</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">editor</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">window</span>
+</pre></div>
+</div>
+<p>Dans ce cas, l&#8217;éditeur et le layout appartiennent à la fenêtre. On ne peut plus y accéder directement mais ils ne sont pas supprimés et on pourra y accéder à travers la fenêtre.</p>
+</div>
+<div class="section" id="signals-slots">
+<h3>Signals / Slots<a class="headerlink" href="#signals-slots" title="Permalink to this headline">¶</a></h3>
+<p>Les signaux et slots sont la base de la programmation évènementielle dans Qt. Chaque fois qu&#8217;un évènement se produit un <strong>signal</strong> est émis. Pour pouvoir réagir à un signal, on utilise un <strong>slot</strong> qu&#8217;on branche sur ce signal. Le slot est une fonction, qui va être exécutée quand le signal auquel il est connecté est émis.</p>
+<ul class="simple">
+<li>Le signal est diffusé lors d&#8217;un évènement</li>
+<li>le slot reçoit le signal et agit</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pyqt">
+<h2>PyQt<a class="headerlink" href="#pyqt" title="Permalink to this headline">¶</a></h2>
+<p>PyQT est le wrapper autour de la bibliothèque Qt. Il permet d&#8217;accéder à quasiment l&#8217;intégralité de la bibliothèque Qt avec le langage Python. PyQt fait aussi le lien entre les types de données Qt et les types de données natifs de Python, en faisant une solution intégrée pour le développement d&#8217;application graphiques.</p>
+<p>PyQt a été développé par Phil Thompson de Riverbank Computing Limited. PyQt est sous licence <strong>General Public Licence</strong>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">PyQt est sous la licence GPL. Ce qui signifie que tout programme réalisant un import de ce module devra être sous une licence compatible GPL.</p>
+</div>
+<p>Les principaux composants de PyQt sont:</p>
+<ul class="simple">
+<li>QtGui - tout ce qui est relatif à l&#8217;interface graphique</li>
+<li>QtCore - Le reste</li>
+<li>Le Namespace Qt - les types et les identifiants</li>
+<li>Les outils Qt - pour diverses taches</li>
+</ul>
+<p>On importe le module principal avec:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">PyQt4</span>
+</pre></div>
+</div>
+<div class="section" id="qtcore">
+<h3>QtCore<a class="headerlink" href="#qtcore" title="Permalink to this headline">¶</a></h3>
+<p>On y trouve toutes les classes de bases qui sont utilisées dans les applications PyQt. Traitement des chaines de caractère, des I/Os, fichiers, etc. Entre autres:</p>
+<ul class="simple">
+<li>QString - chaines de caractères</li>
+<li>QFile - Les fichiers</li>
+<li>QProcess - lancer des programmes externes</li>
+<li>QPoint - Un point</li>
+<li>QDate - fonctions de dates</li>
+<li>QEvent : communication par signaux</li>
+</ul>
+<p>Import du core:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qtgui">
+<h3>QtGui<a class="headerlink" href="#qtgui" title="Permalink to this headline">¶</a></h3>
+<p>Ce sont tous les éléments d&#8217;interface graphique de Qt, des plus simples aux plus complexes. On y trouve boutons, cases à cocher, vues arborescentes... Tous les éléments graphiques de PyQt sont nommés <strong>widgets</strong>.</p>
+<p>On trouve par exemple:</p>
+<ul class="simple">
+<li>QLabel - un widget pour afficher du texte</li>
+<li>QLineEdit - pour entrer une ligne de texte</li>
+<li>QPushButton - un bouton à appuyer</li>
+<li>QCheckbox - une case à cocher</li>
+<li>QCombobox - une liste déroulante</li>
+</ul>
+<p>On trouve aussi quelques composants liés à l&#8217;interface graphique qui ne sont pas des widgets:</p>
+<ul class="simple">
+<li>QApplication - encapsule une application GUI</li>
+<li>QPainter - système d&#8217;affichage</li>
+</ul>
+<p>Import du module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="les-outils-qt">
+<h3>Les outils Qt<a class="headerlink" href="#les-outils-qt" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>QtDesigner</dt>
+<dd>Un outil pour créer des interfaces graphiques de façon visuelle. On génère un fichier XML qu&#8217;on peut ensuite transformer en code Python.</dd>
+<dt>QtAssistant</dt>
+<dd>Un outil qui permet de faire des recherches dans la référence</dd>
+<dt>QtLinguist</dt>
+<dd>Un outil dédié à la traduction et l&#8217;internationalisation des applications</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="ressources">
+<h2>Ressources<a class="headerlink" href="#ressources" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>Introduction à PyQt:</dt>
+<dd><a class="reference external" href="http://riverbankcomputing.co.uk/software/pyqt/intro">http://riverbankcomputing.co.uk/software/pyqt/intro</a></dd>
+<dt>Wiki PyQt:</dt>
+<dd><a class="reference external" href="http://www.diotavelli.net/PyQtWiki">http://www.diotavelli.net/PyQtWiki</a></dd>
+<dt>Référence de Qt:</dt>
+<dd><a class="reference external" href="http://doc.qt.nokia.com/4.7/">http://doc.qt.nokia.com/4.7/</a></dd>
+<dt>Référence de QtCore:</dt>
+<dd><a class="reference external" href="http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtcore.html">http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtcore.html</a></dd>
+<dt>Référence de QtGui:</dt>
+<dd><a class="reference external" href="http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtgui.html">http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtgui.html</a></dd>
+<dt>Référence du Namespace Qt:</dt>
+<dd><a class="reference external" href="http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html">http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html</a></dd>
+<dt>Livre sur PyQt:</dt>
+<dd><a class="reference external" href="http://www.commandprompt.com/community/pyqt/?page=pyqtbook">http://www.commandprompt.com/community/pyqt/?page=pyqtbook</a></dd>
+</dl>
+</div>
+</div>
+<div class="section" id="pratique-de-pyqt">
+<h1>Pratique de PyQt<a class="headerlink" href="#pratique-de-pyqt" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="verification-de-l-installation">
+<h2>Vérification de l&#8217;installation<a class="headerlink" href="#verification-de-l-installation" title="Permalink to this headline">¶</a></h2>
+<p>On peut vérifier que PyQt est bien installé et vérifier la version en important le module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="n">QT_VERSION_STR</span>
+<span class="k">print</span> <span class="n">QT_VERSION_STR</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hello-world">
+<h2>Hello World<a class="headerlink" href="#hello-world" title="Permalink to this headline">¶</a></h2>
+<p>Voici un programme minimal qui crée une application Qt:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span>
+<span class="c"># import des modules PyQt necessaires</span>
+<span class="kn">from</span> <span class="nn">PyQt4.QtGui</span> <span class="kn">import</span> <span class="n">QApplication</span><span class="p">,</span> <span class="n">QPushButton</span>
+<span class="c"># on ne lance les commandes suivantes que si on est dans un script</span>
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c"># Tous les programmes Qt ont besoin d&#39;une</span>
+    <span class="c"># instance de QApplication</span>
+    <span class="c"># On passe les arguments de la ligne de commande car Qt</span>
+    <span class="c"># sait en interpreter certain</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="c"># On cree un bouton avec un texte dessus</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;Hello World !&quot;</span><span class="p">)</span>
+    <span class="c"># on doit explicitement demander l&#39;affichage du bouton</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="c"># On lance la boucle evenementielle</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Ce programme effectue quatre actions:</p>
+<ul class="simple">
+<li>création d&#8217;un objet d&#8217;application Qt</li>
+<li>Création d&#8217;un bouton</li>
+<li>Affichage du bouton</li>
+<li>Lancement de la boucle évènementielle</li>
+</ul>
+</div>
+<div class="section" id="widgets">
+<h2>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline">¶</a></h2>
+<p>Création d&#8217;un widget de niveau supérieur:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">window</span> <span class="o">=</span> <span class="n">QWidget</span><span class="p">()</span>
+<span class="n">window</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">800</span><span class="p">,</span> <span class="mi">600</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">show</span>
+</pre></div>
+</div>
+<p>Création d&#8217;un Widget enfant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;Cliquer ici&quot;</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+<span class="n">button</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">batton</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Placement des widgets dans les layouts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">button</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;&amp;OK&quot;</span><span class="p">)</span>
+<span class="n">cancelButton</span> <span class="o">=</span> <span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;&amp;Annuler&quot;</span><span class="p">)</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">QVBoxLayout</span><span class="p">()</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">okButton</span><span class="p">)</span>
+<span class="n">layout</span><span class="o">.</span><span class="n">addWidget</span><span class="p">(</span><span class="n">cancelButton</span><span class="p">)</span>
+<span class="n">window</span><span class="o">.</span><span class="n">setLayout</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Il y a différents types de layout qui permettent d&#8217;agencer finement et/ou automatiquement les widgets dans une fenêtre.</p>
+</div>
+<div class="section" id="id1">
+<h2>Signals / slots<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Voici un exemple de connexion de signal à un slot. On crée une fenêtre avec un bouton, qui fermera la fenêtre lors du clic:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import des modules Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+
+    <span class="c"># creation de l&#39;application</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+
+    <span class="c"># creation d&#39;une fenetre principale</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">()</span>
+    <span class="c"># changeons le titre de la fenetre</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Signal&quot;</span><span class="p">)</span>
+    <span class="c"># ajout d&#39;un bouton dans la fenetre</span>
+    <span class="c"># Le bouton sera enfant de la fenetre</span>
+    <span class="n">button</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QPushButton</span><span class="p">(</span><span class="s">&quot;Cliquer ici&quot;</span><span class="p">,</span> <span class="n">window</span><span class="p">)</span>
+    <span class="c"># redimensionnons le bouton</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">150</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="c"># connectons le signal de clic au slot quit() de l&#39;application</span>
+    <span class="n">button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;clicked()&quot;</span><span class="p">),</span>\
+        <span class="n">app</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;quit()&quot;</span><span class="p">))</span>
+    <span class="c"># affichons la fenetre</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="c"># lancons la boucle evenementielle</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Il existe deux façons de créer des connexions entre les signaux et les slots. La première utilise la fonction connect présente dans n&#8217;importe quel objet de type QObject:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">object</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">Signal_Widget</span><span class="p">,</span> <span class="n">Signal</span><span class="p">,</span> <span class="n">Slot_Widget</span><span class="p">,</span> <span class="n">Slot</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On spécifie donc les deux objets entre lesquels on fait une connexion, et les deux éléments signal/slot pour lesquels ont effectue la connexion.</p>
+<p>Pour spécifier le signal, on utilise la syntaxe <strong>SIGNAL(QString)</strong>. Par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Pour spécifier le slot, on peut utiliser la syntaxe<strong>SLOT(QSTRING)</strong> .Par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;quit()&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Un slot peut être n&#8217;importe quelle fonction de l&#8217;application. On peut alors spécifier la fonction directement sans passer l&#8217;objet où se trouve le slot. Par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">button</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">button</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;clicked()&quot;</span><span class="p">),</span> <span class="n">mafonction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Notez qu&#8217;on ne met pas les parenthèses lorsqu&#8217;on spécifie la fonction slot car on n&#8217;appelle pas la fonction, on en donne juste une référence.</p>
+<p>La fonction <strong>connect</strong> est disponible dans la classe <strong>QtCore.QObject</strong>. Comme toutes les classes sont dérivées de <strong>QObject</strong> on peut les utiliser pour appeler cette méthode. On utilise souvent <strong>self.connect()</strong>.</p>
+<p>La seconde façon de créer un signal est d&#8217;utiliser la méthode <strong>connect()</strong> de l&#8217;objet <strong>signal</strong> lui même, en lui spécifiant la fonction slot directement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">signal_widget</span><span class="o">.</span><span class="n">signal</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">slot</span><span class="p">)</span>
+<span class="c"># par exemple :</span>
+<span class="n">button</span><span class="o">.</span><span class="n">clicked</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">mafonction</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Il y a énormément de signaux et slots définis dans Qt. En général tous ceux que vous pourrez imaginer et dont vous pourrez avoir besoin existent déjà.</p>
+</div>
+</div>
+<div class="section" id="exercice-1">
+<h1>Exercice 1<a class="headerlink" href="#exercice-1" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>Créez une nouvelle fenêtre avec un bouton et une case à cocher</li>
+<li>Faites en sorte que lorsque l&#8217;on clique sur le bouton, cela coche/décoche la case</li>
+<li>Ajoutez un bouton &#8220;quitter&#8221; qui ferme la fenêtre</li>
+</ul>
+</div>
+<div class="section" id="utiliser-qt-designer">
+<h1>Utiliser Qt Designer<a class="headerlink" href="#utiliser-qt-designer" title="Permalink to this headline">¶</a></h1>
+<p>Qt Designer est un outil permettant de réaliser des interfaces graphiques visuellement, à la souris. Qt Designer crée et sauve des fichiers <strong>.ui</strong>. Ce sont des fichiers XML de description de l&#8217;interface réalisée.</p>
+<p>Pour pouvoir utiliser les interfaces que nous avons créées avec PyQt, il est nécessaire de transformer les fichiers XML en fichiers de code Python. PyQt fournit un outil dont le rôle est exactement celui là. Il s&#8217;agit de <strong>pyuic4</strong>. Il s&#8217;utilise ainsi:</p>
+<div class="highlight-python"><pre>pyuic4 ui_testapp.ui -o ui_testapp.py</pre>
+</div>
+<p>Le code Python généré est une classe qui contient notre interface. Il ne faut <strong>JAMAIS</strong> modifier à la main les fichiers Python générés, car toutes les modifications seraient perdues lors de la prochaine génération.</p>
+<p>Pour modifier notre interface, ou ajouter la partie logique par exemple on va instancier la classe qui a été générée et utiliser sa méthode <strong>setupUi()</strong> pour ajouter les composants définis dans le designer.</p>
+<p>Si on utilise l&#8217;option <strong>-x</strong> de pyuic4, on génère également la partie de code Python qui permet de lancer directement l&#8217;interface générée. C&#8217;est rarement le but recherché, mais peut être très pratique pour tester si tout va bien.</p>
+<p>Il existe un second utilitaire associé à QtDesigner qui permet de transformer les fichiers de ressource de Qt designer <strong>.qrc</strong> en fichiers python. Il s&#8217;agit de <strong>pyrcc4</strong>. La syntaxe est la même que pour <strong>pyuic4</strong>:</p>
+<div class="highlight-python"><pre>pyrcc4 ressources.qrc -o ressources.py</pre>
+</div>
+</div>
+<div class="section" id="exercice-2">
+<h1>Exercice 2<a class="headerlink" href="#exercice-2" title="Permalink to this headline">¶</a></h1>
+<p>Nous allons faire une petite application de TODO-List. Cette application est composée d&#8217;un éditeur de ligne, avec un bouton &#8220;ajouter&#8221;.
+En dessous de l&#8217;éditeur, on trouve une vue sous forme de liste. Lorsqu&#8217;on clique sur le bouton ajouter, le contenu de l&#8217;éditeur de ligne s&#8217;ajoute dans la liste.
+Notre application présente également un bouton &#8220;supprimer&#8221; qui enlève l&#8217;item couramment sélectionné de la liste.</p>
+<ul class="simple">
+<li>Réalisez avec QtDesigner le formulaire principal de cette application.</li>
+<li>Générez le code Python correspondant</li>
+<li>Testez l&#8217;interface avec l&#8217;option <strong>-x</strong> de <em>pyuic4</em></li>
+<li>Complétez le code suivant pour réaliser l&#8217;application complète</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import des modules Qt</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtCore</span>
+<span class="c"># import de la classe generee</span>
+<span class="kn">from</span> <span class="nn">ui_todoform</span> <span class="kn">import</span> <span class="n">Ui_TodoForm</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="c"># notre classe herite de QWidget</span>
+<span class="k">class</span> <span class="nc">TodoForm</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QWidget</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># On lance le constructeur de la classe widget</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TodoForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">()</span>
+        <span class="c"># On cree une instance de notre classe d&#39;interface generee</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_TodoForm</span><span class="p">()</span>
+        <span class="c"># On appelle la methode setupUi</span>
+        <span class="c"># cette methode est la methode generee qui ajoute tous les</span>
+        <span class="c"># elements d&#39;interface dans l&#39;objet self.ui</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c"># On connecte tous les signaux necessaires</span>
+        <span class="c"># la methode (privee) appelee est creee ci dessous</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_connectSlots</span><span class="p">()</span>
+        <span class="c"># Par defaut la liste est vide donc on ne peut rien supprimer</span>
+        <span class="c"># on desactive le bouton delete</span>
+        <span class="c"># tous les objets graphiques fait avec qt designer</span>
+        <span class="c"># sont dans l objet ui qui est</span>
+        <span class="c"># une instance de notre classe generee</span>
+        <span class="c"># trouver la méthode du bouton delete qui le desactive</span>
+        <span class="c"># et remplacer la ligne suivante</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">_connectSlots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># On connecte les signaux des boutons a nos methodes definies ci dessous</span>
+        <span class="c"># connexion du signal du bouton d&#39;ajout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">add_button</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&#39;clicked()&#39;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slotAddClicked</span><span class="p">)</span>
+        <span class="c"># on connecte maintenant le bouton delete a notre slot dedie</span>
+        <span class="k">pass</span>
+        <span class="c"># connexion du bouton quitter a la methode qui ferme le widget (cette classe)</span>
+        <span class="k">pass</span>
+
+    <span class="c"># la methode appelee lorsque le bouton d ajout est clique</span>
+    <span class="k">def</span> <span class="nf">_slotAddClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># On lit le texte du LineEdit</span>
+        <span class="c"># remplacer None par la recuperation du texte du QLineEdit</span>
+        <span class="n">text</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="c"># Si le texte n&#39;est pas vide</span>
+        <span class="k">if</span> <span class="n">text</span><span class="p">:</span>
+            <span class="c"># On insere un nouveau listviewitem</span>
+            <span class="c"># avec le texte du LineEdit</span>
+            <span class="c"># Trouver la méthode pour ajouter un element dans le ListViewItem</span>
+            <span class="k">pass</span>
+            <span class="c"># On vide le LineEdit</span>
+            <span class="k">pass</span>
+            <span class="c"># On active le bouton de suppression car on est surs</span>
+            <span class="c"># que le listview contient au moins un element</span>
+            <span class="k">pass</span>
+
+    <span class="c"># la methode appelee lorsque le bouton delete est clique</span>
+    <span class="k">def</span> <span class="nf">_slotDeleteClicked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># On enleve l&#39;item courant du listview (takeItem)</span>
+        <span class="k">pass</span>
+        <span class="c"># On verifie si la liste est vide ( count() )</span>
+        <span class="c"># remplacer le False par le vrai test</span>
+        <span class="c"># si oui on desactive le bouton de suppression</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">False</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="k">if</span> <span class="n">__name__</span><span class="o">==</span><span class="s">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c"># creation de l&#39;application</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="c"># creation d&#39;une fenetre principale</span>
+    <span class="n">window</span> <span class="o">=</span> <span class="n">TodoForm</span><span class="p">()</span>
+    <span class="c"># changeons le titre de la fenetre window</span>
+    <span class="k">pass</span>
+    <span class="c"># affichons la fenetre</span>
+    <span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="c"># lancons la boucle evenementielle</span>
+    <span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exemple-navigateur-web">
+<h1>Exemple : navigateur web<a class="headerlink" href="#exemple-navigateur-web" title="Permalink to this headline">¶</a></h1>
+<p>La bibliothèque Qt est très complète et permet d&#8217;implémenter simplement des applications complexes. Par exemple le programme ci dessous est un navigateur web. Vous pouvez reprendre le code complet avec les fichiers <em>.ui</em> dans le répertoire <em>web-browser</em>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/env python</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span><span class="p">,</span> <span class="n">QtWebKit</span>
+
+<span class="kn">from</span> <span class="nn">ui_mainwindow</span> <span class="kn">import</span> <span class="n">Ui_MainWindow</span>
+
+
+<span class="k">class</span> <span class="nc">MainWindow</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="p">,</span> <span class="n">Ui_MainWindow</span><span class="p">):</span>
+    <span class="c"># Maintain the list of browser windows so that they do not get garbage</span>
+    <span class="c"># collected.</span>
+    <span class="n">_window_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QMainWindow</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">_window_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c"># Qt Designer (at least to v4.2.1) can&#39;t handle arbitrary widgets in a</span>
+        <span class="c"># QToolBar - even though uic can, and they are in the original .ui</span>
+        <span class="c"># file.  Therefore we manually add the problematic widgets.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lblAddress</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLabel</span><span class="p">(</span><span class="s">&quot;Address&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tbAddress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tbAddress</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionGo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">lblAddress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QLineEdit</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tbAddress</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tbAddress</span><span class="o">.</span><span class="n">insertWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionGo</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;returnPressed()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">actionGo</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;trigger()&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionBack</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;back()&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionForward</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;forward()&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;stop()&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionRefresh</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;reload()&quot;</span><span class="p">))</span>
+
+        <span class="c">#self.connect(self.actionHome, QtCore.SIGNAL(&quot;triggered()&quot;),</span>
+        <span class="c">#    self.WebBrowser, QtCore.SLOT(&quot;load(QtCore.QUrl(&quot;http://www.google.com&quot;))&quot;))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">actionHome</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;triggered()&quot;</span><span class="p">),</span>
+                     <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="p">,</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">SLOT</span><span class="p">(</span><span class="s">&quot;trigger()&quot;</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QProgressBar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">setTextVisible</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statusBar</span><span class="p">()</span><span class="o">.</span><span class="n">addPermanentWidget</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="p">))</span>
+
+    <span class="nd">@QtCore.pyqtSignature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_actionHome_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;on_actionHome_triggered&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="s">&quot;http://www.google.com&quot;</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">closeEvent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+        <span class="n">MainWindow</span><span class="o">.</span><span class="n">_window_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">e</span><span class="o">.</span><span class="n">accept</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">on_WebBrowser_TitleChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="s">&quot;Qt WebBrowser - &quot;</span> <span class="o">+</span> <span class="n">title</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_WebBrowser_ProgressChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">a</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">b</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+            <span class="k">return</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">setRange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pb</span><span class="o">.</span><span class="n">setValue</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_WebBrowser_CommandStateChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">on</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cmd</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actionForward</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">on</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">cmd</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">actionBack</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="n">on</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_WebBrowser_BeforeNavigate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_WebBrowser_NavigateComplete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">actionStop</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">False</span><span class="p">)</span>
+
+    <span class="nd">@QtCore.pyqtSignature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_actionGo_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">print</span> <span class="s">&quot;on_actionGo_triggered&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">WebBrowser</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">QtCore</span><span class="o">.</span><span class="n">QUrl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()))</span>
+
+    <span class="nd">@QtCore.pyqtSignature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_actionNewWindow_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="k">print</span> <span class="s">&quot;on_actionNewWindow_triggered&quot;</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">MainWindow</span><span class="p">()</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="o">.</span><span class="n">text</span><span class="p">()</span><span class="o">.</span><span class="n">isEmpty</span><span class="p">():</span>
+            <span class="k">return</span><span class="p">;</span>
+
+        <span class="n">window</span><span class="o">.</span><span class="n">addressEdit</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">addressEdit</span><span class="o">.</span><span class="n">text</span><span class="p">())</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">actionStop</span><span class="o">.</span><span class="n">setEnabled</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">window</span><span class="o">.</span><span class="n">on_actionGo_triggered</span><span class="p">()</span>
+
+    <span class="nd">@QtCore.pyqtSignature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_actionAbout_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">about</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s">&quot;About WebBrowser&quot;</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s">&quot;This Example has been created using the ActiveQt integration into Qt Designer.</span><span class="se">\n</span><span class="s">&quot;</span>
+                        <span class="s">&quot;It demonstrates the use of QAxWidget to embed the Internet Explorer ActiveX</span><span class="se">\n</span><span class="s">&quot;</span>
+                        <span class="s">&quot;control into a Qt application.&quot;</span><span class="p">))</span>
+
+    <span class="nd">@QtCore.pyqtSignature</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">on_actionAboutQt_triggered</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QMessageBox</span><span class="o">.</span><span class="n">aboutQt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tr</span><span class="p">(</span><span class="s">&quot;About Qt&quot;</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">MainWindow</span><span class="p">()</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">a</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercice">
+<h1>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h1>
+<p>Déterminons ensemble une interface à implémenter, qui pourra être utile par la suite.</p>
+<ul class="simple">
+<li>Dessinez à la main l&#8217;interface à réaliser</li>
+<li>Dessinez la logique liée à l&#8217;interface</li>
+<li>Réalisez l&#8217;interface sous Qt Designer</li>
+<li>Générez le code Python (avec <em>-x</em> pour tester, puis sans)</li>
+<li>Ajoutez la logique en Python</li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Qt et PyQt</a><ul>
+<li><a class="reference internal" href="#qt">Qt</a><ul>
+<li><a class="reference internal" href="#generalites">Généralités</a></li>
+<li><a class="reference internal" href="#bases">Bases</a></li>
+<li><a class="reference internal" href="#boucle-evenementielle">Boucle évènementielle</a></li>
+<li><a class="reference internal" href="#layouts-et-parente">Layouts et parenté</a></li>
+<li><a class="reference internal" href="#signals-slots">Signals / Slots</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pyqt">PyQt</a><ul>
+<li><a class="reference internal" href="#qtcore">QtCore</a></li>
+<li><a class="reference internal" href="#qtgui">QtGui</a></li>
+<li><a class="reference internal" href="#les-outils-qt">Les outils Qt</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ressources">Ressources</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#pratique-de-pyqt">Pratique de PyQt</a><ul>
+<li><a class="reference internal" href="#verification-de-l-installation">Vérification de l&#8217;installation</a></li>
+<li><a class="reference internal" href="#hello-world">Hello World</a></li>
+<li><a class="reference internal" href="#widgets">Widgets</a></li>
+<li><a class="reference internal" href="#id1">Signals / slots</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercice-1">Exercice 1</a></li>
+<li><a class="reference internal" href="#utiliser-qt-designer">Utiliser Qt Designer</a></li>
+<li><a class="reference internal" href="#exercice-2">Exercice 2</a></li>
+<li><a class="reference internal" href="#exemple-navigateur-web">Exemple : navigateur web</a></li>
+<li><a class="reference internal" href="#exercice">Exercice</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python.html"
+                        title="previous chapter">Le langage Python, bases</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pyqt.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="python.html" title="Le langage Python, bases"
+             >previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Vincent Picavet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

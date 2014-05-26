@@ -1,0 +1,155 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Créer des plugins QGIS avec les évènements &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="3e partie - Évènementiel / déboguer / dépôt de plugins" href="index.html" />
+    <link rel="next" title="Débugger les plugins" href="debug.html" />
+    <link rel="prev" title="3e partie - Évènementiel / déboguer / dépôt de plugins" href="index.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">3e partie - Évènementiel / déboguer / dépôt de plugins</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="debug.html"
+                        title="next chapter">Débugger les plugins</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/divers/event_driven_plugins.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="creer-des-plugins-qgis-avec-les-evenements">
+<h1>Créer des plugins QGIS avec les évènements<a class="headerlink" href="#creer-des-plugins-qgis-avec-les-evenements" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="concepts-d-evenements-dans-qgis">
+<h2>Concepts d&#8217;évènements dans QGIS<a class="headerlink" href="#concepts-d-evenements-dans-qgis" title="Permalink to this headline">¶</a></h2>
+<p>La conception orientée évènements dans la bibliothèque Qt utilise les notions de <em>signal</em> et <em>slot</em>. Comme mentionné dans la partie 2, quelques bonne ressources pour aller plus loin sur les signaux et les slots sont <a class="reference external" href="http://www.commandprompt.com/community/pyqt/c1267">ce tutoriel PyQt</a> et la <a class="reference external" href="http://doc.qt.nokia.com/4.7/signalsandslots.html">documentation officielle de Qt</a>. Nous allons présenter ici les points principaux.</p>
+<div class="section" id="signal">
+<h3>SIGNAL<a class="headerlink" href="#signal" title="Permalink to this headline">¶</a></h3>
+<p>Les objets Qt (tous ce qui hérite de QObject) a la possibilité d&#8217;émettre des signaux. L&#8217;objet émet un signal quand il veut diffuser un évènement d&#8217;importance. Par exemple, les concepteurs de la classe <tt class="docutils literal"><span class="pre">QgsMapCanvas</span></tt> considèrent qu&#8217;il est important pour un objet de type canvas de carte de diffuser un QgsPoint quand la souris le survole. Le signal <a class="reference external" href="http://doc.qgis.org/head/classQgsMapCanvas.html#bf90fbd211ea419ded7c934fd289f0ab">xyCoordinates</a> définit la diffusion. La signature de la fonction de signal <tt class="docutils literal"><span class="pre">xyCoordintes</span></tt> est la suivante:</p>
+<div class="highlight-python"><pre>void QgsMapCanvas::xyCoordinates    (   const QgsPoint &amp;    p    )</pre>
+</div>
+<p>On utilise cette signature pour définir comment d&#8217;autres objets vont se connecter et interagir avec cet objet (comme nous verrons dans la prochaine section).</p>
+<p>Dans PyQt on peut émettre un signal existant en utilisant une référence à l&#8217;objet qui émet normalement ce signal. Par exemple ci dessous on a une référence à l&#8217;objet mapCanvas, et on peut émettre un signal <tt class="docutils literal"><span class="pre">xyCoordinates</span></tt> ::</p>
+<blockquote>
+self.iface.mapCanvas().emit(SIGNAL(&#8220;xyCoordinates(const QgsPoint &amp;)&#8221;), QgsPoint(-122,45))</blockquote>
+</div>
+<div class="section" id="slot">
+<h3>SLOT<a class="headerlink" href="#slot" title="Permalink to this headline">¶</a></h3>
+<p>Les <em>slots</em> sont les récepteurs de l&#8217;information des <em>signal</em>. On connecte les slots aux signaux en utilisant la fonction <a class="reference external" href="http://doc.qt.nokia.com/4.7/qobject.html#connect">QObject.connect() function</a> . Les arguments de cette fonction sont:</p>
+<div class="highlight-python"><pre>- Sender -- L'object Qobject responsable de l'émission du signal
+- Signal -- La signature de la fonction de signal passé comme une chaine à la macro SIGNAL()
+- Receiver -- La fonction qui va attraper le signal et effectuer une action avec
+- Type -- Le type de connexion (peut être ignoré dans nos cas d'utilisation)</pre>
+</div>
+<p>Si j&#8217;avais une fonction nommée <tt class="docutils literal"><span class="pre">listen_xyCoordinates</span></tt> et que je veux qu&#8217;elle reçoive de l&#8217;information à partir du signal <tt class="docutils literal"><span class="pre">xyCoordinates</span></tt> quand il se déclenche, je peux établir une connexion ainsi:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># notice that we are only passing the first three arguments here (sender, signal receiver)</span>
+<span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">(),</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;xyCoordinates(const QgsPoint &amp;)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_xyCoordinates</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La fonction slot qui se connecte à un signal doit accepter les mêmes arguments que la signature de la fonction du signal. Dans le cas du signal <tt class="docutils literal"><span class="pre">xyCoordinates</span></tt> cela signifie que notre fonction spécifique doit accepter un QgsPoint. Voici cette fonction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">listen_xyCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">point</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">outputTextEdit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;xyCoordinates - </span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="k">if</span> <span class="n">point</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="k">if</span> <span class="n">point</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="creer-des-signaux-particuliers">
+<h3>Créer des signaux particuliers<a class="headerlink" href="#creer-des-signaux-particuliers" title="Permalink to this headline">¶</a></h3>
+<p>Même si cela apporte un peu de confusion, les développeurs ont la possibilité de créer leurs propres signaux. Ci dessous se trouve un exemple de comment créer un signal spécifique et y connecter un slot. L&#8217;exemple est tiré du plugin <tt class="docutils literal"><span class="pre">foss4g2011_example3_solution</span></tt> :</p>
+<p> <strong>1.</strong> Assurez vous que votre classe de plugin dérive de QObject. Elle doit aussi appeler le constructeur de QObject dans la méthode <tt class="docutils literal"><span class="pre">__init__</span></tt> comme ci dessous:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">foss4g2011_example3_solution</span><span class="p">(</span><span class="n">QObject</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+        <span class="n">QObject</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c"># Save reference to the QGIS interface</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+</pre></div>
+</div>
+<p> <strong>2.</strong> Créez un slot qui va recevoir ce signal. Notez qu&#8217;il accepte un paramètre <tt class="docutils literal"><span class="pre">message</span></tt> qui n&#8217;était pas défini dans le signal (intéressant):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">listen_feedbackStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+       <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">outputTextEdit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;feedbackStatus - </span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">message</span> <span class="k">if</span> <span class="n">message</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> Connectez votre slot au signal quelque part dans le code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;feedbackStatus(PyQt_PyObject)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_feedbackStatus</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> Désormais n&#8217;importe où dans votre plugin (il dérive de QObject) vous pouvez émettre ce signal si vous pensez qu&#8217;il est important et passer un message à votre slot. Le plugin <tt class="docutils literal"><span class="pre">foss4g2011_example3_solution</span></tt> effectue ceci lors d&#8217;un clic sur un bouton:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">btn_emitFeedbackStatus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">checked</span><span class="p">):</span>
+      <span class="bp">self</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;feedbackStatus(PyQt_PyObject)&quot;</span><span class="p">),</span> <span class="s">&quot;Bruce Lee is my hero!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exemple-3">
+<h3>Exemple #3<a class="headerlink" href="#exemple-3" title="Permalink to this headline">¶</a></h3>
+<p>Dans l&#8217;exercice suivant vous pouvez installer l&#8217;exemple #3 de plugin basique comme base. Ce plugin est prévu pour être un test de signal/slot. Il fournit une zone de texte simple pour que les fonctions y écrivent, et une boîte à outil à droite du plugin vous permettra d&#8217;écouter un signal ou d&#8217;envoyer un signal.</p>
+<p>Nous avons fourni quelques exemples de widgets GUI (case à cocher et boutons) pour vous permettre de vous connecter dynamiquement à quelques signaux ou pour générer des signaux de test. Le but sera pour vous de regarder le code et comprendre comment cela est fait (à la fois en regardant le GUI dans le designer et les connexions signal/slot). Une fois que vous comprenez comment cela est fait, nous pouvons tenter de nous connecter à d&#8217;autres signaux. Dans l&#8217;exemple #3 basique, nous avons fourni quelques signaux d&#8217;exemple sur lesquels se connecter dans le code commenté. Nous avons aussi ajouté des éléments de GUI dans le designer qui sont désactivés.</p>
+<p>Ouvrez Qt Desiger et trouver comment &#8220;activer&#8221; la case à cocher pour le signal que vous voulez écouter (Astuce : il y en a deux qui sont désactivés). Une fois que vous avez les éléments du GUI activés, sauvez le fichier .ui et lancez le make dans le répertoire des plugins. Cela va recompiler le fichier .ui en un fichier .py. Ouvrez QGIS et vérifiez que le plugin a maintenant ces éléments de GUI activés. Maintenant, revenez dans le code principal du plugin et trouvez le code commenté pour les signaux que vous avez activé dans l&#8217;interface... Et essayez de les activer en décommentant le code.</p>
+<p>Pour ceux qui cherchent de l&#8217;aventure, trouvez un signal dans la documentation QGIS que vous voulez écouter, ajouter un élément d&#8217;interface au plugin (une case à cocher ou un élément similaire à ceux déjà implémentés), et finalement ajoutez la connexion du signal avec une fonction spécifique qui écrit dans la zone de texte.</p>
+</div>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+######################################
+Installation des logiciels sous Ubuntu
+######################################
+
+********************
+Installation de QGIS
+********************
+
+On ajoute le dépôt *ubuntugis* et on installe QGIS::
+
+  sudo apt-get install python-software-properties
+  sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+  sudo apt-get update
+  sudo apt-get install qgis
+
+Le support de Python est automatiquement ajouté.
+
+On installe également la documentation de l'API::
+
+  sudo apt-get install qgis-api-doc
+
+******************************
+Installation des outils Python
+******************************
+
+On installe iPython, l'interpreteur Python interactif évolué::
+
+  sudo apt-get install ipython python-matplotlib
+
+********************
+Installation de git
+********************
+
+On installe git, l'outil de gestion de versionnement de code source distribué::
+
+  sudo apt-get install git 
+
+***********************
+Installation de Qt
+***********************
+
+On installe l'environnement de développement Qt pour Python::
+
+  sudo apt-get install python-qt4 qt4-doc qt4-doc-html qt4-demos qt4-dev-tools qt4-designer
+
+******************************
+Configuration des plugins QGIS
+******************************
+
+Lancer QGIS.
+
+Aller dans le menu **Extensions->Installeur d'extensions Python**. Ajouter les dépôts tiers et activer les plugins expérimentaux.
+
+* Rechercher et installer le plugin "Plugin Builder".
+
+* Rechercher et installer le plugin "Plugin reloader".
+

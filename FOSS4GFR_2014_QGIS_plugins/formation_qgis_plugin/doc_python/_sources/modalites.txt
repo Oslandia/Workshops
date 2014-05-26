@@ -1,0 +1,24 @@
+=========================
+Modalités de la formation
+=========================
+
+Horaires
+========
+
+9h-12h00 et 13h00-17h
+
+Environnement de travail
+========================
+
+La formation s'effectue sur une machine virtuelle *Virtualbox*. Il faut donc installer auparavant Virtualbox sur les machines, et importer la machine virtuelle fournie.
+
+https://www.virtualbox.org/
+
+La machine virtuelle est une distribution Ubuntu (11.04), sur laquelle nous installerons ensuite l'environnement de développement nécessaire pour la formation.
+
+Ressources
+==========
+
+Les fichiers nécessaires pour la formation sont dans l'archive fournie.
+
+Le répertoire *doc* contient cette documentation. Les autres répertoires sont les différentes parties du programme organisées par thèmes.

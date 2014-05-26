@@ -1,0 +1,88 @@
+--- introduction/pyqt.rst
++++ introduction/pyqt.rst
+@@ -108,18 +108,11 @@
+ Regardons maintenant quelques commandes spécifiques de PyQGIS (nous détaillerons ensuite plus amplement le sujet). Ce qui est intéressant ici est que nous verrons que les objets PyQt fonctionnent en arrière plan (après tout, PyQGIS est basé sur les bindings PyQT). Ce code utilise la console Python pour accéder à la couche sélectionnée de la liste de couches::
+ 
+     >>> layer = qgis.utils.iface.activeLayer()
+-    >>> layer.getLayerID()
+-    PyQt4.QtCore.QString(u'TM_WORLD_BORDERS_0_3_90091320110704184935426')
+     >>> layer.featureCount()
+     144L
+-    >>> layer.srs()
+-    <qgis.core.QgsCoordinateReferenceSystem object at 0x3d10b78>
+     >>> layer.source()
+     PyQt4.QtCore.QString(u'/home/qgis/DATA/SHAPES/world_borders/TM_WORLD_BORDERS-0.3_900913.shp')
+-    >>> layer.setTransparency(50)
+-    >>> layer.wkbType()
+-    3
+-    >>> # 3 == MultiPolygon type
++    >>> layer.renderer().setOpacity(.5)
+     ... 
+     >>> layer.name()
+     PyQt4.QtCore.QString(u'TM_WORLD_BORDERS-0.3_900913')
+--- introduction/pyqt.rst
++++ introduction/pyqt.rst
+@@ -108,18 +108,11 @@
+ Regardons maintenant quelques commandes spécifiques de PyQGIS (nous détaillerons ensuite plus amplement le sujet). Ce qui est intéressant ici est que nous verrons que les objets PyQt fonctionnent en arrière plan (après tout, PyQGIS est basé sur les bindings PyQT). Ce code utilise la console Python pour accéder à la couche sélectionnée de la liste de couches::
+ 
+     >>> layer = qgis.utils.iface.activeLayer()
+-    >>> layer.getLayerID()
+-    PyQt4.QtCore.QString(u'TM_WORLD_BORDERS_0_3_90091320110704184935426')
+     >>> layer.featureCount()
+     144L
+-    >>> layer.srs()
+-    <qgis.core.QgsCoordinateReferenceSystem object at 0x3d10b78>
+     >>> layer.source()
+     PyQt4.QtCore.QString(u'/home/qgis/DATA/SHAPES/world_borders/TM_WORLD_BORDERS-0.3_900913.shp')
+-    >>> layer.setTransparency(50)
+-    >>> layer.wkbType()
+-    3
+-    >>> # 3 == MultiPolygon type
++    >>> layer.renderer().setOpacity(.5)
+     ... 
+     >>> layer.name()
+     PyQt4.QtCore.QString(u'TM_WORLD_BORDERS-0.3_900913')
+--- introduction/pyqt.rst
++++ introduction/pyqt.rst
+@@ -108,18 +108,11 @@
+ Regardons maintenant quelques commandes spécifiques de PyQGIS (nous détaillerons ensuite plus amplement le sujet). Ce qui est intéressant ici est que nous verrons que les objets PyQt fonctionnent en arrière plan (après tout, PyQGIS est basé sur les bindings PyQT). Ce code utilise la console Python pour accéder à la couche sélectionnée de la liste de couches::
+ 
+     >>> layer = qgis.utils.iface.activeLayer()
+-    >>> layer.getLayerID()
+-    PyQt4.QtCore.QString(u'TM_WORLD_BORDERS_0_3_90091320110704184935426')
+     >>> layer.featureCount()
+     144L
+-    >>> layer.srs()
+-    <qgis.core.QgsCoordinateReferenceSystem object at 0x3d10b78>
+     >>> layer.source()
+     PyQt4.QtCore.QString(u'/home/qgis/DATA/SHAPES/world_borders/TM_WORLD_BORDERS-0.3_900913.shp')
+-    >>> layer.setTransparency(50)
+-    >>> layer.wkbType()
+-    3
+-    >>> # 3 == MultiPolygon type
++    >>> layer.renderer().setOpacity(.5)
+     ... 
+     >>> layer.name()
+     PyQt4.QtCore.QString(u'TM_WORLD_BORDERS-0.3_900913')
+--- introduction/pyqt.rst
++++ introduction/pyqt.rst
+@@ -108,18 +108,11 @@
+ Regardons maintenant quelques commandes spécifiques de PyQGIS (nous détaillerons ensuite plus amplement le sujet). Ce qui est intéressant ici est que nous verrons que les objets PyQt fonctionnent en arrière plan (après tout, PyQGIS est basé sur les bindings PyQT). Ce code utilise la console Python pour accéder à la couche sélectionnée de la liste de couches::
+ 
+     >>> layer = qgis.utils.iface.activeLayer()
+-    >>> layer.getLayerID()
+-    PyQt4.QtCore.QString(u'TM_WORLD_BORDERS_0_3_90091320110704184935426')
+     >>> layer.featureCount()
+     144L
+-    >>> layer.srs()
+-    <qgis.core.QgsCoordinateReferenceSystem object at 0x3d10b78>
+     >>> layer.source()
+     PyQt4.QtCore.QString(u'/home/qgis/DATA/SHAPES/world_borders/TM_WORLD_BORDERS-0.3_900913.shp')
+-    >>> layer.setTransparency(50)
+-    >>> layer.wkbType()
+-    3
+-    >>> # 3 == MultiPolygon type
++    >>> layer.renderer().setOpacity(.5)
+     ... 
+     >>> layer.name()
+     PyQt4.QtCore.QString(u'TM_WORLD_BORDERS-0.3_900913')

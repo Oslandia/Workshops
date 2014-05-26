@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Débugger les plugins &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="3e partie - Évènementiel / déboguer / dépôt de plugins" href="index.html" />
+    <link rel="next" title="Dépôt de plugins" href="repositories.html" />
+    <link rel="prev" title="Créer des plugins QGIS avec les évènements" href="event_driven_plugins.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="event_driven_plugins.html"
+                        title="previous chapter">Créer des plugins QGIS avec les évènements</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="repositories.html"
+                        title="next chapter">Dépôt de plugins</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/divers/debug.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="debugger-les-plugins">
+<h1>Débugger les plugins<a class="headerlink" href="#debugger-les-plugins" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="la-console-python-dans-qgis">
+<h2>La console Python dans QGIS<a class="headerlink" href="#la-console-python-dans-qgis" title="Permalink to this headline">¶</a></h2>
+<p>Le débogage par la console Python est toujours une méthode possible.</p>
+</div>
+<div class="section" id="utiliser-le-hook-de-debug-de-pyqt">
+<h2>Utiliser le hook de debug de PyQT<a class="headerlink" href="#utiliser-le-hook-de-debug-de-pyqt" title="Permalink to this headline">¶</a></h2>
+<p>Quand on essaie de débugger des plugins Python, une des meilleures méthodes est d&#8217;utiliser<a class="reference external" href="http://docs.python.org/library/pdb.html">pdb</a> . Pour utiliser<a class="reference external" href="http://docs.python.org/library/pdb.html">pdb</a> , vous aurez besoin d&#8217;ajouter les instructions suivantes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4.QtCore</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">pdb</span>
+</pre></div>
+</div>
+<p>Choisissez ensuite un endroit dans votre code où vous voulez passer dans le débugger (vous pouvez toujours ajouter d&#8217;autres points d&#8217;arrêt dans pdb). Ajoutez ce code là où vous voulez commencer le débug:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pyqtRemoveInputHook</span><span class="p">()</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Lancez alors QGIS à partir de la ligne de commande et quand l&#8217;appel à set_trace est exécuté, vous vous retrouverez avec un prompt PDB sur la ligne de commande. À partir de là vous aurez un environnement de debug ressemblant à &#8220;GDB&#8221; où vous pourrez voir et assigner des variables, ainsi que naviguer dans le code:</p>
+<div class="highlight-python"><pre>(Pdb) print self
+&lt;DockableMirrorMap.mirrorMap.MirrorMap object at 0xabfa5ec&gt;
+(Pdb) print self.iface.mainWindow().windowTitle()
+Quantum GIS 1.7.0-Wroclaw
+(Pdb) aLayer = self.iface.activeLayer()
+(Pdb) aLayer
+&lt;qgis.core.QgsVectorLayer object at 0xabfa6ac&gt;
+(Pdb) aLayer.name()
+PyQt4.QtCore.QString(u'50m_admin_0_boundary_breakaway_disputed_areas')
+(Pdb)</pre>
+</div>
+</div>
+<div class="section" id="astuces-et-commandes-pdb">
+<h2>Astuces et commandes Pdb<a class="headerlink" href="#astuces-et-commandes-pdb" title="Permalink to this headline">¶</a></h2>
+<p>Pdb (comme les autres outils de debug) a des options en ligne de commande qui améliorent le confort de debug. Nous allons voir certaines de ces commandes ci-dessous. Pour une liste complète voir la <a class="reference external" href="http://docs.python.org/library/pdb.html">documentation officielle</a> .</p>
+<p> <strong>1.</strong> Une fois que <tt class="docutils literal"><span class="pre">set_trace()</span></tt> a été exécuté et nous envoie dans une session Pdb, on peut voir où on en est dans l&#8217;exécution du code avec la commande <tt class="docutils literal"><span class="pre">list</span></tt> .:</p>
+<div class="highlight-python"><pre>(Pdb) list
+ 61
+ 62         def handleXY(self, point):
+ 63             self.dlg.clearTextBrowser()
+ 64             pyqtRemoveInputHook()
+ 65             pdb.set_trace()
+ 66  -&gt;         self.cLayer = self.canvas.currentLayer()
+ 67             if self.cLayer:
+ 68                 if self.cLayer.type() == 1:
+ 69                     success, data = self.cLayer.identify(point)
+ 70                     final = ""
+ 71                     for key,value in data.items():</pre>
+</div>
+<p>Notez la flèche <tt class="docutils literal"><span class="pre">-&gt;</span></tt> . Cette commande sans argument renvoie 11 lignes, avec la ligne en cours d&#8217;exécution au milieu.</p>
+<p> <strong>2.</strong> La commande <tt class="docutils literal"><span class="pre">list</span></tt> est assez dynamique, ce qui signifie qu&#8217;on peut lister une partie du code en donnant les numéros de ligne. Quelques variantes de la commande:</p>
+<div class="highlight-python"><pre>(Pdb) list 60
+ 55             #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+ 56
+ 57         def unload(self):
+ 58             # Remove the plugin menu item and icon
+ 59             self.iface.removePluginMenu("&amp;Example #2 Solution for FOSS4G 2011 Workshop",self.action)
+ 60             self.iface.removeToolBarIcon(self.action)
+ 61
+ 62         def handleXY(self, point):
+ 63             self.dlg.clearTextBrowser()
+ 64             pyqtRemoveInputHook()
+ 65             pdb.set_trace()
+
+(Pdb) list 60, 75
+ 60             self.iface.removeToolBarIcon(self.action)
+ 61
+ 62         def handleXY(self, point):
+ 63             self.dlg.clearTextBrowser()
+ 64             pyqtRemoveInputHook()
+ 65             pdb.set_trace()
+ 66  -&gt;         self.cLayer = self.canvas.currentLayer()
+ 67             if self.cLayer:
+ 68                 if self.cLayer.type() == 1:
+ 69                     success, data = self.cLayer.identify(point)
+ 70                     final = ""
+ 71                     for key,value in data.items():
+ 72                         final += str(key) + " &gt; " + str(value) + "\n"
+ 73                     self.dlg.setTextBrowser(final)
+ 74
+ 75         # run method that performs all the real work</pre>
+</div>
+<p>Un seul argument numérique affiche la ligne que demandons avec 5 lignes avant, et après. Deux argumensts affichent le code entre ces deux numéros de lignes.</p>
+<p> <strong>3.</strong> On peut aussi ajouter des points d&#8217;arrêt quand on est dans pdb. On peut utiliser la commande <tt class="docutils literal"><span class="pre">break</span></tt> ou juste le raccourci <tt class="docutils literal"><span class="pre">b</span></tt> avec un argument numérique pour désigner sur quelle ligne on veut placer un point d&#8217;arrêt:</p>
+<div class="highlight-python"><pre>(Pdb) b 64
+Breakpoint 1 at /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py:64</pre>
+</div>
+<p> <strong>4.</strong> Si on veut voir combien de points d&#8217;arrêt sont définis on peut juste utiliser la commande <tt class="docutils literal"><span class="pre">break</span></tt> sans argument. Notez que la valeur &#8216;Num&#8217; est l&#8217;identifiant d&#8217;un point d&#8217;arrêt. On peut utiliser cette valeur si on veut passer ce point d&#8217;arrêt comme argument à une autre commande:</p>
+<div class="highlight-python"><pre>(Pdb) b
+Num Type         Disp Enb   Where
+1   breakpoint   keep yes   at /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py:64</pre>
+</div>
+<p> <strong>5.</strong> Maintenant que j&#8217;ai défini un nouveau point d&#8217;arrêt, je veux continuer à exécuter mon code jusqu&#8217;à y parvenir. Je peux continuer avec la raccourci <tt class="docutils literal"><span class="pre">c</span></tt> ou la commande <tt class="docutils literal"><span class="pre">continue</span></tt> .:</p>
+<div class="highlight-python"><pre>(Pdb) c
+&gt; /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py(64)handleXY()
+-&gt; self.dlg.clearTextBrowser()
+(Pdb) list
+ 59             self.iface.removePluginMenu("&amp;a tool that displays raster values on-the-fly",self.action)
+ 60             self.iface.removeToolBarIcon(self.action)
+ 61
+ 62         def handleXY(self, point):
+ 63             #QMessageBox.information( self.iface.mainWindow(), "Info", str(point.x()) + "," + str(point.y()) )
+ 64 B-&gt;         self.dlg.clearTextBrowser()
+ 65             self.cLayer = self.canvas.currentLayer()
+ 66             if self.cLayer:
+ 67                 if self.cLayer.type() == 1:
+ 68                     success, data = self.cLayer.identify(point)
+ 69                     final = ""</pre>
+</div>
+<p>Remarquez que lorsque je liste le code la où l&#8217;exécution s&#8217;est arrêtée, un <tt class="docutils literal"><span class="pre">B-&gt;</span></tt> montre qu&#8217;il s&#8217;agit d&#8217;un point d&#8217;arrêt.</p>
+<p> <strong>6.</strong> On peut avancer dans le code ligne par ligne avec deux commandes : <tt class="docutils literal"><span class="pre">step</span></tt> et <tt class="docutils literal"><span class="pre">next</span></tt> .  <tt class="docutils literal"><span class="pre">step</span></tt> descend dans toutes les fonctions (mêmes les fonctions Python standard) et <tt class="docutils literal"><span class="pre">next</span></tt> les exécute et avance à la ligne suivante. Soyez surs de comprendre le résultat de la commande. Si l&#8217;exécution était arrêtée sur le point d&#8217;arrêt ci-dessus, <tt class="docutils literal"><span class="pre">next</span></tt> emmène à la ligne 65:</p>
+<div class="highlight-python"><pre>(Pdb) n
+&gt; /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py(65)handleXY()
+-&gt; self.cLayer = self.canvas.currentLayer()
+(Pdb) list
+ 60             self.iface.removeToolBarIcon(self.action)
+ 61
+ 62         def handleXY(self, point):
+ 63             #QMessageBox.information( self.iface.mainWindow(), "Info", str(point.x()) + "," + str(point.y()) )
+ 64 B           self.dlg.clearTextBrowser()
+ 65  -&gt;         self.cLayer = self.canvas.currentLayer()
+ 66             if self.cLayer:
+ 67                 if self.cLayer.type() == 1:
+ 68                     success, data = self.cLayer.identify(point)
+ 69                     final = ""
+ 70                     for key,value in data.items():</pre>
+</div>
+<p>Cela fonctionne en effet.</p>
+<p> <strong>7.</strong> Enfin, on peut retirer un point d&#8217;arrêt avec la commande <tt class="docutils literal"><span class="pre">clear</span></tt> ou le raccourci <tt class="docutils literal"><span class="pre">cl</span></tt> . On donne un numéro de point d&#8217;arrêt comme argument:</p>
+<div class="highlight-python"><pre>(Pdb) cl 1
+Deleted breakpoint 1</pre>
+</div>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

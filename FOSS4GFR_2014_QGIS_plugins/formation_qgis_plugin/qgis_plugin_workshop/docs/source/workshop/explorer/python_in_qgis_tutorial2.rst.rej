@@ -1,0 +1,273 @@
+--- workshop/explorer/python_in_qgis_tutorial2.rst
++++ workshop/explorer/python_in_qgis_tutorial2.rst
+@@ -210,9 +210,6 @@
+ 
+ Il y a plusieurs façons d'accéder aux features d'une couche et à la géométrie d'une feature unique. Nous n'allons\ **PAS** \les détailler toutes.
+ 
+-Methode 1
+-**********
+-
+ Une des façons d'accéder aux features d'une couche se fait au moyen de la classe\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \. Vous pouvez obtenir une référence à une source de données directement à partir de la classe\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \.
+ 
+ \  **1.** \Premièrement, supprimez toutes les couches de QGIS
+@@ -236,26 +233,12 @@
+ 
+ Si il s'agissait d'une couche vecteur de postgresql alors le \ ``provider.name()`` \ "postgres" serait retourné.
+ 
+-\  **5.** \Un des moyen d'accéder aux features d'une couche vecteur est à travers de la fonction\  `select() <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \du data provider::
+-
+-    >>> provider.select()
+-
+-La fonction\  ``select()`` \lit les attributs de la couche et la géométrie afin que l'on puisse y accéder. Si vous regardez\  `select() API <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \vous remarquerez qu'on peut spécifier plus finement ce que l'on veut récupérer de la couche en incluant seulement certains attributs.
+-
+-Lorsqu'on exécute\  ``select()`` \sans arguments on utilise les options par défaut. Les options par "défaut" signifie dans ce cas précis::
+-
+-    - Attributes -- Ne récupérer aucun attribut
+-    - Rectangle Filter -- Ne pas utiliser de filtre spatial rectangulaire (bounding box)
+-    - Geometry -- Récupérer toutes les géométries des features
+-    - Intersection Test -- Ne pas faire de test d'intersection précis
+-
+-En résumé, lorsqu'on exécute\  ``select()`` \on récupère toutes les géométries des features mais aucun attribut.
+-
+-\  **6.** \Maintenant récupérons l'identifiant d'une feature et sa géométrie::
++\  **5.** \Maintenant récupérons un itérateur sur une feature et sa géométrie::
+ 
+     >>> feat = QgsFeature()
+-    >>> # Ci dessus on a une QgsFeature vide jusqu'a ce qu'on la passe au provider
+-    >>> provider.nextFeature(feat)
++    >>> # Ci dessus on a une QgsFeature vide
++    >>> it=cLayer.getFeatures()
++    >>> it.nextFeature(feat)
+     True
+     >>> feat.id()
+     0
+@@ -269,7 +252,7 @@
+ 
+ Finalement, on a utilisé la référence à la couche courante pour sélectionner cette feature dans QGIS.
+ 
+-\  **7.** \Ouvrons la table des attributs de la couche et cliquons sur l'icone 'zoomer sur l'entité selectionnée' en bas à gauche.
++\  **6.** \Ouvrons la table des attributs de la couche et cliquons sur l'icone 'zoomer sur l'entité selectionnée' en bas à gauche.
+ 
+ .. image:: ../_static/zoom_to_selected_feature.png
+     :scale: 100%
+@@ -281,24 +264,7 @@
+     :scale: 43%
+     :align: center
+ 
+-Methode 2
+-**********
+-
+-Bien que nous ne l'ayons pas utilisé ci dessus, nous allons utiliser souvent\  ``QgsVectorDataProvider`` \avec une instruction\  ``while`` \ pour boucler sur toutes les features d'une couche. Dans ces cas le traitement à effectuer concernera probablement toutes les features. Cependant il y a d'autres traitements pour lesquels vous avez déjà un identifiant de feature. Dans ces cas ci, vous voudrez récupérer une unique feature avec ses attributs et sa géométrie en utilisant quelque chose de similaire à la fonction\  ``select()`` \. Voici comment faire.
+-
+-La fonction\  `featureAtId() function <http://doc.qgis.org/head/classQgsVectorDataProvider.html#583a432e2e1046392abf79bf1e58f404>`_ \ de la classe QgsVectorDataProvider ressemble à la fonction select avec des arguments différents::
+-
+-    ## Arguments
+-    - featureID -- L'identifiant de la feature que vous souhaitez récupérer
+-    - feature -- Une QgsFeature vide que vous passez à la fonction pour l'initialiser
+-    - fetchGeometry -- une valeur booléenne qui spécifie si vous voulez la géométrie ou pas (True par défaut)
+-    - attributeList -- Une liste contenant les indexes des champs attributaires à copier (liste vide par défaut -- pas d'attributs)
+-
+-\  **1.** \Si nous ne voulons pas les attributs de la feature, alors on peut ignorer les deux derniers paramètres. Lancez cette commande pour obtenir la feature Aruba de nouveau::
+-
+-    >>> feat = QgsFeature()
+-    >>> provider.featureAtId(0, feat)
+-    True
++Bien que nous ne l'ayons pas utilisé ci dessus, nous allons utiliser souvent\  ``QgsVectorDataProvider`` \avec une instruction\  ``while`` \ pour boucler sur toutes les features d'une couche. Dans ces cas le traitement à effectuer concernera probablement toutes les features. 
+ 
+ 
+ Types de Geometrie
+@@ -381,7 +347,6 @@
+ 
+ \  **1.** \Obtenons le data provider pour ce shapefile::
+ 
+-    >>> provider = aLayer.dataProvider()
+     >>> aLayer = qgis.utils.iface.activeLayer()
+     >>> provider = aLayer.dataProvider()
+     >>> aLayer.name()
+@@ -389,130 +354,76 @@
+     >>> provider.name()
+     PyQt4.QtCore.QString(u'ogr')
+ 
+-\  **2.** \Récupérons un dictionnaire Python des champs attributaires::
++\  **2.** \Récupérons une liste des champs attributaires::
+ 
+     >>> columns = provider.fields()
+     >>> type(columns)
+-    <type 'dict'>
++    <class 'qgis.core.QgsFields'>
+ 
+-\  **3.** \Souvenez vous que le type de données dictionnaire de Python est un ensemble de clés et de valeurs. La fonction\  ``provider.fields()`` \ retourne l'indice positionnel (à base 0) des objets colonne de gauche à droite. Cela signifie que la colonne (le champs attributaire) le plus à gauche commence à 0. Chaque indice entier pointe vers un objet\  `QgsField object <http://doc.qgis.org/head/classQgsField.html>`_ \Par exemple::
++\  **3.** \La fonction\  ``provider.fields()`` \ retourne l'indice positionnel (à base 0) des objets colonne de gauche à droite. Cela signifie que la colonne (le champs attributaire) le plus à gauche commence à 0. Chaque indice entier pointe vers un objet\  `QgsField object <http://doc.qgis.org/head/classQgsField.html>`_ \Par exemple::
+ 
+     >>> columns[0]
+     <qgis.core.QgsField object at 0xd8df66c>
+ 
+ Le résultat ci dessous ne nous aide pas beaucoup pour le moment. Pour avoir des informations utiles sur les colonnes il faut accéder aux attributs et aux fonctions de l'objet QgsField lui même (nous ferons cela en deux étapes).
+ 
+-\  **4.** \Notez que \ **TOUTES** \les clés ou les valeurs d'un dictionnaire peuvent être obtenus sous forme de liste grâce à une de ces fonctions::
+-
+-    >>> columns.keys()
+-    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+-    >>>
+-    >>> columns.values()
+-
+-
+-\  **5.** \Pour itérer dans les clés et les valeurs en une seule fois on peut faire ainsi::
+-
+-    >>> for key,value in columns.items(): print str(key) + " = " + str(value)
+-    ... 
+-    0 = <qgis.core.QgsField object at 0xd8df66c>
+-    1 = <qgis.core.QgsField object at 0xd8df6ac>
+-    2 = <qgis.core.QgsField object at 0xd8df62c>
+-    3 = <qgis.core.QgsField object at 0xd8df5ec>
+-    4 = <qgis.core.QgsField object at 0xd8df5ac>
+-    5 = <qgis.core.QgsField object at 0xd8df56c>
+-    6 = <qgis.core.QgsField object at 0xd8df52c>
+-    7 = <qgis.core.QgsField object at 0xd8df4ec>
+-    8 = <qgis.core.QgsField object at 0xd8df4ac>
+-    
+-    # SORTIE COUPÉE
+-
+-\  **6.** \Maintenant récupérons des sorties intéressantes à partir de l'objet QgsField::
++\  **4.** \Maintenant récupérons des sorties intéressantes à partir de l'objet QgsField::
+  
+-    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) 
++    >>> for i in range(columns.size()): print str(i) + " = " + str(columns[i].name())
+     ... 
+-    0 = ScaleRank
+-    1 = FeatureCla
+-    2 = SOVEREIGNT
+-    3 = SOVISO
+-    4 = SOV_A3
+-    5 = LEVEL
+-    6 = TYPE
+-    7 = NAME
+-    8 = SORTNAME
+-    9 = ADM0_A3
+-    10 = NAME_SM
+-    11 = NAME_LNG
+-    12 = TERR_
+-    13 = PARENTHETI
+-    14 = NAME_ALT
+-    15 = LOCAL_LNG
++    0 = scalerank
++    1 = featurecla
++    2 = labelrank
++    3 = sovereignt
++    4 = sov_a3
++    5 = adm0_dif
++    6 = level
++    7 = type
++    8 = admin
++    9 = adm0_a3
++    10 = geou_dif
+ 
+     # SORTIE COUPEE
+ 
+-\  **7.** \On peut ajouter un autre attribut QgsField à l'itération ci dessus::
++\  **5.** \On peut ajouter un autre attribut QgsField à l'itération ci dessus::
+ 
+-    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.typeName()) + " | " + str(value.length())
++    >>> for i,value in zip(range(columns.size()),columns): print str(i) + " = " + str(value.name()) + " | " + str(value.typeName()) + " | " + str(value.length())
++    0 = scalerank | Integer | 4
++    1 = featurecla | String | 30
++    2 = labelrank | Real | 16
++    3 = sovereignt | String | 254
++    4 = sov_a3 | String | 254
++    5 = adm0_dif | Real | 16
++    6 = level | Real | 16
+     ... 
+-    0 = ScaleRank | Integer | 4
+-    1 = FeatureCla | String | 30
+-    2 = SOVEREIGNT | String | 32
+-    3 = SOVISO | String | 3
+-    4 = SOV_A3 | String | 3
+-    5 = LEVEL | Real | 4
+-    6 = TYPE | String | 13
+-    7 = NAME | String | 36
+-    8 = SORTNAME | String | 36
+ 
+ Le point important est que l'objet QgsField nous donne les noms et types de données des colonnes attributaires mais \ **PAS** \les valeurs individuelles des attributs des features. Celles ci devront être accédées à travers des features elles-mêmes.
+ 
+-\  **8.** \Nous avons déjà vu comment récupérer des features à l'aide de deux fonctions:
++\  **6.** \Nous avons déjà vu comment récupérer des features à l'aide d'un itérateur. L'exemple ci-dessous montre comment récupérer des features et ajoute également les étapes nécessaires pour ne sélectionner que certains attributs en utilisant \  ``QgsFeatureRequest`` \. Des commentaires sur chaque étape sont donnés dans le code suivant::
+ 
+-    \1) La fonction \ ``select()`` \ de QgsVectorDataProvider
++    >>> # On crée une requète à partir d'un rectangle de bounding box que nous utiliserons comme filtre pour ne récupérer que les features qui sont en intersection
++    >>> featureRequest = QgsFeatureRequest(QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34)))
++    >>> # On modifie la requète qui ne va récupérer que les indices des colonnes que nous souhaitons (ici 'NAME')
++    >>> featureRequest.setSubsetOfAttributes([17])) 
+ 
+-    \2) La fonction \ ``featureAtId()`` \ de QgsVectorDataProvider
++    >>> # Récupérer la référence de la couche
++    >>> cLayer = qgis.utils.iface.activeLayer()
+ 
+-L'exemple ci-dessous montre comment récupérer des features et ajoute également les étapes nécessaires pour ne sélectionner que certains attributs en utilisant la fonction\  ``dataProvider.select()`` \. Cette fois cependant nous allons passer\ **TOUS** \ les arguments de la fonction ``select()``. Des commentaires sur chaque étape sont donnés dans le code suivant::
++    >>> # Boucle sur toutes les features pour obtenir un attribut
++    >>> for feat in cLayer.getFeatures(featureRequest): print feat['NAME'].toString()
+ 
+-    # Récupérer la référence de la couche
+-    cLayer = qgis.utils.iface.activeLayer()
+-    provider = cLayer.dataProvider()
+-    # Créer une liste vide qui va contenir les indices des colonnes que nous souhaitons récupérer
+-    selectList = []
+-    # Pour chaque colonne que nous voulons récupérer, on obtient son index et on l'ajoute à la liste selectList
+-    for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
+-        selectList.append(provider.fieldNameIndex(column))
+-
+-    # On crée un rectangle de bounding box que nous utiliserons comme filtre pour ne récupérer que les features qui sont en intersection
+-    rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
+-    # L'instruction select avec tous les arguments pour appeler notre couche vecteur avec tous les attributs qui nous intéressent et la géométrie, cela pour les features qui sont en intersection avec notre QgsRectangle
+-    provider.select(selectList, rect, True, False)
+-    feat = QgsFeature()
+-    # Boucle sur toutes les features de notre instruction select pour obtenir les attributs
+-    while provider.nextFeature(feat):
+-        # On récupère notre dictionnaire de clés et indices qui pointent vers des valeurs attributaires de cette feature
+-        map = feat.attributeMap()
+-
+-    # Pour chaque attribut de la feature on affiche sa valeur
+-    for key, value in map.items():
+-        print value.toString()
+-
+-\  **9.** \Cet exemple est un peu plus compliqué a comprendre. L'objectif est de montrer comment créer des dictionnaires. Nous allons créer une structure de données de table -- un dictionnaire Python qui représente une table dans une base de données. La table est un dictionnaire où les clés sont les featureID pour chaque feature et les valeurs sont des dictionnaires imbriqués qui ont les noms de colonne comme clé et les valeur de la colonne comme valeu. En retravaillant l'exemple précédent cela donne::
++\  **7.** \Cet exemple est un peu plus compliqué a comprendre. L'objectif est de montrer comment créer des dictionnaires. Nous allons créer une structure de données de table -- un dictionnaire Python qui représente une table dans une base de données. La table est un dictionnaire où les clés sont les featureID pour chaque feature et les valeurs sont des dictionnaires imbriqués qui ont les noms de colonne comme clé et les valeur de la colonne comme valeur. En retravaillant l'exemple précédent cela donne::
+ 
+     # Récupérer la référence de la couche
+     cLayer = qgis.utils.iface.activeLayer()
+-    provider = cLayer.dataProvider()
+-    provider.select(selectList, rect, True, False)
+     table = {}
+-    while provider.nextFeature(feat):
+-        attributeMap = feat.attributeMap()
+-        table[feat.id()] = { 'LEVEL' : str(attributeMap[provider.fieldNameIndex('LEVEL')].toString()) \
+-                              , 'NAME' : str(attributeMap[provider.fieldNameIndex('NAME')].toString()) \
+-                              , 'SORTNAME' : str(attributeMap[provider.fieldNameIndex('SORTNAME')].toString()) \
+-                              , 'TYPE' : str(attributeMap[provider.fieldNameIndex('TYPE')].toString()) \ 
++    for feat in cLayer.getFeatures():
++        table[feat.id()] = { 'LEVEL'    : str(feat['LEVEL'].toString()) \
++                           , 'NAME'     : str(feat['NAME'].toString()) \
++                           , 'TYPE'     : str(feat['TYPE'].toString()) \ 
+                             }
+ 
+-    for id, record in table.items():
+-        print str(id) + " --> " + str(record)
++    for id, record in table.items(): print str(id) + " --> " + str(record)
+ 
+ 
+ Raster
+@@ -543,9 +454,12 @@
+ \  **4.** \La fonction \  `QgsRasterLayer.identify() <http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b>`_ \retourne une valeur booléenne True ou False pour indiquer si elle a fonctionné ou pas. La donnée est renvoyée dans un dictionnaire avec le numéro de bande comme clé et la valeur pour cette bande comme valeur::
+ 
+     >>> rLayer.identify(Assam)
+-    (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'218')})
+-    >>> rLayer.identify(DarEsSalaam)
+-    (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'202')})
++    >>> rLayer.dataProvider().identify(Assam, QgsRaster.IdentifyFormatText).results()
++    {}
++    # DEVRAIT ETRE (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'218')})
++    >>> rLayer.dataProvider().identify(DarEsSalaam, QgsRaster.IdentifyFormatText).results()
++    {}
++    # DEVRAIT ETRE (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'202')})
+ 
+ \  **5.** \Pour extraire la donnée renvoyée par identify et la rendre un peu plus présentable on peut faire le traitement suivant::
+ 

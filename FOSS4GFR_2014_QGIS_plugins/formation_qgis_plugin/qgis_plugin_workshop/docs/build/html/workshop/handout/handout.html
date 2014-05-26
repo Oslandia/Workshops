@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>À retenir &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Notes sur le tutoriel" href="index.html" />
+    <link rel="prev" title="Notes sur le tutoriel" href="index.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Notes sur le tutoriel</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/handout/handout.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="a-retenir">
+<h1>À retenir<a class="headerlink" href="#a-retenir" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="acceder-aux-couches-par-qgisinterface-and-qgsmapcanvas">
+<h2>Accéder aux couches par QgisInterface and QgsMapCanvas<a class="headerlink" href="#acceder-aux-couches-par-qgisinterface-and-qgsmapcanvas" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="utiliser-qgisinteface-activelayer">
+<h3>Utiliser QgisInteface.activeLayer()<a class="headerlink" href="#utiliser-qgisinteface-activelayer" title="Permalink to this headline">¶</a></h3>
+<p>Retourne une référence à la couche sélectionnée dans la liste des couches:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span>
+<span class="go">&lt;qgis.core.QgsRasterLayer object at 0x99ea6ec&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;SR_50M&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="utiliser-qgsmapcanvas-currentlayer">
+<h3>Utiliser QgsMapCanvas.currentLayer()<a class="headerlink" href="#utiliser-qgsmapcanvas-currentlayer" title="Permalink to this headline">¶</a></h3>
+<p>Un autre moyen courant d&#8217;accéder à la couche sélectionnée dans la liste des couches est de la récupérer en utilisant le <a class="reference external" href="http://doc.qgis.org/head/classQgsMapCanvas.html">QgsMapCanvas</a> ainsi:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;SR_50M&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="recuperer-toutes-les-couches-visibles-qgsmapcanvas-layers">
+<h3>Récupérer toutes les couches visibles QgsMapCanvas.layers()<a class="headerlink" href="#recuperer-toutes-les-couches-visibles-qgsmapcanvas-layers" title="Permalink to this headline">¶</a></h3>
+<p>Avec la classe map canvas on peut récupérer plus que le layer actif &#8211; on peut obtenir toutes les couches visibles (ceux qui sont activés dans la liste de couches):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">allLayers</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">layers</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">allLayers</span><span class="p">:</span> <span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="go">50m_populated_places_simple</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="recuperer-des-couches-par-leur-indice-avec-qgsmapcanvas-layer">
+<h3>Récupérer des couches par leur indice avec QgsMapCanvas.layer()<a class="headerlink" href="#recuperer-des-couches-par-leur-indice-avec-qgsmapcanvas-layer" title="Permalink to this headline">¶</a></h3>
+<p>Les couches sont empilées de haut en bas et accédées par un indice à base 0. Cela signifie que la première couche (en haut) commence à l&#8217;indice 0. On passe un entier désignant l&#8217;indice de la couche que l&#8217;on veut:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;qgis.core.QgsVectorLayer object at 0x99eaeec&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;50m_populated_places_simple&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="acceder-aux-features-attributs-et-geometrie">
+<h2>Accéder aux Features (Attributs et Geometrie)<a class="headerlink" href="#acceder-aux-features-attributs-et-geometrie" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="utiliser-qgsvectordataprovider-getfeatures">
+<h3>Utiliser QgsVectorDataProvider.getFeatures()<a class="headerlink" href="#utiliser-qgsvectordataprovider-getfeatures" title="Permalink to this headline">¶</a></h3>
+<p>Boucler sur toutes les features:</p>
+<div class="highlight-python"><pre># using the 50m_admin_0_countries.shp from natural earth download for this example
+cLayer = qgis.utils.iface.mapCanvas().currentLayer()
+provider = cLayer.dataProvider()
+columnList = []
+for i in ['NAME']:
+    columnList.append(provider.fieldNameIndex(i))
+
+rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
+req = QgsFeatureRequest(rect)
+req.
+provider.getFeature(selectList, rect, True, False)
+feat = QgsFeature()
+while provider.nextFeature(feat):
+    att = feat.attributeMap()
+    for key, value in att.items(): print str(value.toString())</pre>
+</div>
+</div>
+<div class="section" id="utiliser-qgsvectordataprovider-featureatid">
+<h3>Utiliser QgsVectorDataProvider.featureAtId()<a class="headerlink" href="#utiliser-qgsvectordataprovider-featureatid" title="Permalink to this headline">¶</a></h3>
+<p>Si on a l&#8217;identifiant de la feature que l&#8217;on veut, on a pas besoin de boucler:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># using the 50m_admin_0_countries.shp from natural earth download for this example</span>
+<span class="n">cLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="n">provider</span> <span class="o">=</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+<span class="n">selectList</span> <span class="o">=</span> <span class="p">[</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">56</span> <span class="p">]</span>
+<span class="k">if</span> <span class="n">selectList</span><span class="p">:</span>
+    <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">selectList</span><span class="p">:</span>
+        <span class="n">nIndx</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">fieldNameIndex</span><span class="p">(</span><span class="s">&#39;NAME&#39;</span><span class="p">)</span>
+        <span class="n">sFeat</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">provider</span><span class="o">.</span><span class="n">featureAtId</span><span class="p">(</span><span class="nb">id</span><span class="p">,</span> <span class="n">sFeat</span><span class="p">,</span> <span class="bp">True</span><span class="p">,</span> <span class="p">[</span><span class="n">nIndx</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">nIndx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">attMap</span> <span class="o">=</span> <span class="n">sFeat</span><span class="o">.</span><span class="n">attributeMap</span><span class="p">()</span>
+                <span class="k">print</span> <span class="nb">str</span><span class="p">(</span> <span class="n">attMap</span><span class="p">[</span><span class="n">nIndx</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="exemples-de-signal-et-slot">
+<h2>Exemples de SIGNAL et SLOT<a class="headerlink" href="#exemples-de-signal-et-slot" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="emettre-un-signal">
+<h3>Émettre un Signal<a class="headerlink" href="#emettre-un-signal" title="Permalink to this headline">¶</a></h3>
+<p>On utilise l&#8217;objet  <tt class="docutils literal"><span class="pre">QgsMapCanvas</span></tt> en exemple. Voici comment émettre un signal:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">emit</span><span class="p">(</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;xyCoordinates(const QgsPoint &amp;)&quot;</span><span class="p">),</span> <span class="n">QgsPoint</span><span class="p">(</span><span class="o">-</span><span class="mi">122</span><span class="p">,</span><span class="mi">45</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="connecter-un-slot-a-un-signal">
+<h3>Connecter un Slot à un Signal<a class="headerlink" href="#connecter-un-slot-a-un-signal" title="Permalink to this headline">¶</a></h3>
+<p>On connecte ici la fonction slot <tt class="docutils literal"><span class="pre">listen_xyCoordinates</span></tt> au signal <tt class="docutils literal"><span class="pre">&quot;xyCoordinates(const</span> <span class="pre">QgsPoint</span> <span class="pre">&amp;)&quot;</span></tt> </p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># the connection</span>
+<span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">(),</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;xyCoordinates(const QgsPoint &amp;)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">listen_xyCoordinates</span><span class="p">)</span>
+
+<span class="c"># the custome slot function</span>
+<span class="k">def</span> <span class="nf">listen_xyCoordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">point</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">outputTextEdit</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;xyCoordinates - </span><span class="si">%d</span><span class="s">,</span><span class="si">%d</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">()</span> <span class="k">if</span> <span class="n">point</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">,</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">()</span> <span class="k">if</span> <span class="n">point</span> <span class="k">else</span> <span class="s">&quot;&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="debugger-avec-pdb">
+<h2>Debugger avec Pdb<a class="headerlink" href="#debugger-avec-pdb" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="le-hook-de-debug-pyqt">
+<h3>Le hook de debug PyQt<a class="headerlink" href="#le-hook-de-debug-pyqt" title="Permalink to this headline">¶</a></h3>
+<p>Assurez vous d&#8217;importer pdb avant de l&#8217;utiliser:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">pdb</span>
+</pre></div>
+</div>
+<p>Il faudra ajouter l&#8217;instruction <tt class="docutils literal"><span class="pre">pdb.set_trace()</span></tt> là où vous voulez commencer à mettre un point d&#8217;arrêt dans votre code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pyqtRemoveInputHook</span><span class="p">()</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Démarrer QGIS à partir de la ligne de commande et vous aurez une invite de PDB où vous pourrez lancer des commandes pdb et des instructions Python classiques. Voici une brève liste de commandes pdb. Voir la <a class="reference external" href="http://docs.python.org/library/pdb.html">documentation officielle de pdb</a> pour plus d&#8217;exemples:</p>
+<blockquote>
+<p><tt class="docutils literal"><span class="pre">list</span> <span class="pre">#</span> <span class="pre">Lister</span> <span class="pre">le</span> <span class="pre">source</span> <span class="pre">avec</span> <span class="pre">la</span> <span class="pre">ligne</span> <span class="pre">en</span> <span class="pre">exécution</span> <span class="pre">au</span> <span class="pre">milieu</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">list</span> <span class="pre">&lt;line</span> <span class="pre">number&gt;</span> <span class="pre">#</span> <span class="pre">lister</span> <span class="pre">le</span> <span class="pre">source</span> <span class="pre">avec</span> <span class="pre">la</span> <span class="pre">ligne</span> <span class="pre">&lt;line</span> <span class="pre">number&gt;</span> <span class="pre">au</span> <span class="pre">milieu</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">list</span> <span class="pre">&lt;line</span> <span class="pre">number</span> <span class="pre">from&gt;</span> <span class="pre">,</span> <span class="pre">&lt;line</span> <span class="pre">number</span> <span class="pre">to&gt;</span> <span class="pre">#</span> <span class="pre">lister</span> <span class="pre">le</span> <span class="pre">source</span> <span class="pre">entre</span> <span class="pre">les</span> <span class="pre">arguments</span> <span class="pre">&lt;line</span> <span class="pre">number&gt;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">break</span> <span class="pre">#</span> <span class="pre">break</span> <span class="pre">sans</span> <span class="pre">argument</span> <span class="pre">renvoie</span> <span class="pre">tous</span> <span class="pre">les</span> <span class="pre">points</span> <span class="pre">d'arrêt</span> <span class="pre">(et</span> <span class="pre">leurs</span> <span class="pre">identifiants)</span> <span class="pre">définis</span> <span class="pre">dans</span> <span class="pre">le</span> <span class="pre">code</span> <span class="pre">de</span> <span class="pre">debug</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">break</span> <span class="pre">&lt;line</span> <span class="pre">number&gt;</span> <span class="pre">#</span> <span class="pre">crée</span> <span class="pre">un</span> <span class="pre">nouveau</span> <span class="pre">point</span> <span class="pre">d'arrêt</span> <span class="pre">dans</span> <span class="pre">le</span> <span class="pre">code</span> <span class="pre">à</span> <span class="pre">la</span> <span class="pre">ligne</span> <span class="pre">&lt;line</span> <span class="pre">number&gt;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">next</span> <span class="pre">#</span> <span class="pre">avance</span> <span class="pre">dans</span> <span class="pre">l'exécution</span> <span class="pre">du</span> <span class="pre">code</span> <span class="pre">ligne</span> <span class="pre">a</span> <span class="pre">ligne.</span> <span class="pre">next</span> <span class="pre">passe</span> <span class="pre">à</span> <span class="pre">la</span> <span class="pre">ligne</span> <span class="pre">suivante</span> <span class="pre">sans</span> <span class="pre">rentrer</span> <span class="pre">dans</span> <span class="pre">les</span> <span class="pre">fonctions</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">step</span> <span class="pre">#</span> <span class="pre">avance</span> <span class="pre">dans</span> <span class="pre">l'exécution</span> <span class="pre">du</span> <span class="pre">code</span> <span class="pre">ligne</span> <span class="pre">a</span> <span class="pre">ligne.</span> <span class="pre">next</span> <span class="pre">passe</span> <span class="pre">à</span> <span class="pre">la</span> <span class="pre">ligne</span> <span class="pre">suivante</span> <span class="pre">en</span> <span class="pre">entrant</span> <span class="pre">dans</span> <span class="pre">les</span> <span class="pre">fonctions</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">cl</span> <span class="pre">&lt;breakpoint</span> <span class="pre">ID&gt;</span> <span class="pre">#</span> <span class="pre">supprime</span> <span class="pre">un</span> <span class="pre">point</span> <span class="pre">d'arrêt</span> <span class="pre">identifié</span> <span class="pre">par</span> <span class="pre">son</span> <span class="pre">&lt;breakpoint</span> <span class="pre">ID&gt;</span></tt></p>
+</blockquote>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="creer-un-depot-de-plugin">
+<h2>Créer un dépôt de plugin<a class="headerlink" href="#creer-un-depot-de-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Si vous voulez récupérer vos plugins par QGIS vous devez créer un fichier XML accessible par le web qui indique à QGIS où télécharger le plugin:</p>
+<div class="highlight-python"><pre>&lt;?xml version = '1.0' encoding = 'UTF-8'?&gt;
+&lt;?xml-stylesheet type='text/xsl' href='/plugins.xsl' ?&gt;
+&lt;plugins&gt;
+  &lt;pyqgis_plugin name='Plugin Installer' version='1.1'&gt;
+    &lt;description&gt;The recent Python Plugin Installer&lt;/description&gt;
+    &lt;version&gt;1.1&lt;/version&gt;
+    &lt;qgis_minimum_version&gt;1.0&lt;/qgis_minimum_version&gt;
+    &lt;homepage&gt;http://www.bwj.aster.net.pl/qgis/&lt;/homepage&gt;
+    &lt;file_name&gt;plugin_installer.zip&lt;/file_name&gt;
+    &lt;author_name&gt;Borys Jurgiel&lt;/author_name&gt;
+    &lt;download_url&gt;http://spatialserver.net/pyqgis_1.0/plugins/plugin_installer.zip&lt;/download_url&gt;
+    &lt;uploaded_by&gt;borysiasty&lt;/uploaded_by&gt;
+    &lt;create_date&gt;2008-12-18&lt;/create_date&gt;
+    &lt;update_date&gt;2010-10-31&lt;/update_date&gt;
+  &lt;/pyqgis_plugin&gt;
+&lt;/plugins&gt;</pre>
+</div>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

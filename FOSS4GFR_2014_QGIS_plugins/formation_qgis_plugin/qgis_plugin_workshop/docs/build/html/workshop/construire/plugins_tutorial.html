@@ -1,0 +1,586 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutoriel – Créer un plugin simple &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="2e partie - Construire un plugin Python" href="index.html" />
+    <link rel="next" title="Exercices" href="plugins_exercises.html" />
+    <link rel="prev" title="Architecture de plugin" href="plugins_intro.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="plugins_intro.html"
+                        title="previous chapter">Architecture de plugin</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="plugins_exercises.html"
+                        title="next chapter">Exercices</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/construire/plugins_tutorial.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="tutoriel-creer-un-plugin-simple">
+<h1>Tutoriel &#8211; Créer un plugin simple<a class="headerlink" href="#tutoriel-creer-un-plugin-simple" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="creer-notre-premier-plugin-avec-plugin-builder">
+<h2>Créer notre premier plugin avec &#8216;Plugin Builder&#8217;<a class="headerlink" href="#creer-notre-premier-plugin-avec-plugin-builder" title="Permalink to this headline">¶</a></h2>
+<p>Il est temps de nous mettre à l&#8217;ouvrage avec le <strong>Plugin Builder</strong> .</p>
+<p> <strong>1.</strong> Dans la barre de menu de QGIS cliquer sur l&#8217;icone de <tt class="docutils literal"><span class="pre">Plugin</span> <span class="pre">Builder</span></tt> pour lancer le plugin:</p>
+<a class="reference internal image-reference" href="../../_images/plugin_builder_click1.png"><img alt="../../_images/plugin_builder_click1.png" class="align-center" src="../../_images/plugin_builder_click1.png" style="width: 685.0px; height: 271.0px;" /></a>
+<p> <strong>2.</strong> La boîte de dialogue principale de Plugin Builder va apparaître. C&#8217;est la où nous remlpssons les informations générales de configuration que Plugin Builder utilise pour créer les modèles de fichiers. Nous allons ensuite modifier ces modèles de fichiers pour construire notre plugin. Tous les champs de la fenêtre de dialogue sont nécessaires. Remplissez ces champs comme sur l&#8217;image, puis cliquez sur le bouton <tt class="docutils literal"><span class="pre">Ok</span></tt> .:</p>
+<a class="reference internal image-reference" href="../../_images/plugin_builder_main_dialog.png"><img alt="../../_images/plugin_builder_main_dialog.png" class="align-center" src="../../_images/plugin_builder_main_dialog.png" style="width: 603.4px; height: 343.0px;" /></a>
+<p> <strong>3.</strong> Une boite de dialogue de choix de fichier apparaît. Créez un répertoire <tt class="docutils literal"><span class="pre">workspace</span></tt> dans votre espace personnel <tt class="docutils literal"><span class="pre">/home/formation/</span></tt> . Sauvez votre projet de plugin en sélectionnant le répertoire <tt class="docutils literal"><span class="pre">workspace</span></tt> dans la boîte de dialogue:</p>
+<a class="reference internal image-reference" href="../../_images/plugin_builder_save_dir.png"><img alt="../../_images/plugin_builder_save_dir.png" class="align-center" src="../../_images/plugin_builder_save_dir.png" style="width: 558.0px; height: 424.0px;" /></a>
+<p> <strong>4.</strong> Si tout va bien, Plugin Builder va afficher une boîte de dialogue finale qui vous indique les étapes suivantes pour personnaliser votre projet de plugin. Nous allons suivre exactement les mêmes étapes dans la suite.</p>
+<a class="reference internal image-reference" href="../../_images/plugin_builder_feedback.png"><img alt="../../_images/plugin_builder_feedback.png" class="align-center" src="../../_images/plugin_builder_feedback.png" style="width: 577.0px; height: 458.0px;" /></a>
+<p> <strong>5.</strong> Ouvrez un shelle et déplacez vous vers le répertoire de travail de votre plugin <tt class="docutils literal"><span class="pre">/home/formation/workspace/vector_selectbypoint</span></tt> et affichez le contenu:</p>
+<div class="highlight-python"><pre>$ cd workspace/vector_selectbypoint/
+$ ls -lah
+total 36K
+drwxr-xr-x 2 formation formation 4.0K 2011-08-20 13:21 .
+drwxr-xr-x 3 formation formation 4.0K 2011-08-20 17:34 ..
+-rw-r--r-- 1 formation formation 1.1K 2011-08-20 13:21 icon.png
+-rw-r--r-- 1 formation formation 1.6K 2011-08-20 13:21 __init__.py
+-rw-r--r-- 1 formation formation 1.9K 2011-08-20 13:21 Makefile
+-rw-r--r-- 1 formation formation  116 2011-08-20 13:21 resources.qrc
+-rw-r--r-- 1 formation formation 1.5K 2011-08-20 13:21 ui_vector_selectbypoint.ui
+-rw-r--r-- 1 formation formation 1.5K 2011-08-20 13:21 vector_selectbypointdialog.py
+-rw-r--r-- 1 formation formation 2.6K 2011-08-20 13:21 vector_selectbypoint.py</pre>
+</div>
+<p>Notez que nous avons un seul fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> et un seul fichier <tt class="docutils literal"><span class="pre">.qrc</span></tt> qui n&#8217;ont pas encore été compilés en module Python. Compilons les et regardons à quoi ressemble notre plugin dans QGIS.</p>
+<p> <strong>6.</strong> Par chance nous avons un <tt class="docutils literal"><span class="pre">Makefile</span></tt> dans ce répertoire que nous pouvons utiliser pour compiler les deux fichiers facilement. Depuis le répertoire <tt class="docutils literal"><span class="pre">vector_selectbypoint</span></tt> lancer la commande suivante, qui va afficher deux lignes:</p>
+<div class="highlight-python"><pre>$ make
+pyuic4 -o ui_vector_selectbypoint.py ui_vector_selectbypoint.ui
+pyrcc4 -o resources.py  resources.qrc</pre>
+</div>
+<p>Ces deux lignes sont les commandes nécessaires pour compiler les ressources et les fichiers d&#8217;interface graphuqe. On peut soit lancer ces commandes individuellement ou juste lancer <tt class="docutils literal"><span class="pre">make</span></tt> pour les exécuter d&#8217;un seul coup. Chaque fois que des changements sont fait sur les fichiers <tt class="docutils literal"><span class="pre">resources.qrc</span></tt> ou  <tt class="docutils literal"><span class="pre">ui_vector_selectbypoint.ui</span></tt> il faudra relancer la compilation.</p>
+<p> <strong>7.</strong> Réaffichez le contenu du répertoire et vous verrez que de nouveaux modules Python ont été créés. Les modules importants sont ceux ci:</p>
+<div class="highlight-python"><pre>$ ls -lah
+... # AUTRES FICHIERS LISTES
+-rw-r--r-- 1 formation formation 5.4K 2011-08-20 17:42 resources.py
+-rw-r--r-- 1 formation formation 1.4K 2011-08-20 17:42 ui_vector_selectbypoint.py
+... # AUTRES FICHIERS LISTES</pre>
+</div>
+<p> <strong>8.</strong> QGIS va maintenant pouvoir lire ces fichiers dans votre projet et créer le bouton correspondant dans la barre de menu. Cependant, pour que QGIS détecte notre nouveau plugin, nous allons devoir le mettre dans le répertoire <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins</span></tt> . Plutôt que de coier tous nos fichiers, faisons un lien symbolique (un raccourci) à partir de notre workspace <tt class="docutils literal"><span class="pre">/home/formation/workspace/vector_selectbypoing/</span></tt> vers le répertoire <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins</span></tt> . De cette façon QGIS va prendre en compte notre projet de plugin mais les fichiers d&#8217;origine sont toujours situés dans le répertoire de workspace où on peut les éditer:</p>
+<div class="highlight-python"><pre>$ ln -s /home/formation/workspace/vector_selectbypoint/ /home/formation/.qgis/python/plugins/</pre>
+</div>
+<p> <strong>9.</strong> Si on change de répertoire vers <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins</span></tt> et qu&#8217;on liste le contenu on devrait voir <tt class="docutils literal"><span class="pre">vector_selectbypoint</span></tt> pointer vers notre répertoire de travail:</p>
+<div class="highlight-python"><pre>$ cd /home/formation/.qgis/python/plugins
+$ ls -lah
+total 16K
+drwxr-xr-x 4 formation formation 4.0K 2011-08-20 17:58 .
+drwxr-xr-x 4 formation formation 4.0K 2011-07-07 13:41 ..
+drwxr-xr-x 2 formation formation 4.0K 2011-08-20 12:26 osmpoly_export
+drwxr-xr-x 3 formation formation 4.0K 2011-07-07 13:41 pluginbuilder
+lrwxrwxrwx 1 formation formation   42 2011-08-20 17:58 vector_selectbypoint -&gt; /home/formation/workspace/vector_selectbypoint/</pre>
+</div>
+<p> <strong>10.</strong> Revenons dans QGIS et ajoutons le plugin en utilisant l&#8217;outil de gestion d&#8217;extension de QGIS <tt class="docutils literal"><span class="pre">Extensions</span> <span class="pre">&gt;</span> <span class="pre">Gestionnaire</span> <span class="pre">d'extensions</span></tt> . Quand le gestionnaire d&#8217;extension s&#8217;affiche, tapez <tt class="docutils literal"><span class="pre">Select_</span></tt> dans la barre de filtre en haut et notre plugin devrait apparaître. Cochez la case à gauche du plugin et valider avec le bouton <tt class="docutils literal"><span class="pre">OK</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/plugin_builder_adding2QGIS.png"><img alt="../../_images/plugin_builder_adding2QGIS.png" class="align-center" src="../../_images/plugin_builder_adding2QGIS.png" style="width: 566.0px; height: 419.0px;" /></a>
+<p> <strong>11.</strong> Vous avez du remarquer qu&#8217;une icone a été ajoutée dans le menu à droite de l&#8217;icone du Plugin Builder. Cliquez dessus:</p>
+<a class="reference internal image-reference" href="../../_images/click_vector_selectbypoint_tool.png"><img alt="../../_images/click_vector_selectbypoint_tool.png" class="align-center" src="../../_images/click_vector_selectbypoint_tool.png" style="width: 523.0px; height: 217.0px;" /></a>
+<p> <strong>12.</strong> Si tout va bien, vous allez voir une boite de dialogue vide avec un bouton <tt class="docutils literal"><span class="pre">OK</span></tt> et un bouton <tt class="docutils literal"><span class="pre">Annuler</span></tt> . Comme vous pouvez le constater, le Plugin Builder ne donne pas grand chose d&#8217;intéressant à première vue. Nous devons personnaliser le plugin. Mais au moins il fonctionne:</p>
+<a class="reference internal image-reference" href="../../_images/vector_selectbypoint_firstview.png"><img alt="../../_images/vector_selectbypoint_firstview.png" class="align-center" src="../../_images/vector_selectbypoint_firstview.png" style="width: 427.0px; height: 349.0px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="section" id="etendre-les-modeles-de-plugin-builder">
+<h2>Étendre les modèles de Plugin Builder<a class="headerlink" href="#etendre-les-modeles-de-plugin-builder" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="le-concept-de-plugin-et-le-processus-d-implementation">
+<h3>Le concept de plugin et le processus d&#8217;implémentation<a class="headerlink" href="#le-concept-de-plugin-et-le-processus-d-implementation" title="Permalink to this headline">¶</a></h3>
+<p>L&#8217;outil que nous allons construire va faire quelques opérations basiques:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>L&#8217;outil va renvoyer les coordonnées X,Y d&#8217;un QgsPoint pour chaque clic sur la carte</li>
+<li>L&#8217;outil va sélectionner toutes les features vecteur qui intersectent ce point</li>
+<li>L&#8217;outil va avoir une option qui lui permet d&#8217;être actif ou inactif en utilisant une case à cocher</li>
+</ol>
+</blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Cet outil va fonctionner exactement de la même façon que l&#8217;outil actuel de selection unique de feature. Le but est d&#8217;illustrer les étapes pour créer un plugin. Des exercices à la fin de ce tutoriel vous permettront de vous entraîner.</p>
+</div>
+<p>Nous pouvons séparer les tâches d&#8217;implémentation et les résoudre une par une:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Concevoir l&#8217;interface dans Qt 4 Designer en éditant le fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> .</li>
+<li>Implémenter le clic sur la carte et la récupération des coordonnées du point</li>
+<li>Implémenter la sélection de feature lors du clic quand il y a intersection</li>
+<li>Implémenter la fonction d&#8217;activation/désactivation avec une case à cocher</li>
+<li>Améliorer tout cela pour rendre notre outil plus ergonomique</li>
+</ol>
+</blockquote>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="concevoir-l-interface">
+<h2>1) Concevoir l&#8217;interface<a class="headerlink" href="#concevoir-l-interface" title="Permalink to this headline">¶</a></h2>
+<p>Discutons de l&#8217;apparence de l&#8217;interface graphique. Les spécifications pour cet outil sont très simples:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Nous avons besoin d&#8217;un moyen d&#8217;afficher les coordonnées du point pour l&#8217;utilisateur (on utilisera un widget TextBrowser)</li>
+<li>Nous avons besoin d&#8217;un moyen pour activer et désactiver l&#8217;outil (on utilisera un widget checkbox &#8211; case à cocher)</li>
+</ol>
+</blockquote>
+<p>Pour faire des changements sur le GUI, nous allons devoir éditer le fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> associé à ce projet. Qt Designer est l&#8217;éditeur que nous allons utiliser pour faire ce genre d&#8217;édition.</p>
+<p> <strong>1.</strong> Ouvrir <strong>Qt 4 Designer</strong> à partir du menu <tt class="docutils literal"><span class="pre">Applications</span> <span class="pre">&gt;</span> <span class="pre">Programmation</span></tt> en haut à gauche:</p>
+<a class="reference internal image-reference" href="../../_images/qt_design1.png"><img alt="../../_images/qt_design1.png" class="align-center" src="../../_images/qt_design1.png" style="width: 479.0px; height: 343.0px;" /></a>
+<p> <strong>2.</strong> Une boîte de dialogue s&#8217;ouvre. Naviguez vers l&#8217;espace de travail de notre plugin à <tt class="docutils literal"><span class="pre">/home/formation/workspace/vector_selectbypoint/</span></tt> . Seul le fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> associé à ce projet devrait apparaitre dans la boite de choix de fichier. Il est nommé <tt class="docutils literal"><span class="pre">ui_vector_selectbypoint.ui</span></tt> . Sélectionnez le et clickez sur <tt class="docutils literal"><span class="pre">Ouvrir</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/qt_design2.png"><img alt="../../_images/qt_design2.png" class="align-center" src="../../_images/qt_design2.png" style="width: 625.0px; height: 315.0px;" /></a>
+<p> <strong>3.</strong> Le formulaire Qt qui s&#8217;ouvre devrait vous paraître familier. C&#8217;est simplement un formulaire vide avec deux boutons:</p>
+<a class="reference internal image-reference" href="../../_images/qt_design3.png"><img alt="../../_images/qt_design3.png" class="align-center" src="../../_images/qt_design3.png" style="width: 435.0px; height: 344.0px;" /></a>
+<p> <strong>4.</strong> Nous voulons ajouter un TextBrowser et un widget Checkbox à ce formulaire. Tout d&#8217;abord cliquez-glissez un widget TextBrowser sur le formulaire. Vous trouverez le TextBrowser dans la colonne de gauche dans la partie <tt class="docutils literal"><span class="pre">Display</span> <span class="pre">Widgets</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/qt_design4.png"><img alt="../../_images/qt_design4.png" class="align-center" src="../../_images/qt_design4.png" style="width: 260.0px; height: 132.0px;" /></a>
+<p> <strong>5.</strong> Nous devrions maintenant avoir un objet TextBrowser sur notre formulaire ainsi:</p>
+<a class="reference internal image-reference" href="../../_images/qt_design5.png"><img alt="../../_images/qt_design5.png" class="align-center" src="../../_images/qt_design5.png" style="width: 436.0px; height: 353.0px;" /></a>
+<p> <strong>6.</strong> En sélectionnant le TextBrowser sur le formulaire (affichant les points d&#8217;ancre bleus), aller sur la colonne de droite, en bas dans la partie nommée<tt class="docutils literal"><span class="pre">Éditeur</span> <span class="pre">de</span> <span class="pre">propriétés</span></tt> et changez le nom de l&#8217;objet TextBrowser vers <tt class="docutils literal"><span class="pre">txtFeedback</span></tt> . L&#8217;édition se fait dans le champs <tt class="docutils literal"><span class="pre">objectName</span></tt> . La valeur que nous donnons ici sera utilisée dans notre code pour représenter le TextBrowser.</p>
+<a class="reference internal image-reference" href="../../_images/qt_design05.png"><img alt="../../_images/qt_design05.png" class="align-center" src="../../_images/qt_design05.png" style="width: 321.0px; height: 306.0px;" /></a>
+<p> <strong>7.</strong> Dans la colonne de droite on cherche le widget Checkbox dans la partie <tt class="docutils literal"><span class="pre">Buttons</span></tt> . Glissez le widget sur le formulaire. Celui ci ressemble alors à ceci :</p>
+<a class="reference internal image-reference" href="../../_images/qt_design6.png"><img alt="../../_images/qt_design6.png" class="align-center" src="../../_images/qt_design6.png" style="width: 260.0px; height: 206.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/qt_design7.png"><img alt="../../_images/qt_design7.png" class="align-center" src="../../_images/qt_design7.png" style="width: 363.0px; height: 293.0px;" /></a>
+<p> <strong>8.</strong> Après avoir sélectionné la CheckBox sur le formulaire (affichant les points d&#8217;ancre bleus), aller dans l&#8217; <tt class="docutils literal"><span class="pre">Éditeur</span> <span class="pre">de</span> <span class="pre">propriétés</span></tt> et changer le champs <tt class="docutils literal"><span class="pre">objectName</span></tt> à <tt class="docutils literal"><span class="pre">chkActivate</span></tt> et le champs <tt class="docutils literal"><span class="pre">text</span></tt> à  <tt class="docutils literal"><span class="pre">Activate\n(check)</span></tt> .:</p>
+<a class="reference internal image-reference" href="../../_images/qt_design8.png"><img alt="../../_images/qt_design8.png" class="align-center" src="../../_images/qt_design8.png" style="width: 333.0px; height: 393.0px;" /></a>
+<a class="reference internal image-reference" href="../../_images/qt_design9.png"><img alt="../../_images/qt_design9.png" class="align-center" src="../../_images/qt_design9.png" style="width: 335.0px; height: 315.0px;" /></a>
+<p> <strong>9.</strong> Bougez les widgets et redimensionnez les pour que votre formulaire ressemble à ceci :</p>
+<a class="reference internal image-reference" href="../../_images/qt_design10.png"><img alt="../../_images/qt_design10.png" class="align-center" src="../../_images/qt_design10.png" style="width: 359.0px; height: 292.0px;" /></a>
+<p> <strong>10.</strong> Sauvez les modifications en sélectionnant dans la barre de menu : <tt class="docutils literal"><span class="pre">Fichier</span> <span class="pre">&gt;</span> <span class="pre">Sauver</span></tt> .</p>
+<p> <strong>11.</strong> Dans un shell bash changez de répertoire vers votre espace de travail <tt class="docutils literal"><span class="pre">/home/formation/workspace/vector_selectbypoint</span></tt> et recompilez tout en utilisant la commande &#8216;make&#8217;:</p>
+<div class="highlight-python"><pre>$ cd /home/formation/workspace/vector_selectbypoint
+$ make
+pyuic4 -o ui_vector_selectbypoint.py ui_vector_selectbypoint.ui</pre>
+</div>
+<p>Notez que le Makefile est intelligent. Il sait que seul le fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> a été modifié et pas le ficheir <tt class="docutils literal"><span class="pre">.qrc</span></tt> file. Il ne recompile donc que la partie interface graphique en module Python.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="implementation-de-l-action-de-click-sur-le-canvas">
+<h2>2) Implémentation de l&#8217;action de click sur le Canvas<a class="headerlink" href="#implementation-de-l-action-de-click-sur-le-canvas" title="Permalink to this headline">¶</a></h2>
+<p> <strong>1.</strong> L&#8217;édition de texte dans un éditeur tel que gedit n&#8217;est pas très complexe. Ouvrez gedit en cliquant sur l&#8217;entrée de menu de Ubuntu <tt class="docutils literal"><span class="pre">Éditeur</span> <span class="pre">de</span> <span class="pre">texte</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/open_gedit.png"><img alt="../../_images/open_gedit.png" class="align-center" src="../../_images/open_gedit.png" style="width: 318.0px; height: 189.0px;" /></a>
+<p> <strong>2.</strong> Maintenant naviguez jusque votre répertoire de travail pour les plugins <tt class="docutils literal"><span class="pre">/home/formation/workspace/vector_selectbypoint</span></tt> et ouvrez le fichier <tt class="docutils literal"><span class="pre">vector_selectbypoing.py</span></tt> . Votre code devrait ressemble exactement à <a class="reference external" href="../_static/mapcanvas_click_1.py">ce fichier</a></p>
+<p> <strong>3.</strong> Étudions un certain nombre de choses importantes dans ce fichier.</p>
+<ul>
+<li><p class="first">QGIS nécessite que certaines méthodes de classe existent dans votre classe principale Python pour que le plugin puisse fonctionner. Il s&#8217;agit de <tt class="docutils literal"><span class="pre">initGui()</span></tt> , <tt class="docutils literal"><span class="pre">__init__()</span></tt> et <tt class="docutils literal"><span class="pre">unload</span></tt> . Si nous lisons les commentaires du code de ces fonctions, on peut deviner que <tt class="docutils literal"><span class="pre">initGui()</span></tt> et <tt class="docutils literal"><span class="pre">__init__()</span></tt> sont appelées au démarrage du plugin et qu&#8217;une partie du code de la fonction <tt class="docutils literal"><span class="pre">initGui()</span></tt> est responsable de l&#8217;ajout de notre plugin dans le menu. La fonction <tt class="docutils literal"><span class="pre">unload()</span></tt> fait l&#8217;inverse. Elle détruit tout ce que nous avons créé à l&#8217;initialisation.</p>
+</li>
+<li><p class="first">Notez également que la référence à la classe QgsInterface est faite dans <tt class="docutils literal"><span class="pre">__init__()</span></tt> . À partir de cet attribut de classe on peut créer des référence vers d&#8217;autres parties du système QGIS comme le canevas de la carte.</p>
+</li>
+<li><p class="first">Une autre chose importante est de noter que la fenêtre de dialogue est créée dans la méthode <tt class="docutils literal"><span class="pre">run()</span></tt> avec les lignes suivantes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">dlg</span> <span class="o">=</span> <span class="n">vector_selectbypointDialog</span><span class="p">()</span>
+<span class="c"># show the dialog</span>
+<span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">La classe <tt class="docutils literal"><span class="pre">vector_selectbypointDialog()</span></tt> qui est instanciée dans la dernière partie du code a été importée à partir de notre module Python de boîte de dialogue. Si on ouvre ce module Python on peut voir qu&#8217;il référence le module Python qui a été compilé à partir de notre fichier <tt class="docutils literal"><span class="pre">.ui</span></tt> &#8211; <tt class="docutils literal"><span class="pre">ui_vector_selectbypoint.py</span></tt> . Au début du fichier on a:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">vector_selectbypointdialog</span> <span class="kn">import</span> <span class="n">vector_selectbypointDialog</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">L&#8217;exécution de la méthode <tt class="docutils literal"><span class="pre">run()</span></tt> est insuite stoppée. Elle attend une entrée utiliateur pour avancer. Cet entrée utilisateur (dans ce cas) est un clic sur un bouton. Le reste du code dans la méthode <tt class="docutils literal"><span class="pre">run()</span></tt> détermine ensuite quel bouton a été cliqué. <tt class="docutils literal"><span class="pre">Cancel</span> <span class="pre">==</span> <span class="pre">0</span> <span class="pre">and</span> <span class="pre">OK</span> <span class="pre">==</span> <span class="pre">1</span></tt> . Qand nous commençons à écrire des plugins on écrit généralement du code dans la méthode <tt class="docutils literal"><span class="pre">run()</span></tt> , mais nous verrons qu&#8217;il n&#8217;est pas nécessaire de le mettre à cet endroit par la suite:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">result</span> <span class="o">=</span> <span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+<span class="c"># See if OK was pressed</span>
+<span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+    <span class="c"># do something useful (delete the line containing pass and</span>
+    <span class="c"># substitute with your code</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p> <strong>4.</strong> Maintenant nous allons commencer à programmer. Notre outil va avoir besoin d&#8217;une référence au canvas de la carte. Il va aussi avoir besoin d&#8217;une référence à un outil de clic. Modifiez la fonction <tt class="docutils literal"><span class="pre">__init__()</span></tt> pour la faire ressembler à:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+    <span class="c"># Save reference to the QGIS interface</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+    <span class="c"># a reference to our map canvas</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span> <span class="c">#CHANGE</span>
+    <span class="c"># this QGIS tool emits as QgsPoint after each click on the map canvas</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span> <span class="o">=</span> <span class="n">QgsMapToolEmitPoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>5.</strong> Habituellement en travaillant avec des éléments du GUI QGIS, nous devrons importer les classes et les fonctions du module <tt class="docutils literal"><span class="pre">qgis.gui</span></tt> . La classe <tt class="docutils literal"><span class="pre">QgsMapToolEmitPoint</span></tt> que nous utilisons pour construire notre outil de pointage est dans ce module. En haut de notre module <tt class="docutils literal"><span class="pre">vector_selectbypoint.py</span></tt> ajoutez cet instruction d&#8217;import sous les autres imports de qgis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgis.gui</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p> <strong>6.</strong> Nous avons toutes les références dont nous allons avoir besoin pour implémenter le clic et récupérer un retour sous la forme d&#8217;un <tt class="docutils literal"><span class="pre">QgsPoint</span></tt> , mais nous devons réfléchir à comment tout cela fonctionne. Dans QGIS (comme dans les autres applications), il y a un concept d&#8217;évènement/action. Dans Qt nous appelons celà avec les termes de <em>signal</em> et <em>slot</em>. Quand un utilisateur clique sur la carte, il diffuse un signal sur ce qui vient de se passer. D&#8217;autres fonctions dans votre programme peuvent s&#8217;enregistrer à cette diffusion et réagir en temps réel à un clic. C&#8217;est un mécanisme qui n&#8217;est pas immédiatement intuitif ni facile à programmer au départ. Le meilleur conseil est de suivre pour le moment l&#8217;exemple suivant et de tenter d&#8217;en comprendre le plus possible. Nous reviendrons sur ce sujet plus tard pour l&#8217;approfondir. Pour plus de détail une très bonne référence est <a class="reference external" href="http://www.commandprompt.com/community/pyqt/c1267">PyQt signals and slots</a> .</p>
+<p> <strong>7.</strong> Pour terminer ces dernières étapes, nous allons avoir besoin de deux choses &#8211; 1) un moyen d&#8217;enregistrer une fonction spécifique à l&#8217;évènement de clic sur la carte et 2) une fonction spécifique qui est appelée lorsqu&#8217;un clic de souris survient sur le canvas de la carte. Le meilleur endroit pour mettre le code qui s&#8217;enregistre au signal de clic souris est dans la fonction <tt class="docutils literal"><span class="pre">initGui()</span></tt> . Ajouteez cette ligne de code à la toute fin de la fonction <tt class="docutils literal"><span class="pre">initGui()</span></tt> ::</p>
+<blockquote>
+result = QObject.connect(self.clickTool, SIGNAL(&#8220;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&#8221;), self.handleMouseDown)
+QMessageBox.information( self.iface.mainWindow(),&#8221;Info&#8221;, &#8220;connect = %s&#8221;%str(result) )</blockquote>
+<p>Une note rapide. La fonction <tt class="docutils literal"><span class="pre">QObject.connect()</span></tt> fait le travail d&#8217;enregistrer notre fonction spécifique <tt class="docutils literal"><span class="pre">handleMouseDown</span></tt> (Qui n&#8217;a pas encore été écrite) au signal de clickTool nommé <tt class="docutils literal"><span class="pre">canvasClicked()</span></tt> . Cette fonction retourne une valeur booléenne informant si la connexion a fonctionné ou pas. Nous récupérons la réponse et l&#8217;affichons dans une boîte de message pour être sur que le code que nous écrivons fonctionne correctement.</p>
+<p> <strong>8.</strong> Écrivons ensuite notre fonction spécifique qui sera appellée lorsqu&#8217;un évènement de clic souris survient sur le canvas de la carte. Créez cette fonction n&#8217;importe où en dessous de <tt class="docutils literal"><span class="pre">initGui()</span></tt> .:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">handleMouseDown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span><span class="s">&quot;Info&quot;</span><span class="p">,</span> <span class="s">&quot;X,Y = </span><span class="si">%s</span><span class="s">,</span><span class="si">%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">()),</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">()))</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Nous savons que le signal <tt class="docutils literal"><span class="pre">canvasClicked()</span></tt> émet un QgsPoint. Dans notre fonction <tt class="docutils literal"><span class="pre">handleMouseDown()</span></tt> nous utilisons une boîte de message pour visualiser les composants X,Y de ce point.</p>
+<p> <strong>9.</strong> Finalement, nous devons nous assurer que l&#8217;outil de clic que nous initialisons dans <tt class="docutils literal"><span class="pre">__init__()</span></tt> est activé quand notre outil tourne. Ajoutez ce code au tout début de la fonction <tt class="docutils literal"><span class="pre">run()</span></tt> </p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># make our clickTool the tool that we&#39;ll use for now</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setMapTool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>10.</strong> Votre module entier <tt class="docutils literal"><span class="pre">vector_selectbypoint.py</span></tt> devrait être maintenant <a class="reference external" href="../_static/mapcanvas_click_2.py">similaire à ce module</a></p>
+<div class="section" id="tester-le-plugin-modifie">
+<h3>Tester le plugin modifié<a class="headerlink" href="#tester-le-plugin-modifie" title="Permalink to this headline">¶</a></h3>
+<p> <strong>1.</strong> Retournez dans QGIS et assurez vous que toutes les couches sont supprimées sauf la couche des contours administratifs de pays:</p>
+<div class="highlight-python"><pre>/home/formation/natural_earth_50m/cultural/50m_cultural/50m_admin_0_countries.shp</pre>
+</div>
+<p> <strong>2.</strong> Ouvrez le gestionnaire d&#8217;extensions de QGIS. Si notre plugin <tt class="docutils literal"><span class="pre">Select_VectorFeatures_By_PointClick</span></tt> est déjà sélectionner, alors désélectionnez le, et fermez le gestionnaire d&#8217;extension. Maintenant réouvrez le gestionnaire d&#8217;extension et réactivez notre plugin en le cochant pour l&#8217;ajouter à QGIS. Ce processus assure que la dernière version du plugin soit bien chargée.</p>
+<p> <strong>3.</strong> Vous devriez remarquer que dès que vous sélectionnez &#8216;OK&#8217; dans le gestionnaire d&#8217;extensions, mais avant que le plugin n&#8217;apparaisse dans la barre de menu, des choses se passent : vous avez soit une erreur, soit un message d&#8217;information <tt class="docutils literal"><span class="pre">connect</span> <span class="pre">=</span> <span class="pre">True</span></tt> :</p>
+<a class="reference internal image-reference" href="../../_images/connect_equals_true.png"><img alt="../../_images/connect_equals_true.png" class="align-center" src="../../_images/connect_equals_true.png" style="width: 249.0px; height: 190.0px;" /></a>
+<p>Si vous avez une erreur, faites de votre mieux pour la localiser, éditez la, et réajouter le plugin pour le tester. Si vous ne trouvez pas l&#8217;erreur posez des questions.</p>
+<p> <strong>4.</strong> Cliquez maintenant sur le bouton de plugin dans la barre de menu:</p>
+<a class="reference internal image-reference" href="../../_images/click_vector_selectbypoint_tool.png"><img alt="../../_images/click_vector_selectbypoint_tool.png" class="align-center" src="../../_images/click_vector_selectbypoint_tool.png" style="width: 523.0px; height: 217.0px;" /></a>
+<p> <strong>5.</strong> Vous devriez remarquer deux choses ici. Notre formulaire apparait avec le nouveau look. On remarque aussi que lorsque la souris survole le canvas de la carte, le pointeur change. Cliquez quelque part sur la carte et vous devriez avoir une seconde boîte de message avec les coordonnées X,Y:</p>
+<a class="reference internal image-reference" href="../../_images/point_feedback.png"><img alt="../../_images/point_feedback.png" class="align-center" src="../../_images/point_feedback.png" style="width: 601.3px; height: 278.6px;" /></a>
+<p>Si vous avez une erreur, faites de votre mieux pour la localiser, éditez la, et réajouter le plugin pour le tester. Si vous ne trouvez pas l&#8217;erreur posez des questions.</p>
+</div>
+<div class="section" id="relier-la-sortie-de-qgspoint-au-gui">
+<h3>Relier la sortie de QgsPoint au GUI<a class="headerlink" href="#relier-la-sortie-de-qgspoint-au-gui" title="Permalink to this headline">¶</a></h3>
+<p> <strong>1.</strong> Ouvrez le fichier <tt class="docutils literal"><span class="pre">vector_selectbypointdialog.py</span></tt> .:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">ui_vector_selectbypoint</span> <span class="kn">import</span> <span class="n">Ui_vector_selectbypoint</span>
+<span class="c"># create the dialog for zoom to point</span>
+<span class="k">class</span> <span class="nc">vector_selectbypointDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c"># Set up the user interface from Designer.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_vector_selectbypoint</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Quelques remarques à propos de ce fichier:</p>
+<blockquote>
+<ul class="simple">
+<li>Ce module Python dérive une classe QtGui.QDialog et inclus le fichier compilé <tt class="docutils literal"><span class="pre">ui_vector_selectbypoint.py</span></tt> à partir de notre<tt class="docutils literal"><span class="pre">.ui</span></tt> . Notez qu&#8217;on importe ce module au début avec la ligne <tt class="docutils literal"><span class="pre">from</span> <span class="pre">ui_vector_selectbypoint</span> <span class="pre">import</span> <span class="pre">Ui_vector_selectbypoint</span></tt> .</li>
+<li>L&#8217;intérêt de cette classe est d&#8217;abstraire l&#8217;initialisation de l&#8217;interface de telle sorte qu&#8217;on ait pas à la gérer dans le module Python principal. Maintenant lorsque nous voulons créer notre fenêtre il suffit de créer une instance de la classe <tt class="docutils literal"><span class="pre">vector_selectbypointDialog</span></tt> et cela prend en charge tout le paramétrage de l&#8217;interface.</li>
+<li>Cette classe est un bon endroit pour ajouter des propriétés spécifiques à la fenêtre, comme des accesseurs pour les entrées/sorties et des choses qui vont interagir avec les boutons.</li>
+</ul>
+</blockquote>
+<p> <strong>2.</strong> Ajoutez des propriétés pour fixer l&#8217;entrée du TextBrowser. Cela va remplacer notre QMessageBox générique pour la sortie de notre QgsPoint. Créez les fonctions nécessaires pour que <tt class="docutils literal"><span class="pre">ui_vector_selectbypoint.py</span></tt> ressemble à ce qui suit. Souvenez vous que  <tt class="docutils literal"><span class="pre">txtFeedback</span></tt> était le <tt class="docutils literal"><span class="pre">objectName</span></tt> que l&#8217;on a donné à l&#8217;objet TextBrowser dans Qt Designer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+<span class="kn">from</span> <span class="nn">ui_vector_selectbypoint</span> <span class="kn">import</span> <span class="n">Ui_vector_selectbypoint</span>
+<span class="c"># create the dialog for zoom to point</span>
+<span class="k">class</span> <span class="nc">vector_selectbypointDialog</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c"># Set up the user interface from Designer.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_vector_selectbypoint</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">setTextBrowser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">txtFeedback</span><span class="o">.</span><span class="n">setText</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">clearTextBrowser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">txtFeedback</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> Ouvrez maintenant et commentez la création de la boîte de message <tt class="docutils literal"><span class="pre">vector_selectbypoint.py</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;connect = %s&quot;%str(result) )</span>
+
+<span class="c">#QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;X,Y = %s,%s&quot; % (str(point.x()),str(point.y())) )</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> Dans <tt class="docutils literal"><span class="pre">vector_selectbypoint.py</span></tt> également nous voulons bouger la création de notre objet dialog pour l&#8217;enlever de <tt class="docutils literal"><span class="pre">run()</span></tt> et le mettre dans la fonction <tt class="docutils literal"><span class="pre">__init__</span></tt> pour qu&#8217;il soit accessible de l&#8217;ensemble des fonctions de la classe:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># create our GUI dialog</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">dlg</span> <span class="o">=</span> <span class="n">vector_selectbypointDialog</span><span class="p">()</span>
+</pre></div>
+</div>
+<p> <strong>5.</strong> Maintenant que la variable <tt class="docutils literal"><span class="pre">dlg</span></tt> est une variable d&#8217;instance de classe en Python nous devons vérifier que toutes les références qui y sont faites doivent inclure <tt class="docutils literal"><span class="pre">self</span></tt>. Changez donc toutes les références à <tt class="docutils literal"><span class="pre">dlg</span></tt> dans la fonction <tt class="docutils literal"><span class="pre">run()</span></tt></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># show the dialog</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+</pre></div>
+</div>
+<p> <strong>6.</strong> Enfin, redirigeons la sortie de notre QgsPoint vers le TextBrowser avec notre propriété. Avant de régler la nouvelle valeur du TextBrowser, on vide la valeur précédente. Dans la fonction <tt class="docutils literal"><span class="pre">handleMouseDown</span></tt> réécrivez le code ainsi:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">handleMouseDown</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">clearTextBrowser</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">setTextBrowser</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">x</span><span class="p">())</span> <span class="o">+</span> <span class="s">&quot; , &quot;</span> <span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">point</span><span class="o">.</span><span class="n">y</span><span class="p">())</span> <span class="p">)</span>
+        <span class="c">#QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;X,Y = %s,%s&quot; % (str(point.x()),str(point.y())) )</span>
+</pre></div>
+</div>
+<p> <strong>7.</strong> Notre code devrait maintenant ressembler  <a class="reference external" href="../_static/mapcanvas_click_3.py">à ceci</a></p>
+<p> <strong>8.</strong> Enregistrez les changements. Fermez les fichiers. Rechargez le plugin en utilisant le gestionnaire d&#8217;extension. Vous devriez maintenant voir le résultat du QgsPoint dans le TextBrowser à chaque clic:</p>
+<a class="reference internal image-reference" href="../../_images/qgspoint_to_gui.png"><img alt="../../_images/qgspoint_to_gui.png" class="align-center" src="../../_images/qgspoint_to_gui.png" style="width: 536.0px; height: 373.0px;" /></a>
+</div>
+</div>
+<div class="section" id="implementation-de-la-selection-de-feature-au-clic">
+<h2>3) Implémentation de la sélection de Feature au clic<a class="headerlink" href="#implementation-de-la-selection-de-feature-au-clic" title="Permalink to this headline">¶</a></h2>
+<p>Le but désormais va être de sélectionner la feature qu&#8217;on a cliqué sur la carte. Il y a un certain nombre de choses que nous avons besoin d&#8217;implémenter dans la section suivante:</p>
+<blockquote>
+<ol class="arabic simple">
+<li>Nous avons besoin d&#8217;un moyen de connecter la fonction spécifique qui va faire la sélection à notre évènement de clic</li>
+<li>Nous avons besoin d&#8217;écrire une fonction spécifique qui fait le travail de sélection</li>
+</ol>
+</blockquote>
+<p> <strong>1.</strong> Pour commencer, écrivez une nouvelle connexion au signal <tt class="docutils literal"><span class="pre">canvasClicked()</span></tt> . Nous allons créer notre propre fonction de sélection <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> à la prochaine étape. Au cas où vous auriez oublié, cette connexion est implémentée exactement de la même manière que pour la fonction <tt class="docutils literal"><span class="pre">handleMouseDown()</span></tt> dans la section précédente. Mettez ce code à la fin de la fonction <tt class="docutils literal"><span class="pre">initGui()</span></tt> </p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># connect our select function to the canvasClicked signal</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectFeature</span><span class="p">)</span>
+<span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span><span class="s">&quot;Info&quot;</span><span class="p">,</span> <span class="s">&quot;connect = </span><span class="si">%s</span><span class="s">&quot;</span><span class="o">%</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Remarquez que nous mettons un QMessageBox immédiatement après la connexion pour être sur que nous avons un retour correct pendant les tests.</p>
+<p> <strong>2.</strong> Maintenant écrivez la fonction spécifique pour sélectionnez les features. Pour comprendre ce que le code suivant effectue, lisez les commentaires. Tout ce qui est ans la fonction a déjà été vu dans les parties précédentes. Reprenez les explications si cela ne vous semble pas clair ou posez des questions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">selectFeature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+    <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span><span class="s">&quot;Info&quot;</span><span class="p">,</span> <span class="s">&quot;in selectFeature function&quot;</span> <span class="p">)</span>
+    <span class="c"># setup the provider select to filter results based on a rectangle</span>
+    <span class="n">pntGeom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="c"># scale-dependent buffer of 2 pixels-worth of map units</span>
+    <span class="n">pntBuff</span> <span class="o">=</span> <span class="n">pntGeom</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mapUnitsPerPixel</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">pntBuff</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span>
+    <span class="c"># get currentLayer and dataProvider</span>
+    <span class="n">cLayer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+    <span class="n">selectList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">cLayer</span><span class="p">:</span>
+        <span class="n">provider</span> <span class="o">=</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">provider</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">(</span><span class="n">rect</span><span class="p">)):</span>
+            <span class="c"># if the feat geom returned from the selection intersects our point then put it in a list</span>
+            <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">pntGeom</span><span class="p">):</span>
+                <span class="n">selectList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">id</span><span class="p">())</span>
+
+        <span class="c"># make the actual selection</span>
+        <span class="n">cLayer</span><span class="o">.</span><span class="n">setSelectedFeatures</span><span class="p">(</span><span class="n">selectList</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span><span class="s">&quot;Info&quot;</span><span class="p">,</span> <span class="s">&quot;No layer currently selected in TOC&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> Le code Python complet devrait maintenant ressembler à  <a class="reference external" href="../_static/featureselect_1.py">ceci</a></p>
+<p> <strong>4.</strong> Sauver vos modifications et fermez les fichiers. Rechargez le plugin et testez le. Vous devriez voir au moins deux boîtes de dialogue &#8211; une après le chargement du plugin qui affiche le test de la connexion au signal, et un second après avoir cliqué sur le canvas de la carte. Le second message nous dit que nous sommes dans la fonction <tt class="docutils literal"><span class="pre">selectFeature</span></tt> . Le code que nous avons écrit après ce message va soit s&#8217;exécuter jusqu&#8217;au bout soit échouer:</p>
+<a class="reference internal image-reference" href="../../_images/in_selectfeature.png"><img alt="../../_images/in_selectfeature.png" class="align-center" src="../../_images/in_selectfeature.png" style="width: 605.0px; height: 387.0px;" /></a>
+</div>
+<div class="section" id="implementation-de-l-activation-de-l-outil-par-checkbox">
+<h2>4) Implémentation de l&#8217;activation de l&#8217;outil par CheckBox<a class="headerlink" href="#implementation-de-l-activation-de-l-outil-par-checkbox" title="Permalink to this headline">¶</a></h2>
+<p>Il est temps de faire en sorte que notre outil soit activable/désactivable selon l&#8217;état de notre case à cocher en bas à gauche. Il nous manque deux étapes pour cette implémentation:</p>
+<ol class="arabic simple">
+<li>Nous avons besoin de faire une connexion vers un signal de la case à cocher lorsqu&#8217;elle est cliquée. La fonction appelée va vérifier l&#8217;état (coché ou non coché) de la case à cocher.</li>
+<li>Nous avons besoin de créer la fonction de gestion qui vérifie l&#8217;état de la case à cocher et qui active ou désactive en fonction une connexion au signal de clic sur le canvas de la carte. Cela veut dire que nous allons devoir modifier notre code.</li>
+</ol>
+<p> <strong>1.</strong> Ajoutez une connexion pour le signal <tt class="docutils literal"><span class="pre">stateChanged()</span></tt> de la case à cocher, à la fin de <tt class="docutils literal"><span class="pre">initGui()</span></tt> . Le nom de la fonction qui va s&#8217;activer sur cet évènement est <tt class="docutils literal"><span class="pre">changeActive()</span></tt> . Nous créerons la fonction par la suite:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">ui</span><span class="o">.</span><span class="n">chkActivate</span><span class="p">,</span><span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;stateChanged(int)&quot;</span><span class="p">),</span><span class="bp">self</span><span class="o">.</span><span class="n">changeActive</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>2.</strong> Tant que nous sommes dans la fonction <tt class="docutils literal"><span class="pre">initGui()</span></tt> nous allons commenter notre code précédent pour connecter la fonction <tt class="docutils literal"><span class="pre">handleMouseDown</span></tt> et la fonction <tt class="docutils literal"><span class="pre">selectFeature</span></tt>. Ces actions vont être déplacées dans notre fonction de gestion de la case à cocher:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># connect our custom function to a clickTool signal that the canvas was clicked</span>
+<span class="c">#result = QObject.connect(self.clickTool, SIGNAL(&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;), self.handleMouseDown)</span>
+<span class="c">#QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;connect = %s&quot;%str(result) )</span>
+
+<span class="c"># connect our select function to the canvasClicked signal</span>
+<span class="c">#result = QObject.connect(self.clickTool, SIGNAL(&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;), self.selectFeature)</span>
+<span class="c">#QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;connect = %s&quot;%str(result) )</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> Nous créons maintenant une fonction spécifique qui s&#8217;active chaque fois que la case à cocher change d&#8217;état de coché vers décoché ou vice-versa. L&#8217;idée est que si la case est cochée (activée), on connecte <tt class="docutils literal"><span class="pre">handleMouseDown</span></tt> et <tt class="docutils literal"><span class="pre">selectFeature</span></tt> au signal de clic sur le canvas de la carte. Si elle est décochée alors on déconnecte du signal de clic:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">changeActive</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">state</span><span class="p">):</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">state</span><span class="o">==</span><span class="n">Qt</span><span class="o">.</span><span class="n">Checked</span><span class="p">):</span>
+             <span class="c"># connect to click signal</span>
+             <span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handleMouseDown</span><span class="p">)</span>
+             <span class="c"># connect our select function to the canvasClicked signal</span>
+             <span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectFeature</span><span class="p">)</span>
+     <span class="k">else</span><span class="p">:</span>
+             <span class="c"># disconnect from click signal</span>
+             <span class="n">QObject</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handleMouseDown</span><span class="p">)</span>
+             <span class="c"># disconnect our select function to the canvasClicked signal</span>
+             <span class="n">QObject</span><span class="o">.</span><span class="n">disconnect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;canvasClicked(const QgsPoint &amp;, Qt::MouseButton)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectFeature</span><span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> Votre code devrait être similaire à <a class="reference external" href="../_static/activate_click_1.py">ce code</a></p>
+<p> <strong>5.</strong> Sauvez et fermez vos modules Python. Rechargez le plugin.</p>
+<p> <strong>6.</strong> Après avoir chargé le plugin, la case à cocher d&#8217;activation devrait être décochée. Souvenez-vous, cela signifie que vous ne devriez pas être capable de sélectionner de feature, ni d&#8217;avoir de sortie vers le TextBrowser.</p>
+<a class="reference internal image-reference" href="../../_images/plugin_tut_notactive.png"><img alt="../../_images/plugin_tut_notactive.png" class="align-center" src="../../_images/plugin_tut_notactive.png" style="width: 521.0px; height: 332.0px;" /></a>
+<p> <strong>8.</strong> Cliquez alors sur la case à cocher et essayer de cliquer sur la carte de nouveau. Nous devrions avoir le résultat du point X,Y dans le TextBrowser et voir les features sélectionnées sur la carte.</p>
+<a class="reference internal image-reference" href="../../_images/plugin_tut_active.png"><img alt="../../_images/plugin_tut_active.png" class="align-center" src="../../_images/plugin_tut_active.png" style="width: 532.0px; height: 435.0px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="section" id="ameliorer-notre-plugin">
+<h2>5)  Améliorer notre plugin<a class="headerlink" href="#ameliorer-notre-plugin" title="Permalink to this headline">¶</a></h2>
+<p>Vous avez pu remarquer quelques petits détails intéressants qui se passent dans le module <tt class="docutils literal"><span class="pre">vector_selectbypoint.py</span></tt> , que je trouve pénible. Examinons les changements et modifions ensuite le code dans les étapes suivantes:</p>
+<blockquote>
+<p> <strong>1.</strong> Chaque fois que l&#8217;on clique sur le canvas de la carte, un signal est émis, et notre slot (ou fonction appelée) <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> s&#8217;exécute et fait un certain nombre de choses avant de sélectionner une feature:</p>
+<ul class="simple">
+<li>récupérer la couche courante et régler une variable dans la fonction locale</li>
+<li>Récupérer le data provider de la couche courante et régler une variable dans la fonction locale</li>
+</ul>
+<p><strong>SOLUTION</strong> : Cela ne semble pas être l&#8217;endroit le plus intuitif pour récupérer la couche courante et son data provider. Réorganisons les choses pour faire plus simple. Lorsqu&#8217;une couche est sélectionnée, la liste des couche émet un signal. Cela semble un bon endroit pour y mettre le code d&#8217;initialisation pour la couche courante ou le data provider puisque nous ne nous servons que d&#8217;une seule couche à la fois.</p>
+<p> <strong>2.</strong> Donner les coordonnées X,Y au clic n&#8217;est pas d&#8217;un très grand intérêt.</p>
+<p><strong>SOLUTION</strong> : Mettons quelque chose de plus intéressant dans le TextBrowser. Nous allons mettre l&#8217;attribut Name dans le TextBrowser s&#8217;il existe pour une couche donnée.</p>
+</blockquote>
+<hr class="docutils" />
+<p>La plupart de ces changements sont de la réorganisation du code.</p>
+<p> <strong>1.</strong> Premièrement, travaillons sur nos variables de classes. Ce sont celles qui sont définies dans <tt class="docutils literal"><span class="pre">__init__()</span></tt> . Nous voulons être sur que chaque fois qu&#8217;une sélection est faite nous avons une variable de classe pour contenir:</p>
+<blockquote>
+<ul class="simple">
+<li>La liste des features sélectionnées</li>
+<li>La couche courante</li>
+<li>Le data provider de la couche courante</li>
+</ul>
+</blockquote>
+<p>La raison pour laquelle nous voulons utiliser des variables de classe plutôt que des variables de fonction est que nous voulons que TOUTES nos fonctions puissent y accéder et prendre des décisions basées sur leurs valeurs. Présentement toutes ces variables sont réglées dans la fonction <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> . Cela signifie que nous allons devoir déplacer la variable <tt class="docutils literal"><span class="pre">selectList</span></tt> hors de la fonction <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> et la mettre dans <tt class="docutils literal"><span class="pre">__init__()</span></tt> ainsi que les variables  <tt class="docutils literal"><span class="pre">cLayer</span></tt> et <tt class="docutils literal"><span class="pre">provider</span></tt> . Faites donc en sorte que votre fonction <tt class="docutils literal"><span class="pre">__init__()</span></tt> ressemble à ceci :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">iface</span><span class="p">):</span>
+    <span class="c"># Save reference to the QGIS interface</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">iface</span> <span class="o">=</span> <span class="n">iface</span>
+    <span class="c"># refernce to map canvas</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+    <span class="c"># out click tool will emit a QgsPoint on every click</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span> <span class="o">=</span> <span class="n">QgsMapToolEmitPoint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="p">)</span>
+    <span class="c"># create our GUI dialog</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span> <span class="o">=</span> <span class="n">vector_selectbypointDialog</span><span class="p">()</span>
+    <span class="c"># create a list to hold our selected feature ids</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c"># current layer ref (set in handleLayerChange)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="c"># current layer dataProvider ref (set in handleLayerChange)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">provider</span> <span class="o">=</span> <span class="bp">None</span>
+</pre></div>
+</div>
+<p> <strong>2.</strong> Maintenant changez toutes les références dans le module (la plupart dans la fonction <tt class="docutils literal"><span class="pre">selectFeature()</span></tt>  ) pour être préfixées par <tt class="docutils literal"><span class="pre">self.</span></tt> .</p>
+<p> <strong>3.</strong> Ensuite créons une fonction nommée <tt class="docutils literal"><span class="pre">updateTextBrowser()</span></tt> qui va remplacer la fonction <tt class="docutils literal"><span class="pre">handleMouseDown()</span></tt> qui met à jour le TextBrowser avec les coordonnées du point. Voici à quoi cette fonction va ressembler. Lisez les commentaires qui expliquent le code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">updateTextBrowser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">:</span>
+        <span class="c"># find the index of the &#39;NAME&#39; column, branch if has one or not</span>
+        <span class="n">nIndx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span><span class="o">.</span><span class="n">fieldNameIndex</span><span class="p">(</span><span class="s">&#39;NAME&#39;</span><span class="p">)</span>
+        <span class="c"># get our selected feature from the provider, but we have to pass in an empty feature and the column index we want</span>
+        <span class="n">sFeat</span> <span class="o">=</span> <span class="n">iself</span><span class="o">.</span><span class="n">provider</span><span class="o">.</span><span class="n">getFeature</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">(</span><span class="n">iself</span><span class="o">.</span><span class="n">selectList</span><span class="p">[</span><span class="mi">0</span><span class="p">]))[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sFeat</span><span class="p">:</span>
+            <span class="c"># only if we have a &#39;NAME&#39; column</span>
+            <span class="k">if</span> <span class="n">nIndx</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="c"># get the feature attributeMap</span>
+                <span class="n">attMap</span> <span class="o">=</span> <span class="n">sFeat</span><span class="o">.</span><span class="n">attributeMap</span><span class="p">()</span>
+                <span class="c"># clear old TextBrowser values</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">clearTextBrowser</span><span class="p">()</span>
+                <span class="c"># now update the TextBrowser with attributeMap[nameColumnIndex]</span>
+                <span class="c"># when we first retrieve the value of &#39;NAME&#39; it comes as a QString so we have to cast it to a Python string</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">setTextBrowser</span><span class="p">(</span> <span class="nb">str</span><span class="p">(</span> <span class="n">attMap</span><span class="p">[</span><span class="n">nIndx</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="p">))</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> Nous avons besoin d&#8217;appeler d&#8217;une manière ou d&#8217;une autre notre fonction <tt class="docutils literal"><span class="pre">updateTextBrowser()</span></tt> . Nous pourrions créer une autre connexion de signal, mais nous voulons nous assurer d&#8217;un ordre séquentiel des évènements ici &#8211; c&#8217;est à dire que nous voulons mettre à jour le TextBrowser uniquement après que la fonction <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> a été exécutée. Pour faire cela nous allons appeler <tt class="docutils literal"><span class="pre">updateTextBrowser()</span></tt> à la toute fin de la fonction <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> en changeant quelques lignes ainsi:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">:</span>
+        <span class="c"># make the actual selection</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="o">.</span><span class="n">setSelectedFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">)</span>
+        <span class="c"># update the TextBrowser</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">updateTextBrowser</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Voici la fonction complète <tt class="docutils literal"><span class="pre">selectFeature()</span></tt> pour voir le code ci-dessus dans le contexte:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">selectFeature</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">point</span><span class="p">,</span> <span class="n">button</span><span class="p">):</span>
+    <span class="c"># reset selection list on each new selection</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c"># setup the provider select to filter results based on a rectangle</span>
+    <span class="n">pntGeom</span> <span class="o">=</span> <span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">point</span><span class="p">)</span>
+    <span class="c"># scale-dependent buffer of 2 pixels-worth of map units</span>
+    <span class="n">pntBuff</span> <span class="o">=</span> <span class="n">pntGeom</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">mapUnitsPerPixel</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">),</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">rect</span> <span class="o">=</span> <span class="n">pntBuff</span><span class="o">.</span><span class="n">boundingBox</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">(</span><span class="n">rect</span><span class="p">)):</span> <span class="c"># the arguments mean no attributes returned, and do a bbox filter with our buffered rectangle to limit the amount of features</span>
+            <span class="c"># if the feat geom returned from the selection intersects our point then put it in a list</span>
+            <span class="k">if</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">pntGeom</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">feat</span><span class="o">.</span><span class="n">id</span><span class="p">())</span>
+
+            <span class="c"># make the actual selection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="o">.</span><span class="n">setSelectedFeatures</span><span class="p">(</span><span class="n">selectList</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">:</span>
+            <span class="c"># make the actual selection</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="o">.</span><span class="n">setSelectedFeatures</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">)</span>
+            <span class="c"># update the TextBrowser</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">updateTextBrowser</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">QMessageBox</span><span class="o">.</span><span class="n">information</span><span class="p">(</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mainWindow</span><span class="p">(),</span><span class="s">&quot;Info&quot;</span><span class="p">,</span> <span class="s">&quot;No layer currently selected in TOC&quot;</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p> <strong>6.</strong> Comme précaution supplémentaire, nous allons écrire deux lignes dans la fonction <tt class="docutils literal"><span class="pre">run()</span></tt> qui vont régler la couche courante et le data provider lorsque le plugin est ouvert la première fois. La plupart des gens vont avoir les layers déjà chargé avant d&#8217;ouvrir le plugin. Comme notre couche courante et notre data provider sont réglés automatiqumeent quand une couche différente est sélectionnée dans la liste des couches, nous n&#8217;avons pas de valeur initiale. Désormais la fonction <tt class="docutils literal"><span class="pre">run()</span></tt> ressemblera à ceci :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># run method that performs all the real work</span>
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c"># set the current layer immediately if it exists, otherwise it will be set on user selection</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span> <span class="o">=</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+    <span class="c"># make our clickTool the tool that we&#39;ll use for now</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">setMapTool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">clickTool</span><span class="p">)</span>
+
+    <span class="c"># show the dialog</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">exec_</span><span class="p">()</span>
+    <span class="c"># See if OK was pressed</span>
+    <span class="k">if</span> <span class="n">result</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c"># do something useful (delete the line containing pass and</span>
+        <span class="c"># substitute with your code</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+<p> <strong>7.</strong> Nous avons besoin de créer une connexion à un signal qui diffuse lorsque la couche change. À la fin de <tt class="docutils literal"><span class="pre">initGui()</span></tt> on ajoute ce code qui connecte une fonction spécifique que nous allons créer, au signal <tt class="docutils literal"><span class="pre">currentLayerchanged()</span></tt> de QgisInterface:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># connect to the currentLayerChanged signal of QgsInterface</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">QObject</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iface</span><span class="p">,</span> <span class="n">SIGNAL</span><span class="p">(</span><span class="s">&quot;currentLayerChanged(QgsMapLayer *)&quot;</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">handleLayerChange</span><span class="p">)</span>
+<span class="c"># QMessageBox.information( self.iface.mainWindow(),&quot;Info&quot;, &quot;connect = %s&quot;%str(result) )</span>
+</pre></div>
+</div>
+<p> <strong>8.</strong> Notre fonction spécifique pour gérer le changement de couche ressemblera à ceci :</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">handleLayerChange</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">layer</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">canvas</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">provider</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+</pre></div>
+</div>
+<p> <strong>9.</strong> L&#8217;ensemble du code devrait maintenant ressembler à <a class="reference external" href="../_static/vector_selectbypoint(2nd_hour_ex_1).py">ce module</a> </p>
+<p> <strong>10.</strong> Tester l&#8217;ensemble de nos changements. Un bon test est de charger deux couches de shapefile (qui auront toutes deux un champs &#8216;NAME&#8217;). Ensuite de tester de passer d&#8217;une couche à l&#8217;autre et de cliquer sur différentes featur pour vérifier que l&#8217;outil fonctionne et qu&#8217;il ne plante pas.</p>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

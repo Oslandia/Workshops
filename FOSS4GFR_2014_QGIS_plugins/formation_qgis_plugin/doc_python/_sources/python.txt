@@ -1,0 +1,1392 @@
+########################
+Le langage Python, bases
+########################
+
+****************
+Syntaxe générale
+****************
+
+L'indentation délimite les blocs de code.
+
+Une ligne vide n'est pas interprétée.
+
+On peut placer des commentaires dans le code à l'aide du caractère **#**\ ::
+
+   # this is the first comment
+   SPAM = 1                 # and this is the second comment
+   STRING = "# This is not a comment."
+
+Les instructions simples sont écrites sur une seule ligne. Si besoin est, on peut forcer un retour chariot en placant un anti-slash ( **\\** ) à la fin de la ligne::
+
+   >>> var = 132
+   >>> var = \
+   ... 123
+
+Une instruction simple peut être :
+
+* Une expression, elle est alors simplement évaluée et sa valeur est retournée.
+* Une affectation composée d'une variable et d'une expression. La valeur de l'expression est stockée dans la variable.
+
+Exemple::
+
+   >>> # Ceci est une expression
+   >>> 2+7
+   9
+   >>> # Ceci est une affectation
+   >>> var = 2+7
+
+Les instructions complexes incluent d'autres instructions. Elles s'écrivent sur plusieurs lignes, la première ligne est terminée par ':' et les instructions imbriquées sont indentées::
+
+ >>> condition = True
+ >>> if condition:
+ ...   var = 1
+ ...else:
+ ...   var = 2
+ ...
+ >>> var
+    1
+
+.. warning::
+
+  l'interpréteur Python s'appuie sur l'indentation pour déterminer la structure du code, une erreur d'indentation pourra faire échouer votre programme.
+
+*******************
+Variables et typage
+*******************
+
+Variables
+=========
+
+En informatique, les variables associent un **nom** (le *symbole*) à une **valeur** ou un objet.
+
+* Les variables permettent d'identifier et de stocker les informations à traiter.
+* Pendant l'exécution du programme, la variable pourra prendre une valeur (et en changer). C'est l'opération d'affectation.
+* Les variables sont abstraites alors que les valeurs sont concrètes.
+
+En Python, la portée des variables s'étend de leur première utilisation jusqu'à la fin du fichier (pour simplifier).
+
+Affectation
+===========
+L'affectation est l'instruction qui associe une valeur à une variable. Elle est symbolisée par le signe **=**.
+
+.. warning::
+  Attention à ne pas confondre l'affectation avec un test d'égalité !
+
+L'affection **x = 98** se lit **x reçoit 98**
+
+La partie droite est d'abord évaluée, son résultat est ensuite stocké dans la partie gauche.
+
+En Python, l'affectation est une instruction et non pas une opération, elle n'a donc pas de valeur.
+
+
+
+Valeurs littérales
+==================
+Une valeur littérale est une valeur donnée explicitement dans le code source d'un programme.
+
+Généralement, on utilise beaucoup les variables et peu les valeurs littérales car les programmes traitent des informations reçues en entrée, pas des informations figées dans le code.
+
+Types simples
+================
+En Python, les variables ne sont pas explicitement typées. Pourtant, toute valeur a un type !
+
+Les types simples sont :
+
+int
+ Numérique entier
+long
+ Numérique entier long (rare)
+float
+ Numérique décimal
+bool
+ Booléen (valeur logique : vrai\slash faux)
+str
+ Chaîne de caractère
+unicode
+ Chaîne de caractère Unicode
+
+Exemples de données de types simples::
+
+    5           # Littéral numérique entier
+    8768L       # Littéral numérique entier long
+    5.0         # Littéral numérique flottant
+    .5          # Littéral numérique flottant
+    5.          # Littéral numérique flottant
+    "Salut !"   # Chaîne littérale
+    'Salut !'   # Chaîne littérale
+    u"Salut !"  # Chaîne Unicode littérale
+    True        # Littéral booléen
+    None        # Absence de valeur !
+
+
+Vous verrez couramment trois mots-clés :
+
+* True : valeur litérale booléenne vraie
+* False : valeur litérale booléenne fausse
+* None : valeur nulle (c'est-à-dire absence de valeur)
+
+Types séquences
+===============
+Chaînes de caractères
+---------------------
+
+Les chaînes de caractères sont délimitées par des simple quote (apostrophes) ou des doubles quotes (guillemets)::
+
+ # Quelques exemples de chaînes de caractères
+ 'voici une chaîne'
+ "encore une"
+ "les guillemets permettent d'utiliser l'apostrophe"
+ 'et inversement : "'
+
+Le caractère \ permet d'introduire un caractère spécial::
+
+ "voici une chaîne sur \
+ deux lignes"
+ 'une chaine avec l\'apostrophe'
+
+Deux types alternatifs existent:
+
+* les chaînes Unicode permettent d'introduire toutes sortes de caractères étranges sans risque d'erreur d'encodage
+
+::
+
+ u'€ûßöæô'
+
+* à l'interieur d'une chaîne brute (**raw**), les conversions de fin de ligne sont désactivées
+
+::
+
+ str = "This is a rather long string containing\n\
+ several lines of text much as you would do in C."
+ print str
+
+produira::
+
+ This is a rather long string containing
+ several lines of text much as you would do in C.
+
+mais::
+
+ str = r"This is a rather long string containing\n\
+ several lines of text much as you would do in C."
+ print str
+
+produira::
+
+ This is a rather long string containing\n\
+ several lines of text much as you would do in C.
+
+Enfin, il existe une syntaxe pour écrire directement des chaînes multi-lignes::
+
+ str = """This is a rather long
+ string containing several lines
+ of text much as you would do in C."""
+
+Tuples et listes
+----------------
+Ces types sont utilisés pour grouper des valeurs, ce sont donc des agrégations d'autres types (simples ou complexes). Python autorise les tuples et listes à être formés d'éléments hétérogènes.
+
+Un tuple se présente comme une liste d'éléments séparés par des virgules et éventuellement entourée de parenthèse::
+
+ # un tuple :
+ a, b, c
+ # un autre :
+ (a, b, d)
+ # un tuple vide :
+ ()
+ # un tuple à un élément :
+ (4,)
+
+Cette structure est principalement utilisée pour concentrer du code. On peut réaliser deux affectations en une seule instructions::
+
+ a, b = 1, 2
+
+On peut accéder aux éléments d'un tuple en passant par leur indice::
+
+ >>> var = (1, 3, 4, 9)
+ >>> var[1]
+    3
+ >>> var[-1]
+    9
+ >>> var[:2]
+    (1, 3)
+ >>> var[1:3]
+    (3, 4)
+
+Notez que les indices commencent à 0.
+
+Les listes ressemblent beaucoup aux tuples à première vue::
+
+ # une liste :
+ [a, b, c]
+ # une autre :
+ [a, b, d]
+ # une liste vide :
+ []
+ # une liste à un élément :
+ [4]
+
+La principale différence est qu'on peut modifier une liste mais pas un tuple::
+
+ >>> var = (1, 3, 4, 9)
+ >>> var[1] = 4
+    <type 'exceptions.TypeError'>: 'tuple' object does not support item assignment
+ >>> var = [1, 3, 4, 9]
+ >>> var[1] = 4
+ >>> var
+    [1, 4, 4, 9]
+
+Selon la terminologie Python, les tuples sont **immutables** alors que les listes sont **mutables**.
+
+Dans d'autres langages, les listes portent souvent le nom de tableau (**array**).
+
+Notez que les chaînes de caractère se comportent comme des tuples, on peut accéder à chaque caractère par son indice mais on ne peut le modifier.
+
+La fonction range() permet de générer une liste d'entier::
+
+ >>> range(10)
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+ >>> range(5, 10)
+    [5, 6, 7, 8, 9]
+ >>> range(0, 10, 3)
+    [0, 3, 6, 9]
+ >>> range(-10, -100, -30)
+    [-10, -40, -70]
+
+Ceci pourra s'avérer utile dans les boucle **for**.
+
+Ensembles
+----------
+
+Un ensemble regroupe des éléments sans ordre et sans doublons. Les ensembles implémentent des opérations telles que la symétrie, la différence, etc... Les ensemble n'accepte que objets de types **immutable** (non modifiables)
+
+Dictionnaires
+-------------
+
+Un dictionnaire est un ensemble de couples clé-valeur séparés par des virgules et encadrés par des accolades::
+
+ {4098: 'jack', 4127: 'sjoerd'}
+
+**********
+Opérateurs
+**********
+
+Arithmétiques
+=============
+
+Addition
+ x + y
+Soustraction
+ x - y
+Multiplication
+ x * y
+Division
+ x / y
+Division entière
+ x // y
+Modulo (reste de la division entière)
+ x % y
+Opposé
+ -x
+Valeur absolue
+ abs(x)
+Forcer la conversion en entier simple ou long
+ int(x)
+
+ long(x)
+Forcer la conversion en flottant
+ float(x)
+Puissance
+ x ** y
+
+Logiques
+========
+
+Intersection
+ x and y
+Union
+ x or y
+Négation
+ not x
+
+Notez qu'une expression quelconque valant False, 0, None ou tout type complexe vide sera converti en False dans une expression logique.
+
+Comparatifs
+===========
+
+Inférieur
+ x < y
+Inférieur ou égal
+ x <= y
+Supérieur
+ x > y
+Supérieur ou égal
+ x >= y
+Egal
+ x == y
+Différent
+ x != y
+
+ x <> y
+Identité (égalité sur des objets complexes)
+ x is y
+Non identité (différence sur des objets complexes)
+ x is not y
+
+Séquences
+=========
+
+Vérifie si un objet est présent ou pas dans un séquence
+ x in s
+
+ x not in s
+Concatène deux séquences
+ s + t
+Produit n copies de la séquence s
+ s * n
+
+ n * s
+Renvoie le ième élément de la séquence
+ s[i]
+Renvoie les éléments d'indice compris entre i et j
+ s[i:j]
+Renvoie la longeur de la séquence
+ len(s)
+Renvoie le plus petit élement de la séquence
+ min(s)
+Renvoie le plus grand élement de la séquence
+ max(s)
+
+**********************
+Structures de contrôle
+**********************
+
+Les structures de contrôle permettent de faire varier l'exécution du programme. Une instruction de contrôle englobe généralement un bloc d'instructions. C'est l'indentation qui délimite les blocs d'instructions.
+
+Structures conditionnelles
+==========================
+
+On peut exécuter un groupe d'instruction en fonction d'une condition::
+
+ >>>  if x < 0:
+ ...      print 'X est négatif'
+ ...
+
+Notez que l'indentation est obligatoire et doit être la même pour toutes les instructions imbriquées.
+
+L'instruction **if** supporte les alternatives::
+
+ >>>  if x < 0:
+ ...      print 'X est négatif'
+ ... elif x == 0:
+ ...      print 'X est nul'
+ ... elif x > 0:
+ ...      print 'X est positif'
+ ... else:
+ ...      print 'Hum...'
+ ...
+
+Structures itératives (boucles)
+===============================
+
+Boucle *for*
+------------
+
+La boucle **for** permet de parcourir les éléments d'une séquence::
+
+ >>> a = ['cat', 'window', 'defenestrate']
+ >>> for x in a:
+ ...     print x, len(x)
+ ... 
+ cat 3
+ window 6
+ defenestrate 12
+
+Dans la plupart des langages, les boucles de type permettent d'itérer sur les indices des éléments d'une séquence. C'est un comportement que l'on peut facilement émuler::
+
+ >>> a = ['cat', 'window', 'defenestrate']
+ >>> for i in range(len(a)):
+ ...     print a[i], len(a[i])
+ ... 
+ cat 3
+ window 6
+ defenestrate 12
+
+On peut également utiliser enumerate pour récupérer et l'indice et l'élément::
+
+ >>> a = ['cat', 'window', 'defenestrate']
+ >>> for i, x in enumerate(a):
+ >>> 	print i, x, len(x)
+ ...
+ 0 cat 3
+ 1 window 6
+ 2 defenestrate 12
+
+Il peut être intéressant de noter que les boucles **for** peuvent s'utiliser sous forme abrégée lors de la définition des séquences::
+
+ >>> [2**i for i in range(10)]
+ [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+
+Dans le cas des dictionnaires, on peut itérer avec une boucle for pour récupérer à la fois la clé et la valeur::
+
+  >>> a = {"couleur":"bleu", "annee":1985, "immatriculation":"1337BB34"} 
+  >>> for k, v in a.iteritems():
+  ...     print k,v
+  ... 
+  couleur bleu
+  annee 1985
+  immatriculation 1337BB34
+
+
+
+Boucle *while*
+--------------
+
+Une boucle **while** répète ses instructions tant qu'une condition est vraie, c'est à dire jusqu'à ce que cette même condition soit fausse::
+
+ >>> x = raw_input('Entrez un entier : ')
+ >>> while x < 10:
+ ...    print 'trop petit...'
+ ...    x = raw_input('Entrez un entier : ')
+
+*********
+Fonctions
+*********
+
+Une fonction est un ensemble d'instructions auquel on affecte un nom::
+
+ def mult2(x):
+    return x*2
+
+Le rôle des fonctions est de factoriser le code ou, d'une manière plus générale, de grouper du code. Si, par exemple, vous devez faire des calculs d'aire à divers endroits de votre programme, vous avez intérêt à isoler les instructions de calcul d'aire dans une fonction.
+
+Lorsque votre programme devient trop gros, vous pouvez le décomposer en fonctions pour préserver la lisibilité du code.
+
+Une fonction est définie par sa signature : son **nom**, ses **types d'arguments** et son **type de retour**. 
+En outre, une fonction possède un comportement sur lequel le programmeur de la fonction et ses utilisateurs se sont accordés. La signature de la fonction ainsi que son comportement forment une sorte de contrat qu'il ne faut pas rompre, sous peine de voir s'écrouler les programmes utilisant cette fonction.
+
+Le mot-clé **def** introduit la déclaration d'une fonction::
+
+  # Syntaxe générale d'une fonction
+  def nom_de_la_fonction(arg1, arg2, ...) :
+    pass
+    ...
+    return expression
+
+Comme pour les structures de contrôle, le corps de la fonction est délimité par l'indentation.
+
+Comme dans l'exemple ci-dessus, une fonction prend généralement un ou plusieurs paramètres (ou arguments). Elle peut aussi avoir une valeur de retour. Les arguments sont accessibles dans le corps de la fonction, au même titre que des variables.
+
+.. warning::
+ Le code d'une fonction est exécuté quand la fonction est appelée, pas quand elle est déclarée.
+
+
+
+Pour appeler une fonction, insérez simplement son nom ainsi que ses paramètres entre parenthèses::
+
+ >>> n = 354
+ >>> mult2(n)
+ 708
+
+Toute fonction peut être utilisée pour former une expression::
+
+ >>> var = mult2(n) + 5
+
+Prenez garde aux **éventuels effets de bord** !
+
+Vous pouvez définir une valeur par défaut pour vos paramètres en plaçant des affectations dans la liste des paramètres::
+
+ >>> def mult2(x = 0):
+ ...    return x*2
+ ...
+ >>> mult2()
+ 0
+
+**********************
+Les modules Python
+**********************
+
+Import
+======
+
+Les modules Python permettent d'organiser le code d'un logiciel en plusieurs fichiers et composants que l'on nomme *module*. Cela permet de se resservir d'un même code dans plusieurs programmes par exemple, ou juste de clarifier l'écriture du code.
+
+Un module consiste donc en un ensemble de définitions et d'instructions Python écrite dans un même fichier et réutilisables par ailleurs. Ces définitions peuvent être **importées** dans un autre module ou dans le module **main** (le script principal).
+
+Le nom du fichier est le nom du module, auquel on ajout le suffixe *.py*. Dans un module, le nom de ce module (une chaine, est dispnible dans la variable **__name__**. Par exemple créons un module avec des fonctions de calcul de la suite de Fibonacci. On appelle ce fichier **fibo.py**::
+
+    # Module pour la suite de Fibonacci
+
+    def fib(n):    # Ecrire la suite de Fibonacci de 1 a n
+        a, b = 0, 1
+        while b < n:
+            print b,
+            a, b = b, a+b
+
+    def fib2(n): # Retourne la suite de Fibonacci de 1 a n
+        result = []
+        a, b = 0, 1
+        while b < n:
+            result.append(b)
+            a, b = b, a+b
+        return result
+
+
+La gestion des modules se fait avec le mot clef **import**. **import** est un mot-clé permettant de faire appel à des éléments définis **ailleurs**.
+
+Si dans l'interpréteur Python on importe le module créé::
+
+    >>> import fibo
+
+Cela n'importe pas directement les noms des fonctions mais seulement le module. On peut ensuite accéder aux fonctions en les préfixant du nom du module::
+
+    >>> fibo.fib(1000)
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987
+    >>> fibo.fib2(100)
+    [1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]
+    >>> fibo.__name__
+    'fibo'
+
+On peut réassigner un nom local à une des fonctions du module si on s'en sert souvent::
+
+    >>> fib = fibo.fib
+    >>> fib(500)
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377
+
+On peut aussi importer des objets spécifiques de l'intérieur d'un module. On utilise pour cela le mot-clef **from**\ ::
+
+    >>> from fibo import fib, fib2
+    >>> fib(500)
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377
+
+Dans ce cas les fonctions *fib* et *fib2* sont accessibles directement.
+Il est possible d'importer tous les éléments d'un module (sauf ceux qui commencent par "_") en utilisant import \*. Cela n'est cependant pas conseillé car cela peut poser des collisions de noms et créer des problèmes difficilement détectables::
+
+    >>> from fibo import *
+    >>> fib(500)
+    1 1 2 3 5 8 13 21 34 55 89 144 233 377
+
+
+Des modules peuvent importer d'autres modules. On place en général les directives **import** au début d'un module (ou script).
+
+Recherche des modules
+=====================
+
+Quand une directive **import monmodule** est utilisée, l'interpréteur Python recherche **monmodule.py** dans le répertoire contenant le script appelant, puis dans la liste des répertoires contenus dans la variable d'environnement **PYTHONPATH**, enfin dans des répertoires par défaut de Python (souvent **.:/usr/local/lib/python** ).
+
+Cette liste de répertoires de recherche est accessible par la variable **sys.path** (après avoir importé le module **sys).
+
+Packages
+========
+
+Les modules Python peuvent aussi être composés de plusieurs fichiers dans une arborescence de répertoires. Cela permet de structurer l'organisation des fichiers, y compris à l'intérieur d'un module, tout en utilisant la notation "." pour accéder au contenu des modules.
+
+La syntaxe pour importer un package est la même que pour importer un module, et le fonctionnement est transparent.
+
+Pour qu'un répertoire soit considéré comme un package, il faut qu'il contienne un fichier **__init__.py** dans lequel sont données les instructions d'initialisation du package (il est souvent vide mais doit être présent).
+
+Un package peut contenir des sous-modules ou sous-package, avec dans ce cas un fichier **__init__.py** par répertoire.
+
+Les packages sont recherchés dans les mêmes endroits que les modules, le fonctionnement est ici aussi totalement identique.
+
+Un exemple de structure de package::
+
+    sound/                      Package principal
+      __init__.py               Initialisation du package sound
+      formats/                  Sous-package pour les formats
+              __init__.py
+              wavread.py
+              wavwrite.py
+              aiffread.py
+              aiffwrite.py
+              auread.py
+              auwrite.py
+              ...
+      effects/                  Sous-package pour les effets
+              __init__.py
+              echo.py
+              surround.py
+              reverse.py
+              ...
+      filters/                  
+              __init__.py
+              equalizer.py
+              vocoder.py
+              karaoke.py
+              ...
+
+Exemples d'imports pour ce package::
+
+    # import du sous-module sound.effect.echo. Il doit ensuite etre reference completement
+    import sound.effects.echo
+    sound.effects.echo.echofilter(input, output, delay=0.7, atten=4)
+
+Une autre façon d'importer le sous module::
+
+    # import du sous-module echo qui rentre dans l'espace de nom courant
+    from sound.effects import echo
+    echo.echofilter(input, output, delay=0.7, atten=4)
+
+On peut aussi importer une variable ou une fonction directement::
+
+    from sound.effects.echo import echofilter
+    echofilter(input, output, delay=0.7, atten=4)
+
+
+###################
+Exercices Python 1
+###################
+
+*******************
+interpréteur Python
+*******************
+
+Lancez la console, tapez simplement la commande suivante::
+
+ ipython
+
+L'interpréteur Python se lance et attends vos instructions.
+
+Dans un premier temps, essayez diverses expressions :
+
+* Calculez des sommes, des divisions...
+* Que se passe-t-il si l'on saisit deux nombres séparés par un espace ?
+* Que se passe-t-il si l'on saisit deux chaînes de caractères séparées par un espace ?
+* Que se passe-t-il si l'on essaye de concaténer une chaîne normale et une chaîne Unicode ?
+* Essayez de passer à **print** le résultat de cette concaténation.
+* Que produit l'instruction suivante ?
+
+::
+
+ print a = 10
+
+* Quelle est la différence entre les deux instructions suivantes ?
+
+::
+
+ print "Python " + "Plugin"
+ print "Python ", "Plugin"
+
+Vous pouvez tester tout ce qui vous passe par la tête, même en cas d'erreur de syntaxe, la console ne vous mangera pas.
+
+Essayez maintenant de travailler avec des listes :
+
+* Créez une liste de 6 éléments, modifiez la valeur du premier élément,
+* extrayez les éléments 1, 3, 5 dans une nouvelle liste.
+* Faites de même avec un tuple.
+* Créez une liste ne contenant que des valeurs numériques.
+* Sachant que la fonction sum() permet d'obtenir la somme des éléments du tableau, quelle formule utilisera-t-on pour calculer la moyenne de la liste ?
+* Testez les différents opérateurs associés aux séquences.
+
+************************
+Créez des scripts Python
+************************
+
+Un script Python est simplement un fichier texte contenant du code Python.
+
+En utilisant l'éditeur de code, créez un fichier portant le nom que vous voulez avec l'extension **.py**.
+
+Dans ce fichier, écrivez un code très simple, par exemple un convertisseur euro-franc::
+
+ a = raw_input('Votre somme en euros : ')
+ print float(a) * 6.55957
+
+Enregistrez votre script.
+
+Pour exécuter ce script, tapez simplement dans la console::
+
+ python script.py
+
+(en supposant que votre script s'appelle script.py).
+
+Vous savez maintenant écrire des scripts Python :) Organisez-vous un répertoire pour stocker vos scripts et passez à la suite.
+
+Améliorez vos scripts (optionnel)
+==================================
+
+Si vous voulez disposer de votre script comme d'une commande Shell, vous devez :
+
+* spécifier l'adresse de l'interpréteur et l'encodage du fichier sur les deux premières lignes
+
+::
+
+ #!/usr/bin/python
+ # -*- coding: utf-8 -*-
+
+* attribuer les droits d'exécution à votre script. Pour ce faire, vous pouvez passer par la fenêtre "Propriétés" du fichier ou taper cette commande dans une console
+
+::
+
+ chmod u+x script.py
+
+* vous assurer que votre script se situe bien dans le PATH.
+
+Notez que l'utilisation de l'extension **.py** n'est absolument pas obligatoire, c'est une simple convention. Vous pouvez l'enlever si vous en jugez bon.
+
+*******************
+Lecture de script 1
+*******************
+
+Lire (et comprendre) du code Python est généralement un premier pas dans l'apprentissage du langage.
+
+En lisant et en testant le script dans le fichier **convertisseur.py**, qu'apprenez-vous sur la fonction **raw_input()** ?. Quels sont ses paramètres ? sa valeur de retour ? que **fait**-elle ? Pour plus d'information, vous pouvez consulter l'aide dans ipython::
+
+ raw_input?
+
+En vous appuyant sur les exemples vu en cours, pouvez-vous modifier ce script pour qu'il continue à s'exécuter tant que l'utilisateur saisit un montant non nul ?
+
+**********************
+Lecture de script 2
+**********************
+
+Analysez le code suivant ( fichier **stat-fichiers.py** )::
+
+  #!/usr/bin/python
+  # -*- coding: utf-8 -*-
+  
+  import os
+  
+  home_directory = os.path.expanduser('~') # '~' est un raccourci pour désigner le répertoire utilisateur.
+  file_list = os.listdir(home_directory)
+
+  count_dir = 0
+  count_file = 0
+  count_hidden = 0
+  count_others = 0
+  count = 0
+
+  for node in file_list:
+      count = count + 1
+      if node[0] == '.':
+          count_hidden = count_hidden + 1
+      if os.path.isfile(home_directory + '/' + node):
+          count_file = count_file + 1
+      elif os.path.isdir(home_directory + '/' + node):
+          count_dir = count_dir + 1
+      else:
+          count_others = count_others + 1
+  
+  print 'Le répertoire utilisateur contient :'
+  print '    - ' + str(count_file) + ' fichiers réguliers'
+  print '    - ' + str(count_dir) + ' répertoires'
+  print '    - ' + str(count_others) + ' autres fichiers'
+  print 'Notez que ' + str(count_hidden / float(count) * 100) + '% des fichiers sont masqués'
+
+Pouvez-vous dire ce qu'il fait ? Commentez le code pour décrire le comportement du script.
+
+N'hésitez pas à consulter l'aide dans ipython pour comprendre le rôle de telle ou telle instruction.
+
+En vous appuyant sur ce que vous avez appris à l'étape précédente, modifiez ce script pour qu'il demande à l'utilisateur quel répertoire analyser.
+
+***********************
+Définition de fonctions
+***********************
+
+* Ecrivez une première fonction affichant simplement une ligne vide (l'instruction **print** sans argument devrait produire cet effet).
+
+* Ecrivez une deuxième fonction affichant 3 lignes vides successives. Cette nouvelle fonction utilisera la première fonction ci-dessus.
+
+* Modifiez votre fonction pour qu'elle affiche **n** lignes vides successives, **n** étant un paramètre.
+
+* Modifiez votre fonction pour que son argument prenne la valeur 3 par défaut.
+
+*************
+Algorithmique
+*************
+
+La surface d'un rectangle
+=========================
+
+Vous souhaitez calculer la surface d'un rectangle.
+
+* Quelles sont les informations dont vous avez besoin en entrée ?
+
+* Quelle est l'information que vous souhaitez en sortie ?
+
+* Quel est le traitement à réaliser ?
+
+* Ecrivez-le en Python.
+
+Calcul statistique
+==================
+
+Vous souhaitez calculer une moyenne coefficientée.
+
+* Quelles sont les informations dont vous avez besoin en entrée ?
+
+* Quelle est l'information que vous souhaitez en sortie ?
+
+* Quel est le traitement à réaliser ?
+
+* Ecrivez-le en Python.
+
+Calcul entier
+=============
+
+Vous disposez d'une somme de monnaie en euros. Pour simplifier, disons que c'est une somme ronde (pas de centimes).
+
+Vous souhaitez déterminer combien de pièces et billets sont nécessaires pour représenter cette somme. Vous cherchez le nombre minimal de billets et de pièces.
+
+Concevez le programme réalisant ce calcul en utilisant le division entière et l'opérateur de modulo.
+
+Vous détaillerez les étapes suivies pour aboutir à ce programme.
+
+Itérations
+==========
+
+Ecrivez une fonction qui affiche la suite de Padovan jusqu'à l'indice **n**.
+
+La suite de Padovan est définie par::
+
+ Fn+3 = Fn+2 + Fn
+ F2 = 1
+ F1 = 1
+ F0 = 1
+
+*****************
+Import de modules
+*****************
+
+* Importez le module **math**.
+* Utilisez l'introspection pour voir ce qui est fourni par le module math.
+* Utilisez la fonction **sqrt** du module **math** pour calculer le nombre d'or. Le nombre d'or se définit comme "1 plus racine de 5, le tout divisé par 2".
+
+
+########################
+Python, notions avancées
+########################
+
+*******************
+Gestion des erreurs
+*******************
+
+Pour l'instant, nous avons créé des programmes simples. Ceux-ci fonctionnaient bien mais seulement dans le cas où ils étaient censés fonctionner.
+
+Malheureusement, dans la vraie vie, un programme est souvent confronté à des situations inattendues. Lorsqu'un cas non supporté se présente, un programme peut simplement "planter" en libérant de nombreux messages incompréhensibles, ceci est généralement désagréable pour les utilisateur. 
+
+Si vous avez un peu d'estime pour l'utilisateur, vous chercherez par tous les moyens à anticiper ces cas particuliers d'une part pour empêcher l'arrêt brutal du programme et d'autre part pour rétablir une situation normale en informant l'utilisateur de **la solution à apporter au problème**.
+
+Erreurs et exceptions
+=====================
+
+En matière de programmation, on parle souvent d'erreur et d'exception. De manière simple, disons que les erreurs sont le fait du programmeur alors que les exceptions correspondent à des cas non supportés par le programme.
+
+Par exemple, lorsque vous oubliez d'indenter le corps d'une boucle, il s'agit d'une erreur. A l'inverse, lorsque l'utilisateur saisit "arthur" quand on lui demande son age, il s'agit d'une exception.
+
+Les erreurs peuvent être dues à une mauvaise conception du programme. Cela arrive souvent à tous les programmeurs. Dans ce cas, seuls des tests pourront vous aider à éliminer les erreurs. Python vous aide en signalant les erreurs de syntaxe. Lorsque le programme s'arrête brutalement et signale une **SyntaxError**, relisez calmement votre code, vous avez fait une erreur quelque part, il suffit de la trouver.
+
+Tous les autres cas d'arrêt brutal du programme correspondent à des exceptions. Il peut s'agir d'une division par zéro, d'une opération arithmétiques sur une valeur non numérique, etc. Dans tous les cas, l'interpréteur affichera une erreur qui vous permettra de trouver la source du problème.
+
+Intercepter une exception
+=========================
+
+Notez que l'arrêt brutal du programme peut être normal. Lorsque l'utilisateur saisit "arthur" quand on lui demande son age, le programme ne peut plus décemment calculer la moyenne d'age des utilisateurs par exemple. Il s'agit d'une exception, d'un cas non supporté par le programme.
+
+Cela dit, vous pouvez tout de même réagir lorsqu'une exception se produit. Vous pouvez **intercepter** cette exception et réagir pour rétablir la situation. Ceci se fait avec le couple d'instruction **try** et **except**. Voici un exemple::
+
+ >>> a = 9876
+ >>> b = 0
+ >>> try:
+ ...    c = a / b
+ ... except ZeroDivisionError:
+ ...    c = 0
+ ...    print "Problème : On ne peut pas diviser par 0. On considère que 'c' vaut 0."
+ ... 
+ Problème : On ne peut pas diviser par 0. On considère que 'c' vaut 0.
+ >>> print a, b, c
+ 9876 0 0
+
+Dans l'exemple ci-dessus, nous savons que le cas d'une division par 0 peut arriver. Nous interceptons donc cette erreur et préparons une riposte. Cette riposte se compose de deux actions :
+
+* affecter à **c** une valeur par défaut pour permettre à la suite du programme de s'exécuter normalement,
+* prévenir l'utilisateur qu'un cas particulier s'est produit.
+
+L'interception des exceptions peut vous permettre de :
+
+#. rétablir la situation lorsque c'est possible,
+#. amorcer la fin du programme de manière propre (avec un message d'erreur digne de ce nom) lorsque la situation n'est pas récupérable.
+
+Toute exception se produisant en dehors d'un bloc **try** entrainera l'arrêt brutal du programme. Ceci est parfaitement normal et même positif en période de développement ou test. A l'inverse, il serait vraiment regrettable que cela arrive en phase de production.
+
+Il est possible de traiter plusieurs cas particuliers (plusieurs exceptions donc) en une seule fois::
+
+ >>> try:
+ ...    a = b/0
+ ... except (ZeroDivisionError, NameError):
+ ...    print 'Erreur !'
+ ... 
+ Erreur !
+
+Attention, les **parenthèses sont obligatoires ici**
+
+Il est aussi possible de traiter individuellement chaque cas particulier::
+
+ >>> try:
+ ...    a = b / 0
+ ... except ZeroDivisionError:
+ ...    print 'Erreur: division par zéro !'
+ ... except NameError:
+ ...    print "Erreur: la variable n'existe pas"
+ ... 
+ Erreur: la variable n'existe pas
+
+Enfin, il est aussi possible d'intercepter toutes les exceptions possibles (et même les autres) si l'on ne spécifie pas le type::
+
+ >>> try:
+ ...    a = 1/0
+ ... except:
+ ...    print 'Une erreur s\' est produit mais on ne sait pas bien laquelle...'
+ ... 
+ Une erreur s' est produit mais on ne sait pas bien laquelle...
+
+Il n'est pas du tout recommandé d'utiliser cette dernière construction car cela masquerait les bugs du programme et empêcherait donc leur correction.
+
+Il existe deux autres instructions que l'on peut combiner avec **try** et **except**. Il s'agit de **else** et de **finally**. On les utilise de la manière suivante::
+
+ >>> def test(a, b):
+ ...    c = None
+ ...    try:
+ ...       c = a/b
+ ...    except:
+ ...       print 'Une erreur s\'est produite'
+ ...    else:
+ ...       print 'Aucune erreur ne s\'est produite'
+ ...    finally:
+ ...       print 'Une erreur s\'est produite... ou pas !'
+ ...    return c
+ ... 
+ >>> test(1, 2)
+ Aucune erreur ne s'est produite
+ Une erreur s'est produite... ou pas !
+ 0
+ >>> test(1, 0)
+ Une erreur s'est produite
+ Une erreur s'est produite... ou pas !
+
+L'exemple ci-dessous nous montre que les blocs **except** ne sont exécutés qu'en cas d'erreur. Le bloc **else** n'est exécuté que lorsqu'il n'y a pas d'exception. Enfin, le bloc **finally** est exécuté dans tout les cas.
+
+Déclencher une exception
+========================
+
+L'instruction **raise** permet de déclencher une exception "de force". Imaginez par exemple que vous écriviez une fonction prennant un entier positif en paramètre. Si jamais le paramètre donné est négatif, vous pourrez informer le **code appelant** de son erreur en **déclenchant** une exception.::
+
+ >>> def ma_fonction(i):
+ ...    if i < 0:
+ ...       raise ValueError, 'i doit être positif'
+ ... 
+ >>> ma_fonction(0)
+ >>> ma_fonction(-12)
+ Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 3, in ma_fonction
+ ValueError: i doit être positif
+
+Lorsque **i** est négatif, une exception est déclenchée et l'exécution de la fonction s'arrête. Il en va de même pour le code appelant et pour celui qui l'a appelé et ainsi de suite. L'exception se **propage** de proche en proche jusqu'à ce qu'elle soit interceptée ou que le programme s'arrête.
+
+La syntaxe de **raise** permet non seulement de spécifier le type de l'exception mais aussi d'ajouter un message personnalisé pour aiguiller le programmeur dans la résolution du problème.
+
+*****************
+Prévenir l'erreur
+*****************
+
+Obtenir des données de la part de l'utilisateur
+===============================================
+
+Le meilleur moyen d'obtenir des donnnées valides est de les demander correctement. Ainsi, lorsque l'on pose des conditions particulière sur le format des données, il faut en informer l'utilisateur au moment où il saisit les données. Par exemple la première ligne est préférable à la seconde::
+
+ num_tel = raw_input('Numéro de téléphone (10 chiffres sans espaces ni séparateurs) : ')
+ num_tel = raw_input('Numéro de téléphone : ')
+
+Normalement, vous connaissez déjà la fonction **input()**. Celle-ci prend en paramètre un message qu'elle affiche à l'écran et attend une saisie de l'utilisateur. La capture de la saisie s'arrête lorsque l'utilisateur appuie sur la touche "entrée". Cette fonction a l'inconvénient d'exiger une saisie ayant une syntaxe Python valide, c'est-à-dire que pour saisir une chaîne de caractère, l'utilisateur devrait l'encadrer de guillemets, ce qui est peu intuitif.
+
+Il est donc recommandé d'utiliser la fonction **raw_input()** à la place. Contrairement à **input()**, cette fonction produit toujours une chaîne de caractère, même si l'utilisateur n'a saisi que des chiffres. Vous pouvez ensuite utiliser les fonctions de conversion pour obtenir une valeur du type souhaité::
+
+ reponse = raw_input('Votre age : ')
+ age = int(reponse)
+
+Valider les entrées
+===================
+
+Même si vous avez pris soin d'expliciter correctement votre demande, vous ne pouvez pas considérer les données provenant de l'utilisateur comme valides. Une vérification s'impose au risque de voir l'équilibre du programme s'effondrer.
+
+Lorsque vous recevez des données depuis une source gérant différents types de données compatibles avec Python, vous pouvez utiliser la fonction **type()** qui donne le type d'une variable ou d'une valeur. Faîtes simplement un test sur le résultat de la fonction comme ceci::
+
+ >>> type(876) is int
+ True
+ >>> type('du texte') is int
+ False
+ >>> type(876) is str
+ False
+ >>> type('du texte') is str
+ True
+ >>> type(876.987) is int
+ False
+ >>> type(876.987) is float
+ True
+
+Lorsque vous lisez des valeurs dans un fichier ou que obtenez une saisie de l'utilisateur via **raw_input()**, vous ne pouvez pas utilisez **type()** car le résultat serait toujours **str**. La solution consiste à utiliser les fonctions de conversion et à intercepter les éventuelles exceptions **ValueError**. Par exemple::
+
+ try:
+    age = int(raw_input('Votre age : '))
+ except ValueError:
+    print 'Valeur incorrecte, entrez un nombre entier.'
+ try:
+    taille = float(raw_input('Votre taille : '))
+ except ValueError:
+    print 'Valeur incorrecte, entrez un nombre décimal.'
+
+Dans la plupart des cas, on souhaite redemander à l'utilisateur de saisir tant que la valeur n'est pas correcte. Une manière succinte d'écrire ceci est::
+
+ while True:
+    try:
+       age = int(raw_input('Votre age : '))
+       break
+    except ValueError:
+       print 'Valeur incorrecte, entrez un nombre entier.'
+
+*********************
+Date, mesure du temps
+*********************
+
+A travers le module **datetime**, Python fournit un moyen efficace de traiter les données temporelles. On peut représenter les dates, les formater mais aussi réaliser des opérations dessus::
+
+    >>> # Formatage des dates
+    >>> from datetime import date
+    >>> now = date.today()
+    >>> now
+    datetime.date(2003, 12, 2)
+    >>> now.strftime("%m-%d-%y. %d %b %Y is a %A on the %d day of %B.")
+    '12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.'
+    >>> # Calculs sur les dates
+    >>> birthday = date(1964, 7, 31)
+    >>> age = now - birthday
+    >>> age.days
+    14368
+
+***************************
+Gestion des entrées/sorties
+***************************
+
+Une utilisation de Python est de transformer des données et à les faire passer d'un support vers un autre. Nous voyons ici comment accéder en lecture et en écriture à des fichiers.
+
+Pour traiter un fichier, vous devez en premier lieu l'ouvrir avec la fonction **open()**. Cette fonction renvoit un **descripteur** de fichier qui constitue votre lien avec le fichier ouvert. Une fois que vous avez fini de traiter ce fichier, penser à le fermer avec la fonction **close()**.
+
+La fonction **open()** prend en premier argument le chemin d'accès au fichier et en deuxième argument le mode qui peut être :
+
+* 'r' pour lire dans le fichier,
+* 'w' pour écrire à partir du début du fichier (écrase le contenu précédent),
+* 'a' pour écrire à la fin du fichier (en ajoutant au contenu précédent).
+
+::
+
+ >>> f = open('/tmp/workfile', 'r')
+ >>> 
+ >>> f.close()
+
+La lecture dans le fichier s'appuie sur un **curseur**. Celui-ci est positionné sur le début du fichier par défaut (c'est-à-dire à l'ouverture). A chaque fois que vous lisez des données, le curseur se déplace jusqu'à la fin des données lues. En général, on lit dans un fichier texte ligne par ligne::
+
+ >>> f = open('/tmp/workfile', 'r')
+ >>> f.readline()
+ >>> f.close()
+
+A chaque fois qu'on appelle **readline()**, le curseur se déplace vers le début de la ligne suivante. On peut aussi utiliser **read()** qui prend en argument le nombre de caractère à lire. Cela dit, il existe une syntaxe rapide et efficace pour lire dans un fichier ligne par ligne::
+
+ >>> f = open('/tmp/workfile', 'r')
+ >>> for line in f:
+ ...    print line
+ ... 
+ >>> f.close()
+
+Inversemment, pour écrire dans le fichier, on utilisera la méthode **write()** de la manière suivante::
+
+ >>> f = open('/tmp/workfile', 'w')
+ >>> f.write('This is a test\n')
+ >>> f.close()
+
+Notez que les opérations autorisées dans le fichier dépendent du mode dans lequel le fichier est ouvert.
+
+
+###################
+Exercices Python 2
+###################
+
+*********************
+Gestion d'exception 1
+*********************
+
+Exécutez le code suivant::
+
+ operande_1 = 2
+ operande_2 = 'quatre'
+ somme = operande_1 + operande_2
+
+Que s'est-il passé ? En supposant que vous ayez reçu un message d'erreur de Python (ce qui devrait être le cas), pouvez-vous expliquer cette erreur en langage naturel ?
+
+Supposons maintenant que vous ne maîtrisiez pas le contenu des deux opérandes, quels solutions s'offrent à vous pour éviter l'arrêt brutal du programme ? Mettez en œuvre la solution qui vous semble la plus adaptée.
+
+Que se passe-t-il maintenant si l'on exécute le code suivant ? ::
+
+ operande_1 = 2
+ operande_2 = 'quatre'
+ somme = ( operande_1 + operande_2 ) / cinq
+
+Pouvez-vous expliquer cette erreur ?
+
+Améliorez la solution mise en œuvre précédemment pour traiter cette nouvelle erreur. Vous apporterez une réponse différente pour les deux types d'erreur.
+
+Enfin, complétez ce code pour afficher la somme si et seulement si elle a été calculée.
+
+*********************
+Gestion d'exception 2
+*********************
+
+Ecrivez la fonction **somme_sequence_positive(s)** produisant ce résultat::
+
+ >>> s = (0, 4, 7.1, 3)
+ >>> print somme_sequence_positive(s)
+ 14.1
+ >>> s = (0, 4, 7.1, -3)
+ >>> print somme_sequence_positive(s)
+ Traceback (most recent call last):
+   File "<stdin>", line 1, in <module>
+   File "<stdin>", line 5, in somme_sequence_positive
+ ValueError: Nombres négatifs interdits !
+
+La fonction doit simplement faire la somme des éléments de la séquence. On suppose que tous les éléments sont de type numérique. Au cours du calcul, si un élément est négatif, déclenchez une exception de type ValueError avec le message : "Nombres négatifs interdits !".
+
+************************
+Validation des données 1
+************************
+
+Reprenez la fonction de calcul de la suite de Padovan vu dans la première série d'exercice. Améliorez-la en vérifiant le type et la valeur du paramètre. Selon le cas, vous pourrez déclencher des exceptions de type **TypeError** ou **ValueError**.
+
+************************
+Validation des données 2
+************************
+
+Ecrivez une fonction **input_int()** qui permet d'obtenir une valeur entière saisie au clavier par l'utilisateur.
+
+Cette fonction utilisera **raw_input()** pour afficher la question et recueillir la saisie. Ensuite la fonction **int()** permettra de convertir la saisie en entier. Pensez à afficher une erreur et reposer la question si la saisie n'est pas valide.
+
+************************
+Validation des données 3
+************************
+
+Ecrivez une fonction **input_float()**. Celle-ci fonctionne de la même manière que **input_int()** mais vise à obtenir une valeur flottante.
+
+
+***************************************
+Manipulation des chaines de caractère 2
+***************************************
+
+Vous recevez une chaîne saisie par l'utilisateur représentant une date. Le format de cette chaîne est 'JJ/MM/AAAA' impérativement. Ecrivez une fonction **decompose_date(s)** qui transforme cette chaîne en un tuple de trois entiers représentant le jour le mois et l'année.
+
+Par exemple, cette fonction produirait::
+
+ >>> s = '06/11/2005'
+ >>> decompose_date(s)
+ (6, 11, 2005)
+
+Vous gérerez les cas particuliers et notamment les chaines invalides (ne correspondant pas au format donné ci-dessus).
+
+***************************************
+Manipulation des chaines de caractère 3
+***************************************
+
+A l'aide de la méthode **join()**, affichez la date au format 'JJ-MM-AAAA' à partir du tuple produit par la fonction decompose_date(s).
+
+
+******************
+Accès aux fichiers
+******************
+
+Prenez le fichier **exemple.csv** et mettez le dans votre répertoire de travail.
+
+Dans un premier temps, accédez à ce fichier en lecture en Python. Lisez chaque ligne du fichier et affichez-les simplement à l'écran. Vous avez donc maintenant la structure générale d'un programme lisant séquentiellement un fichier.
+
+Pour chaque ligne, construisez une séquence à l'aide de la fonction **split()**. Ceci vous permettra de découper chaque ligne en plusieurs champs. Lorsque les champs d'origine sont de type chaîne, ils sont encadrés par des guillemets, vous pouvez les "nettoyer" à l'aide de la fonction **strip()**. Enfin, convertissez chaque champs dans le type approprié. Pour chaque ligne, vous aurez donc une séquence avec un premier élément de type entier et un élément de type chaîne et un autre de type date.
+
+Enfin, utilisez la fonction **join()** pour afficher chaque ligne du fichier sous la forme::
+
+  <date> - <ville>
+  **<date>** représente le deuxième champs et **<ville>** est le troisième.
+
+
+######################################
+Programmation orientée-objet en Python
+######################################
+
+******************
+Introduction à POO
+******************
+
+Jusqu'à maintenant nous avons vu que, pour traiter de l'information, un programme :
+
+* gère des structures de données représentant l'information en s'appuyant sur le concept de **variable**,
+* implémente un traitement de ces données en s'appuyant sur le concept de **fonction**.
+
+En cherchant à améliorer l'architecture des programmes, le besoin de rapprocher ces deux concepts est apparu. En effet, une fonction ne peut pas s'appliquer à toutes les variables et inversemment. Il existe donc des relations entre les variables et les fonctions qui rendent valide ou non leur association : on ne calcule pas l'aire d'un point ni le périmètre d'une ligne par exemple, ce serait absurde.
+
+La notions d'**objet** fait apparaître ce lien en **encapsulant** variables et fonctions dans une même structure. On parle alors de **propriétés** et de **méthodes** de l'objet (on dit parfois que ce sont les membres de l'objet). L'ensemble des informations et comportements relatifs à un concept peuvent donc interagir en toute cohérence.
+
+Imaginez, par exemple, un objet de type **Voiture**. Cet objet peut avoir les propriétés **immatriculation**, **couleur** et **cylindrée**. On pourra implémenter les méthodes **charger()** et **décharger()** ainsi que **accélerer()** et **freiner()** par exemple. Il est aussi possible d'imaginer que la méthode **accélerer()** se comporte différement en fonction de la **cylindrée**.
+
+Notez qu'il s'agit d'une **modélisation** d'un objet réel que nous connaissons tous. En tant que tel, son périmètre se limite à ce que nous jugeons utile en fonction de nos besoins. Une **modélisation** est une représentation simplifiée de la réalité, cette représentation est construite avec des objectifs particuliers. Nous n'avons dans cet exemple que trois propriétés et quatre méthodes pour représenter une voiture, vous pouvez imaginez que la notion de voiture dans le système d'information d'un constructeur automobile est bien plus complexe.
+
+Vous savez déjà qu'une variable possède toujours un type. Il en va de même pour les objets. La description de ce type, c'est-à-dire de la structure de l'objet est appelée une **classe**. Une **classe** possède un nom ainsi qu'un ensemble de propriétés et de méthodes. Les **objets** sont précisemment des **instances de classe**. On dit d'ailleurs qu'on **instancie** une classe en créant un **objet**.
+
+Dans l'exemple de la voiture, nous décrivions la représentation qu'on peut faire d'une voiture, il s'agit donc d'une classe. On peut ensuite manipuler plusieurs objets issue de cette classe. Par exemple, la voiture d'Arthur est bleue, immatriculée "2222 AGH 83" et a une cylindrée de 1,5l. Celle de Gabriel est jaune, immatriculée "986 TR 29" et n'a qu'un litre de cylindrée. Ces deux objets sont différents mais possèdent la même structure et le même comportement car ils sont deux instances différentes de la même classe.
+
+Dans certains cas, la similarité dans la structure de deux objets peut être partielle. Imaginez une moto par exemple, elle a bien une couleur, une immatriculation et une cylindrée. La moto peut accélerer et freiner mais ne peut pas être chargée ou déchargée puisqu'elle n'a pas de coffre. Prenons l'exemple d'un vélo maintenant, il se comporte approximativement comme une moto mais n'a pas de cylindrée ni d'immatriculation. Pour simplifier, disons que :
+
+* un véhicule a une couleur et peut accélerer ou freiner,
+* un vélo est un véhicule,
+* un véhicule motorisé est un véhicule qui a une cylindrée et une immatriculation,
+* une moto est un véhicule motorisée,
+* une voiture est un véhicule motorisée qui a un coffre et peut donc être charger ou décharger.
+
+Ainsi, si tout le monde est d'accord sur la description d'un véhicule motorisé, il est plus simple de s'appuyer sur cette définition pour décrire une voiture. C'est la relation d'**héritage**. Nous définirons donc d'abord une classe pour décrire le véhicule motorisé, puis la classe décrivant la voiture héritera de toutes les propriétés et méthodes du véhicule motorisé.
+
+********************
+Les objets en Python
+********************
+
+En Python comme dans de nombreux langages de script, à peu près tout est un objet. Vous manipulez donc déjà des objets sans le savoir.
+
+Prenons l'exemple d'une chaîne::
+
+ >>> chaine = 'du texte du texte du texte'
+ >>> print chaine
+ du texte du texte du texte
+ >>> print chaine.upper()
+ DU TEXTE DU TEXTE DU TEXTE
+
+Bravo, vous venez d'instancier un objet de la classe **str** nommé **chaine**. Vous avez ensuite appelé la méthode **upper()** de cet objet. Au passage, vous avez découvert qu'on utilise la notation pointée pour accéder aux propriétés et méthodes d'un objet.
+
+.. note::
+
+  Dans le cas des types de base (**built-in types**), il est un peu abusif de parler d'objet mais le comportement est similaire. Nous utilisons ainsi **str** pour les exemples car c'est un élément simple et bien connu.
+
+Pour créer un nouvel objet, utilisez simplement le nom de la classe suivi d'une paire de parenthèses::
+
+ >>> chaine = str()
+
+Cette fonction portant le même nom que la classe est appelé **constructeur** de la classe, son rôle est d'initialiser l'objet. Dans certains cas, le constructeur peut prendre des paramètres::
+
+ >>> chaine = str('du texte du texte du texte')
+
+Les éléments de base à retenir pour utiliser les objets en Python sont :
+
+* un objet est composé de propriétés et de méthodes,
+* vous utilisez le point pour accéder aux membres d'un objet,
+* par convention, un nom de classe commence par une majuscule,
+* les propriétés/méthodes d'un objets dont le nom commence par un underscore sont réservées au système
+
+Pour créer vos propres classes, vous devrez au moins maitriser :
+
+* la création de classe avec le mot-clé **class**
+* l'utilisation de l'auto-référence (propriété spéciale **self**)
+* la création de propriétés
+* la création de méthodes
+* gestion de l'initialisation et de la destruction de l'objet (méthodes spéciales **__init__()** et **__del__()**)
+
+*******************
+Définir une classe
+*******************
+
+
+************************************
+Création et utilisation d'une classe
+************************************
+
+La syntaxe générale de création d'une classe est la suivante::
+
+    class MaClasse:
+        instruction1
+        ...
+        instructionN
+
+Les instructions dans la définition de la classe sont en général des définitions de fonctions, même si d'autres instructions peuvent éventuellement y être placées.
+
+Lorsqu'on a défini une classe on peut l'instancier en appelant son constructeur avec la syntaxe déjà vue ci dessus::
+
+    >>> mybag = Bag()
+
+La définition de cette classe Python::
+
+    class Bag:
+        """Une classe pour stocker des choses"""
+        def __init__(self):
+            self.data = []
+        def add(self, x):
+            self.data.append(x)
+        def addtwice(self, x):
+            self.add(x)
+            self.add(x)
+
+On voit ici qu'à l'intérieur de la classe on a des définitions de **méthodes** qui utilisent des **propriétés** de la classe. Lorsqu'on veut faire référence à un élément de la classe, propriété ou méthode, on utilise le mot-clef **self**. Ce mot clef est également le premier argument dans la définition des méthodes.
+
+On peut une fois qu'on a une instance de la classe appeler une de ses méthodes::
+
+    >>> mybag.add("Sandwich")
+
+On ajoute ici un sandwich dans le sac, en appelant la **méthode** *add* de la classe *Bag*. Lorsqu'on appelle cette méthode, on passe l'argument *x*. L'argument **self** de la fonction *add* est en fait l'instance de la classe elle même.
+
+La fonction **__init__(self)** est une méthode particulière. C'est le constructeur. C'est cette méthode qui est appelée lors de l'instanciation de la classe. On y place en général les initialisations des propriétés, ou certains traitements spécifiques à réaliser à la création de l'objet. Ici on initialise la propriété *data* à la séquence vide. Ce faisant, on crée cette nouvelle propriété de la classe, puisqu'elle est préfixée par le mot-clef *self*.
+
+Lors de l'appel à la méthode *add* on agit donc sur la propriété *data* en lui ajoutant l'argument donné à *add*.
+
+Il faut noter que le constructeur peut aussi avoir des arguments::
+
+    >>> class Complex:
+    ...     def __init__(self, realpart, imagpart):
+    ...         self.r = realpart
+    ...         self.i = imagpart
+    ...
+    >>> x = Complex(3.0, -4.5)
+    >>> x.r, x.i
+    (3.0, -4.5)
+
+Il existe quelques autres méthodes spéciales pouvant être définis dans une classe. Elles sont détaillées ici : http://docs.python.org/reference/datamodel.html#basic-customization
+
+********
+Héritage
+********
+
+Il est donc possible pour une classe d'hériter d'une autre classe. La syntaxe générale dans ce cas est::
+
+    class DerivedClassName(BaseClassName):
+        <statement-1>
+        .
+        .
+        .
+        <statement-N>
+
+La recherche des attributs et méthodes se fait dans la classe dérivée puis dans les classes parentes si ils ne sont pas trouvés dans la classe dérivée.
+
+Il est possible de surcharger dans une classe dérivée une méthode définie dans une classe parente. Si on veut appeler spécifiquement la méthode de la classe parente on peut le faire avec la syntaxe au point::
+
+    BaseClassName.methodname(self, arguments)
+
+Le constructeur de la classe parente n'est pas automatiquement appelé lors de l'instanciation de la classe dérivée, il faut donc l'appeler explicitement avec cette syntaxe si besoin.
+
+************************
+Exercice sur les classes
+************************
+
+Référez-vous à la documentation Python si vous voulez plus de détails sur l'utilisation des classes : http://docs.python.org/tutorial/classes.html
+
+Vous souhaitez manipuler des dates, créez pour cela une classe ayant les spécificités suivantes :
+
+* Aucune propriété n'est visible.
+* Le constructeur peut prendre en paramètre une chaîne qui sera traitée par la méthode set_date_ymd(date_string).
+* La méthode set_date(year, month, day) ré-initialise la date.
+* La méthode set_date_ymd(date_string) ré-initialise la date en analysant la chaine de caractère passée en argument. Cette chaîne doit être au format "YYYY-MM-DD" sinon une exception est lancée.
+* La méthode get_date_ymd() affiche la date au format YYYY/MM/DD.
+* La méthode get_date_dmy() affiche la date au format DD/MM/YYYY.
+
+.. note::
+
+ Pour créer la date à partir d'une chaîne de caractère, vous aurez probablement besoin de la méthode **split()** des objets **str**. Pour valider la chaînes vous pouvez vous appuyez sur les exceptions ou utiliser une expression régulière.
+
+Ecrivez également un petit programme de test qui instancie des objets de votre classe avec diverses valeurs (valides ou non).

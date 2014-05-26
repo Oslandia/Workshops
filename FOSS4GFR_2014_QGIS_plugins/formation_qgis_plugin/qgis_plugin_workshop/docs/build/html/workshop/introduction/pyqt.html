@@ -1,0 +1,192 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PyQT &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="Introduction - Outils" href="index.html" />
+    <link rel="next" title="1ere partie - Exploration de l’utilisation de Python dans QGIS" href="../explorer/index.html" />
+    <link rel="prev" title="QT" href="qt.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="qt.html"
+                        title="previous chapter">QT</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../explorer/index.html"
+                        title="next chapter">1ere partie - Exploration de l&#8217;utilisation de Python dans QGIS</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/introduction/pyqt.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="pyqt">
+<h1>PyQT<a class="headerlink" href="#pyqt" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="qu-est-ce-que-c-est">
+<h2>Qu&#8217;est ce que c&#8217;est<a class="headerlink" href="#qu-est-ce-que-c-est" title="Permalink to this headline">¶</a></h2>
+<p>PyQt désigne les <em>bindings</em> Python qui enrobent la bibliothèque C++ de Qt. Cela signifie que l&#8217;on peut maintenant utiliser Python pour construire des applications Qt au lieu d&#8217;apprendre le C++.</p>
+</div>
+<div class="section" id="comment-l-idee-de-pyqgis-est-arrivee">
+<h2>Comment l&#8217;idée de PyQGIS est arrivée<a class="headerlink" href="#comment-l-idee-de-pyqgis-est-arrivee" title="Permalink to this headline">¶</a></h2>
+<p>Utiler les <em>wrappers</em> PyQt pour accéder aux bibliothèques QGIS était une solution pratique car QGIS était construit au dessus des bibliothèques Qt. D&#8217;après le  <a class="reference external" href="http://www.qgis.org/pyqgis-cookbook/intro.html#python-console">PyQGIS cookbook</a> , une autre raison pour PyQt semble être l&#8217;immense popularité de Python.</p>
+</div>
+<div class="section" id="exemples">
+<h2>Exemples<a class="headerlink" href="#exemples" title="Permalink to this headline">¶</a></h2>
+<p>Ci dessous se trouvent deux exemples: le premier est une définition XML pour Qt et le second est un module PyQt.</p>
+<p>Le schema XML définit la constitution de l&#8217;interfaçe graphique utilisateur (GUI). Il a été créé en utilisant Qt Designer, un programme qui aide à construre des interfaçes graphiques avec des composants à glisser-déposer. Les composants sont ensuites sauvés dans un schéma XML. Il faut noter que XML, comme HTML, est un langage qui définit une structure de données, mais n&#8217;est pas un langage fonctionnel.</p>
+<p>Exemple d&#8217;une structure XML de QT Designer:</p>
+<div class="highlight-python"><pre>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;ui version="4.0"&gt;
+ &lt;class&gt;Dialog&lt;/class&gt;
+ &lt;widget class="QDialog" name="Dialog"&gt;
+  &lt;property name="geometry"&gt;
+   &lt;rect&gt;
+    &lt;x&gt;0&lt;/x&gt;
+    &lt;y&gt;0&lt;/y&gt;
+    &lt;width&gt;400&lt;/width&gt;
+    &lt;height&gt;300&lt;/height&gt;
+   &lt;/rect&gt;
+  &lt;/property&gt;
+  &lt;property name="windowTitle"&gt;
+   &lt;string&gt;Dialog&lt;/string&gt;
+  &lt;/property&gt;
+ &lt;/widget&gt;
+ &lt;resources/&gt;
+ &lt;connections/&gt;
+&lt;/ui&gt;</pre>
+</div>
+<p>Une fois effectué le rendu, la structure XML ci-dessus décrit ce type de fenêtre GUI. Un exemple très simple:</p>
+<a class="reference internal image-reference" href="../../_images/qt_designer_form_example.png"><img alt="../../_images/qt_designer_form_example.png" class="align-center" src="../../_images/qt_designer_form_example.png" style="width: 408.0px; height: 328.0px;" /></a>
+<p>Quand on a une structure XML qui définit notre interface graphique, on a besoin de le transformer en module Python de sorte de pouvoir l&#8217;utiliser dans des applications PyQt. Le module PyQt en exemple ci dessous a été produit en utilisant un outil très pratique sur lequel nous reviendrons.</p>
+<blockquote>
+<ul class="simple">
+<li>pyuic4: Un script Python qui compile un fichier XML Qt Designer en module Python.</li>
+</ul>
+</blockquote>
+<p>Si on compile ce fichier XML en utilisant  <strong>pyuic4</strong> il va créer magiquement du code PyQt. Voici l&#8217;instruction de compilation depuis le shell bash:</p>
+<div class="highlight-python"><pre>pyuic4 -x -o form.py form.ui</pre>
+</div>
+<p>Il faut noter que l&#8217;option -x crée un fichier python de sortie qui peut être lancé directement, pour voir un exemple de rendu du widget que nous venons juste de créer.</p>
+<p>Voici le résultat &#8211; un module Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="c"># Form implementation generated from reading ui file &#39;form.ui&#39;</span>
+<span class="c">#</span>
+<span class="c"># Created: Sun Sep 11 11:52:22 2011</span>
+<span class="c">#      by: PyQt4 UI code generator 4.8.3</span>
+<span class="c">#</span>
+<span class="c"># WARNING! All changes made in this file will be lost!</span>
+
+<span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">_fromUtf8</span> <span class="o">=</span> <span class="n">QtCore</span><span class="o">.</span><span class="n">QString</span><span class="o">.</span><span class="n">fromUtf8</span>
+<span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+    <span class="n">_fromUtf8</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">s</span><span class="p">:</span> <span class="n">s</span>
+
+<span class="k">class</span> <span class="nc">Ui_Dialog</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">setupUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setObjectName</span><span class="p">(</span><span class="n">_fromUtf8</span><span class="p">(</span><span class="s">&quot;Dialog&quot;</span><span class="p">))</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">resize</span><span class="p">(</span><span class="mi">400</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">retranslateUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+        <span class="n">QtCore</span><span class="o">.</span><span class="n">QMetaObject</span><span class="o">.</span><span class="n">connectSlotsByName</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">retranslateUi</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Dialog</span><span class="p">):</span>
+        <span class="n">Dialog</span><span class="o">.</span><span class="n">setWindowTitle</span><span class="p">(</span><span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s">&quot;Dialog&quot;</span><span class="p">,</span> <span class="s">&quot;Dialog&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="o">.</span><span class="n">UnicodeUTF8</span><span class="p">))</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">sys</span>
+    <span class="n">app</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QApplication</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">Dialog</span> <span class="o">=</span> <span class="n">QtGui</span><span class="o">.</span><span class="n">QDialog</span><span class="p">()</span>
+    <span class="n">ui</span> <span class="o">=</span> <span class="n">Ui_Dialog</span><span class="p">()</span>
+    <span class="n">ui</span><span class="o">.</span><span class="n">setupUi</span><span class="p">(</span><span class="n">Dialog</span><span class="p">)</span>
+    <span class="n">Dialog</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">exec_</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>On remarque tout d&#8217;abord l&#8217;instruction d&#8217;import:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">PyQt4</span> <span class="kn">import</span> <span class="n">QtCore</span><span class="p">,</span> <span class="n">QtGui</span>
+</pre></div>
+</div>
+<p>Le nombre dans PyQt4 se rapporte à la version avec laquelle on travaille. On importe ici le module noyau de la bibliothèque Qt, et le module qui permet de faire des GUIs.</p>
+<p>Il faut noter que la classe Python ci-dessus définit notre boîte de dialogue de l&#8217;interface utilisateur. La fonction de classe suivante construit notre interface avec les boutons et les combobox qui étaient spécifiées dans le XML.</p>
+<p>Regardons maintenant quelques commandes spécifiques de PyQGIS (nous détaillerons ensuite plus amplement le sujet). Ce qui est intéressant ici est que nous verrons que les objets PyQt fonctionnent en arrière plan (après tout, PyQGIS est basé sur les bindings PyQT). Ce code utilise la console Python pour accéder à la couche sélectionnée de la liste de couches:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">layer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layer</span><span class="o">.</span><span class="n">featureCount</span><span class="p">()</span>
+<span class="go">144L</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layer</span><span class="o">.</span><span class="n">source</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;/home/qgis/DATA/SHAPES/world_borders/TM_WORLD_BORDERS-0.3_900913.shp&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layer</span><span class="o">.</span><span class="n">renderer</span><span class="p">()</span><span class="o">.</span><span class="n">setOpacity</span><span class="p">(</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">layer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;TM_WORLD_BORDERS-0.3_900913&#39;)</span>
+</pre></div>
+</div>
+<p>Voyez tous ces types de données <tt class="docutils literal"><span class="pre">PyQt4.QtCore.QString</span></tt> en action? On prend la couche active de la liste des couches (actif voulant dire selectionné). On affiche ensuite son layerID, le nombre de feature, le système de projection, le chemin de la source, et le type WKB (Well-Known-Binary) des données. Il s&#8217;agit d&#8217;un petit aperçu de la puissance que l&#8217;on a en accédant à nos couches de données QGIS.</p>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

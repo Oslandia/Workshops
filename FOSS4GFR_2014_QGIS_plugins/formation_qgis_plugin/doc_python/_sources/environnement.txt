@@ -1,0 +1,111 @@
+==============================
+Environnement de développement
+==============================
+
+Système d'exploitation
+======================
+Nous utilisons la machine virtuelle avec une distribution Ubuntu. Il est beaucoup plus simple de se créer un environnement de développement complet sous un système Unix que sous Windows.
+
+Editeur de code
+===============
+
+Fonctionnalités
+---------------
+
+Pour créer vos programmes, le premier outil dont vous avez besoin est un *éditeur de texte*. Celui-ci doit être enrichi des fonctionnalités destinées au programmeur :
+
+* Coloration syntaxique
+* Indentation automatique
+* Complétion
+* Intégration d'outils externes
+* Gestion de l'encodage de fichier
+
+gedit
+-----
+Nous utiliserons entre autre *gedit* qui est l'éditeur par défaut de *Gnome* (l'environnement de bureau utilisé par *Ubuntu*). Cet éditeur est assez minimaliste, il propose par défaut la coloration syntaxique et l'indentation automatique. Il est toutefois possible d'enrichir les fonctionnalités grâce à des *plugins* (*greffons* dans la version française).
+
+La coloration syntaxique est normalement enclenchée automatiquement dès lors que vous avez sauvegardé votre fichier. Elle dépend de l'extension du fichier mais aussi de la structure du code. Si cette détection automatique n'offre pas satisfaction, allez dans le menu Affichage > Mode de coloration et choisissez votre langage pour forcer la coloration syntaxique.
+
+Vous pouvez modifier les paramètres d'indentation dans le menu Édition > Préférences > Éditeur. Il est possible de choisir la longueur de l'indentation et le caractère utilisé (tabulation ou espace).
+
+Vous pouvez contrôler le choix de l'encodage au moment où vous enregistrez le fichier. Ceci se fait grâce à la liste déroulante située en bas de la boîte de dialogue "Enregistrer sous...". Il est *très largement recommandé* d'utiliser l'encodage UTF-8 pour écrire vos programmes.
+
+Une des fonctionnalités les plus utiles est Rechercher/Remplacer (Ctrl-H) qui permet de remplacer toutes les occurences d'une chaîne de caractère donnée.
+
+Eclipse et PyDev
+----------------
+L'environnement de programmation Eclipse est un environnement de développement intégré. Originellement créé pour Java, il supporte de nombreux autres langages de programmation et offre un nombre de fonctionnalité gigantesque. On peut cependant lui reprocher une certaine lourdeur. Nous pourrons utiliser Éclipse et l'extension de développement pour Python Pydev afin de profiter notamment des fonctionnalités de débogage.
+
+Autres Alternatives
+-------------------
+
+Il existe d'innombrables éditeurs de texte dédiés à la programmation et chaque programmeur vous dira que celui qu'il utilise est le meilleur ! Vous êtes libre d'utiliser celui qui vous plaît le plus.
+*Kate* est une éditeur de code semblable à *gedit* mais associé à l'environnement de bureau *KDE*. *UltraEdit* est un éditeur de code pour Windows assez complet et disponible gratuitement (mais pas OpenSource).
+
+Console
+=======
+
+La *console* (ou *terminal* ou *invite de commande*) est un outil d'une grande richesse mais parfois déroutant au premier abord. Les commandes et exemples donnés dans ce cours seront textuels et utiliseront donc systématiquement la console. C'est par la console que vous lancerez vos programmes.
+
+Il est possible de faire des copier/coller dans la console mais les raccourcis habituels (Ctrl-C/Ctrl-V) ne fonctionnent pas, utilisez le menu contextuel à la place (clic droit).
+
+Interpréteur de commande
+========================
+
+L'interpréteur standard Python s'appelle tout simplement *python*. Il permet:
+
+* d'éxecuter un script Python contenu dans un fichier
+* de saisir des instructions Python une par une
+
+L'interpréteur *ipython* est un peu plus évolué. Il intégre notamment :
+
+* la complétion
+* l'introspection
+* une intégration avec *Matplotlib* pour en faire un environnement scientifique
+
+Versionnement du code source
+============================
+La grande majorité des nouveaux projets OpenSource utilise désormais Git comme gestionnaire de versionnement de code source. Nous passerons rapidement sur la façon dont on utilise Git dans le contexte de développement de plugins Python pour QGIS.
+
+Quelques commandes UNIX utiles
+===============================
+man
+---
+
+*man* est l'équivalent de F1 dans la console, c'est l'accès à l'aide. C'est la première source d'information sur les commandes.
+
+Avant de copier/coller une commande inconnue, il est largement recommandé d'en étudier le *man*.
+
+Exemple::
+
+  # Affiche l'aide de la commande find
+  man find
+
+find
+----
+
+*find* est l'outil de base pour rechercher un fichier sur le système. Les critères de recherches peuvent porter sur le nom, le type de fichier, la date de modification, le propriétaire du fichier, etc...
+
+Exemple::
+
+  # Tous les sous-répertoires de ./data dont le nom commence par "europe"
+  find ./data -name "europe*" -type d
+
+grep
+----
+*grep* permet de faire des recherches à l'intérieur des fichiers.
+
+Exemple::
+
+  # Extrait toutes les lignes du fichier code.py contenant "import"
+  grep "import" code.py
+
+Une utilisation avancée de *grep* consiste à la combiner avec la commande *find* pour chercher dans le contenu de plusieurs fichiers d'un seul coup::
+
+  # Recherche le mot "todo" dans tous les fichiers Python à partir du répertoire courant
+  find . -name "*.py" -exec grep -Hin "todo" '{}' \;
+
+Grep possède également une option **-r** si on veut effectuer une recherche récursive::
+
+    # Rechercher le mot todo dans tous les fichiers récursivement
+    grep -r "todo" ./*

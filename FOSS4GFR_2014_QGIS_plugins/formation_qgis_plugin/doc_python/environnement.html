@@ -1,0 +1,226 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Environnement de développement &mdash; Plugins Python QGIS v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plugins Python QGIS v1.0 documentation" href="index.html" />
+    <link rel="next" title="Introduction à la programmation" href="programmation.html" />
+    <link rel="prev" title="Installation des logiciels sous Ubuntu" href="installation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="programmation.html" title="Introduction à la programmation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation des logiciels sous Ubuntu"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="environnement-de-developpement">
+<h1>Environnement de développement<a class="headerlink" href="#environnement-de-developpement" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="systeme-d-exploitation">
+<h2>Système d&#8217;exploitation<a class="headerlink" href="#systeme-d-exploitation" title="Permalink to this headline">¶</a></h2>
+<p>Nous utilisons la machine virtuelle avec une distribution Ubuntu. Il est beaucoup plus simple de se créer un environnement de développement complet sous un système Unix que sous Windows.</p>
+</div>
+<div class="section" id="editeur-de-code">
+<h2>Editeur de code<a class="headerlink" href="#editeur-de-code" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fonctionnalites">
+<h3>Fonctionnalités<a class="headerlink" href="#fonctionnalites" title="Permalink to this headline">¶</a></h3>
+<p>Pour créer vos programmes, le premier outil dont vous avez besoin est un <em>éditeur de texte</em>. Celui-ci doit être enrichi des fonctionnalités destinées au programmeur :</p>
+<ul class="simple">
+<li>Coloration syntaxique</li>
+<li>Indentation automatique</li>
+<li>Complétion</li>
+<li>Intégration d&#8217;outils externes</li>
+<li>Gestion de l&#8217;encodage de fichier</li>
+</ul>
+</div>
+<div class="section" id="gedit">
+<h3>gedit<a class="headerlink" href="#gedit" title="Permalink to this headline">¶</a></h3>
+<p>Nous utiliserons entre autre <em>gedit</em> qui est l&#8217;éditeur par défaut de <em>Gnome</em> (l&#8217;environnement de bureau utilisé par <em>Ubuntu</em>). Cet éditeur est assez minimaliste, il propose par défaut la coloration syntaxique et l&#8217;indentation automatique. Il est toutefois possible d&#8217;enrichir les fonctionnalités grâce à des <em>plugins</em> (<em>greffons</em> dans la version française).</p>
+<p>La coloration syntaxique est normalement enclenchée automatiquement dès lors que vous avez sauvegardé votre fichier. Elle dépend de l&#8217;extension du fichier mais aussi de la structure du code. Si cette détection automatique n&#8217;offre pas satisfaction, allez dans le menu Affichage &gt; Mode de coloration et choisissez votre langage pour forcer la coloration syntaxique.</p>
+<p>Vous pouvez modifier les paramètres d&#8217;indentation dans le menu Édition &gt; Préférences &gt; Éditeur. Il est possible de choisir la longueur de l&#8217;indentation et le caractère utilisé (tabulation ou espace).</p>
+<p>Vous pouvez contrôler le choix de l&#8217;encodage au moment où vous enregistrez le fichier. Ceci se fait grâce à la liste déroulante située en bas de la boîte de dialogue &#8220;Enregistrer sous...&#8221;. Il est <em>très largement recommandé</em> d&#8217;utiliser l&#8217;encodage UTF-8 pour écrire vos programmes.</p>
+<p>Une des fonctionnalités les plus utiles est Rechercher/Remplacer (Ctrl-H) qui permet de remplacer toutes les occurences d&#8217;une chaîne de caractère donnée.</p>
+</div>
+<div class="section" id="eclipse-et-pydev">
+<h3>Eclipse et PyDev<a class="headerlink" href="#eclipse-et-pydev" title="Permalink to this headline">¶</a></h3>
+<p>L&#8217;environnement de programmation Eclipse est un environnement de développement intégré. Originellement créé pour Java, il supporte de nombreux autres langages de programmation et offre un nombre de fonctionnalité gigantesque. On peut cependant lui reprocher une certaine lourdeur. Nous pourrons utiliser Éclipse et l&#8217;extension de développement pour Python Pydev afin de profiter notamment des fonctionnalités de débogage.</p>
+</div>
+<div class="section" id="autres-alternatives">
+<h3>Autres Alternatives<a class="headerlink" href="#autres-alternatives" title="Permalink to this headline">¶</a></h3>
+<p>Il existe d&#8217;innombrables éditeurs de texte dédiés à la programmation et chaque programmeur vous dira que celui qu&#8217;il utilise est le meilleur ! Vous êtes libre d&#8217;utiliser celui qui vous plaît le plus.
+<em>Kate</em> est une éditeur de code semblable à <em>gedit</em> mais associé à l&#8217;environnement de bureau <em>KDE</em>. <em>UltraEdit</em> est un éditeur de code pour Windows assez complet et disponible gratuitement (mais pas OpenSource).</p>
+</div>
+</div>
+<div class="section" id="console">
+<h2>Console<a class="headerlink" href="#console" title="Permalink to this headline">¶</a></h2>
+<p>La <em>console</em> (ou <em>terminal</em> ou <em>invite de commande</em>) est un outil d&#8217;une grande richesse mais parfois déroutant au premier abord. Les commandes et exemples donnés dans ce cours seront textuels et utiliseront donc systématiquement la console. C&#8217;est par la console que vous lancerez vos programmes.</p>
+<p>Il est possible de faire des copier/coller dans la console mais les raccourcis habituels (Ctrl-C/Ctrl-V) ne fonctionnent pas, utilisez le menu contextuel à la place (clic droit).</p>
+</div>
+<div class="section" id="interpreteur-de-commande">
+<h2>Interpréteur de commande<a class="headerlink" href="#interpreteur-de-commande" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;interpréteur standard Python s&#8217;appelle tout simplement <em>python</em>. Il permet:</p>
+<ul class="simple">
+<li>d&#8217;éxecuter un script Python contenu dans un fichier</li>
+<li>de saisir des instructions Python une par une</li>
+</ul>
+<p>L&#8217;interpréteur <em>ipython</em> est un peu plus évolué. Il intégre notamment :</p>
+<ul class="simple">
+<li>la complétion</li>
+<li>l&#8217;introspection</li>
+<li>une intégration avec <em>Matplotlib</em> pour en faire un environnement scientifique</li>
+</ul>
+</div>
+<div class="section" id="versionnement-du-code-source">
+<h2>Versionnement du code source<a class="headerlink" href="#versionnement-du-code-source" title="Permalink to this headline">¶</a></h2>
+<p>La grande majorité des nouveaux projets OpenSource utilise désormais Git comme gestionnaire de versionnement de code source. Nous passerons rapidement sur la façon dont on utilise Git dans le contexte de développement de plugins Python pour QGIS.</p>
+</div>
+<div class="section" id="quelques-commandes-unix-utiles">
+<h2>Quelques commandes UNIX utiles<a class="headerlink" href="#quelques-commandes-unix-utiles" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="man">
+<h3>man<a class="headerlink" href="#man" title="Permalink to this headline">¶</a></h3>
+<p><em>man</em> est l&#8217;équivalent de F1 dans la console, c&#8217;est l&#8217;accès à l&#8217;aide. C&#8217;est la première source d&#8217;information sur les commandes.</p>
+<p>Avant de copier/coller une commande inconnue, il est largement recommandé d&#8217;en étudier le <em>man</em>.</p>
+<p>Exemple:</p>
+<div class="highlight-python"><pre># Affiche l'aide de la commande find
+man find</pre>
+</div>
+</div>
+<div class="section" id="find">
+<h3>find<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h3>
+<p><em>find</em> est l&#8217;outil de base pour rechercher un fichier sur le système. Les critères de recherches peuvent porter sur le nom, le type de fichier, la date de modification, le propriétaire du fichier, etc...</p>
+<p>Exemple:</p>
+<div class="highlight-python"><pre># Tous les sous-répertoires de ./data dont le nom commence par "europe"
+find ./data -name "europe*" -type d</pre>
+</div>
+</div>
+<div class="section" id="grep">
+<h3>grep<a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h3>
+<p><em>grep</em> permet de faire des recherches à l&#8217;intérieur des fichiers.</p>
+<p>Exemple:</p>
+<div class="highlight-python"><pre># Extrait toutes les lignes du fichier code.py contenant "import"
+grep "import" code.py</pre>
+</div>
+<p>Une utilisation avancée de <em>grep</em> consiste à la combiner avec la commande <em>find</em> pour chercher dans le contenu de plusieurs fichiers d&#8217;un seul coup:</p>
+<div class="highlight-python"><pre># Recherche le mot "todo" dans tous les fichiers Python à partir du répertoire courant
+find . -name "*.py" -exec grep -Hin "todo" '{}' \;</pre>
+</div>
+<p>Grep possède également une option <strong>-r</strong> si on veut effectuer une recherche récursive:</p>
+<div class="highlight-python"><pre># Rechercher le mot todo dans tous les fichiers récursivement
+grep -r "todo" ./*</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Environnement de développement</a><ul>
+<li><a class="reference internal" href="#systeme-d-exploitation">Système d&#8217;exploitation</a></li>
+<li><a class="reference internal" href="#editeur-de-code">Editeur de code</a><ul>
+<li><a class="reference internal" href="#fonctionnalites">Fonctionnalités</a></li>
+<li><a class="reference internal" href="#gedit">gedit</a></li>
+<li><a class="reference internal" href="#eclipse-et-pydev">Eclipse et PyDev</a></li>
+<li><a class="reference internal" href="#autres-alternatives">Autres Alternatives</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#console">Console</a></li>
+<li><a class="reference internal" href="#interpreteur-de-commande">Interpréteur de commande</a></li>
+<li><a class="reference internal" href="#versionnement-du-code-source">Versionnement du code source</a></li>
+<li><a class="reference internal" href="#quelques-commandes-unix-utiles">Quelques commandes UNIX utiles</a><ul>
+<li><a class="reference internal" href="#man">man</a></li>
+<li><a class="reference internal" href="#find">find</a></li>
+<li><a class="reference internal" href="#grep">grep</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">Installation des logiciels sous Ubuntu</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="programmation.html"
+                        title="next chapter">Introduction à la programmation</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/environnement.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="programmation.html" title="Introduction à la programmation"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="installation.html" title="Installation des logiciels sous Ubuntu"
+             >previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Vincent Picavet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

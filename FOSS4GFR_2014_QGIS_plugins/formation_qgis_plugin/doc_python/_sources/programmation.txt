@@ -1,0 +1,171 @@
+===============================
+Introduction à la programmation
+===============================
+
+Les programmes
+==============
+
+Définition
+----------
+
+Selon Wikipédia, un programme informatique est une liste d'instructions indiquant à un ordinateur ce qu'il doit faire.
+
+Un programme (ou algorithme) est une liste séquentielle d'instructions. Un programme *informatique* contient des instructions destiné à manipuler de *l'information*. Si vous lui demandez poliment, un programme pourra même manipuler de de *l'information géographique*.
+
+La notion de programme est un peu floue et peut faire référence à plusieurs concepts :
+
+* code source du programme
+* exécutable
+* processus (exécution du programme).
+
+Dans notre cas, nous étudierons surtout le code source, comment le lire et comment l'écrire.
+
+Structure
+---------
+
+Quelque soit le type de programme, l'information est stockée dans des *variables* qui sont ensuite manipulées par des *instructions*. Il existe des *instructions de contrôle* permettant de faire varier l'exécution du programme. Par exemple, on peut faire dépendre une ou plusieurs *instructions* d'une *condition*::
+
+  si j'ai faim alors:
+    ouvrir le placard
+    prendre du chocolat
+    manger le chocolat
+
+On peut aussi *répeter* une ou plusieurs *instructions*::
+ 
+  tant que j'ai encore faim alors:
+     prendre une nouvelle tablette de chocolat
+     manger le chocolat
+
+Cela dit, tout le monde n'apprécie pas le chocolat, on peut alors utiliser une *variable* pour stocker l'information "aliment souhaité"::
+
+  aliment = chocolat
+  si j'ai faim alors:
+    prendre l'aliment
+    manger l'aliment
+
+Mon programme est alors générique, il s'adapte à tous les régimes alimentaires pourvu qu'on précise quel en est l'aliment de base !
+
+Rôle
+----
+
+Les ordinateurs ont été conçus comme des machines universelles. Elles savent exécuter des programmes, c'est tout ce qu'elles savent faire mais elles le font plutôt bien. Pour certaines tâches, les machines sont bien plus douées que nous autres humains :
+
+* compter jusqu'à 2000000000000
+* calculer la trajectoire d'une fusée
+* trouver tous les magasins vendant un produit X dans un rayon de n Km autour d'un point
+* calculer la surface d'une parcelle
+* ajouter un mot à la fin de toutes les lignes d'un fichier
+* calculer la surface moyenne de 6543215 parcelles
+* etc...
+
+Le domaine de prédilection des ordinateurs est l'information. Dès lors que vous souhaitez réaliser une tâche consistant à manipuler de l'information, un ordinateur sera sûrement plus rapide qu'un humain. Le second intérêt de l'ordinateur est sa capacité à répéter très vite une tâche. Vous utiliserez donc un programme si :
+
+* votre tâche consiste à traiter de l'information et peut donc être décrite dans un programme informatique,
+* l'écriture de ce programme prend moins de temps que si vous faisiez cette tâche vous même.
+
+Les langages des programmation
+==============================
+
+Toujours selon Wikipédia : un langage de programmation est un code de communication, permettant à un être humain de dialoguer avec une machine en lui soumettant des instructions et en analysant les données matérielles fournies par le système, généralement un ordinateur. Le langage permet à la personne qui rédige un programme, de faire abstraction de certains mécanismes internes, généralement des activations et désactivations de commutateurs électroniques, qui aboutissent au résultat désiré.
+
+Les langages de programmation sont les outils permettant d'écrire les programmes.
+
+Il faut surtout retenir que l'ordinateur ne comprends absolument rien au langage naturel que nous parlons. Inversemment, ni vous ni moi ne comprenons ce que signifie tous ces 1 et ces 0 mis bout à bout. Le langage de programmation fait le lien entre ces deux mondes. Nous pouvons le lire et l'écrire et l'ordinateur peut le transformer en 0 et en 1.
+
+
+Il existe plusieurs types de langage de programmation :
+
+* assembleur
+* langage compilé (C, Java, C++, C#, Pascal, Ada, ...)
+* langage interprété (Python, Perl, Javascript, PHP, ...)
+
+Il existe d'autres langages qui ont un rôle descriptif (HTML, KML, PDF, ...). Ils ne permettent pas d'écrire des programme à proprement parler, ils se contentent de structurer l'information.
+
+Chaque langage de programmation permet d'écrire des programmes et propose donc au moins :
+
+* des structures de contrôle,
+* un moyen de gérer des variables.
+
+Toutefois, chaque langage a ses spécificités qui dépendent des postulats et des objectifs fixés par les créateurs du langage. Au sein de cette diversité, on retrouve plusieurs familles de programme dont les plus courantes sont :
+
+* langages de programmation structurés
+* langages de programmation orientés-objet
+
+Méthodologie
+============
+
+Pour une tâche donnée, il existe toujours une infinité de façon d'écrire un programme. Généralement, quelques unes sont brillantes, d'autres sont satisfaisantes et la majorité sont médiocres. Heureusement, il n'est pas bien difficile d'éviter la catégorie médiocre si l'on suit quelques règles.
+
+Le but de ce cours n'est pas de faire de vous des gourous de l'algorithmique. Cela dit, un peu de méthodologie facilitera l'écriture des programmes.
+
+Cas pratique
+------------
+
+Vous savez normalement très bien écrire un programme::
+
+  Tâche :
+   Faire un gateau au chocolat et aux noisettes
+  Programme :
+   Ingrédients :
+   
+   - 90 g de noisettes moulues
+   - 150 g de chocolat à 50% de cacao (ne PAS utiliser du chocolat à 70%, le gâteau serait trop sec)
+   - 125 g de sucre
+   - 100 g de farine
+   - 4 oeufs
+   - 50 g de beurre
+   
+   
+   Préparation :
+   
+   Faire fondre le chocolat et le beurre au micro-ondes. Mélanger les jaunes d'oeufs avec le sucre jusqu'à l'obtention d'un mélange crémeux et blanchâtre.
+   
+   Rajouter le chocolat et le beurre, puis incorporer la farine. Battre les blancs en neige et les rajouter au mélange.
+ 
+   Placer dans un moule beurré (typiquement, un moule rond de 22 cm). Mettre au four préchauffé à 180°C (électrique) et laisser cuire jusqu'à ce qu'un couteau inséré au centre sorte sec (le temps de cuisson varie suivant le four et la forme du moule).
+   *Source : marmiton.org*
+
+Quelques remarques :
+
+* Ce programme est structuré en deux parties distinctes :
+
+  - Vous déclarez d'abord ce que vous allez manipuler : les ingrédients.
+  - Vous décrivez le déroulement de cette tâche par une série d'instructions s'appliquant aux ingrédients.
+* Ce programme a également un ensemble d'éléments en entrée et un élément de sortie principal (l'objet du programme) ainsi que des déchets.
+* Le programmeur a choisi un niveau de détail adapté au destinataire du programme (il n'explique pas comment obtenir la farine par exemple).
+* Il existe une multitude de manière différente d'écrire cette recette (dont certaines sont incompréhensibles !)
+* Ce programme est valide dans le sens où l'on peut le suivre à la lettre sans être bloqué nul part.
+* En revanche, ce programme est faux car le résultat produit ne correspond pas au résultat attendu (les noisettes moulues ne sont pas dans le gateau...).
+
+A partir du moment où l'on sait comment faire ce gateau (la "connaissance métier"), il n'est pas bien difficile d'en décrire la recette (connaissance algorithmique). Ecrire des programmes est donc simple. Enfin presque... La grande différence entre les programmes que nous allons écrire et cette recette de cuisine est : le destinataire du programme. Un ordinateur dispose en effet de capactités intellectuelles bien plus limitées que celles d'un(e) cuisinier(e), il faudra donc fournir quelques efforts supplémentaires pour lui expliquer la tâche (lui transmettre la connaissance métier).
+
+Comment s'y prendre ?
+---------------------
+
+#. En premier lieu, il convient de bien identifier quelles informations vous allez devoir utiliser.
+#. Une fois ces informations identifiées, il faut déterminer quelle représentation de cette informations sera la plus appropriée.
+#. Ensuite, identifiez les grandes étapes de votre programme. Entre chaque étape, il peut être intéressant de s'interroger sur l'état courant de vos structures de données.
+#. Enfin, décomposez vos étapes en sous-étapes jusqu'à ce que vous ayez atteint un niveau de détail satisfaisant.
+
+En pratique, définir un programme est un processus itératif où l'on affine successivement le périmètre des informations nécessaires et la suite d'instructions à réaliser.
+
+Quelques remarques
+------------------
+
+* L'ordinateur n'apprécie guère l'ambiguïté.
+* Le programmeur n'aime pas réinventer la roue, il tente donc par tous les moyens de rendre son code générique et facile à ré-utiliser.
+* Un ordinateur ne fait quasiment jamais d'erreur, il fait ce qu'on lui demande. Si ça ne produit pas l'effet attendu, c'est que vous avez mal formulé votre demande.
+* Un programmeur rigoureux perd beaucoup moins de temps à corriger des erreurs.
+
+Pourquoi programmer en Python ?
+===============================
+
+Python est un langage de programmation interprété. Ceci lui confère une grande simplicité d'utilisation : écrivez du code, lancez-le et ça marche ! (Hum, normalement ça devrait marcher...)
+
+Python a l'avantage d'offrir une syntaxe claire et facile à lire. Par ailleurs, Python est peu tolérant en matière de syntaxe. Ceci est généralement vu comme un inconvénient au départ mais cela présente l'avantage d'imposer de la rigueur et donc de limiter les erreurs dûes à à des fautes d'innattention. De fait, Python est un bon langage pour débuter la programmation.
+
+Python est multiplateforme, on le retrouve notamment sous Linux, MacOS et Windows. Ce que vous apprendrez dans ce cours pourra donc être appliqué quelque soit le contexte technique.
+
+Python dispose d'une importante communauté d'utilisateur qui ont développé toutes sortes de modules spécialisés. Par ailleurs de nombreuses bibliothèques écrites dans d'autres langages (GDAL/OGR, MapScript, ...) disposent de *bindings* Python. Par conséquent, il est facile d'assembler dans un script Python des fonctionnalités complexes dejà développées. On illustre ceci en disant que Python est un très bon *langage de glue*.
+
+Python permet d'automatiser rapidement un traitement sur des fichiers/des données. Ces traitements pourront inclure des opérations sur les géométries. Python permet également de construire des applications complètes, de la plus simple à la plus évoluée.

@@ -1,0 +1,31 @@
+--- explorer/python_in_qgis_exercises.rst
++++ explorer/python_in_qgis_exercises.rst
+@@ -39,7 +39,7 @@
+ Conseils
+ ***************
+ 
+-Dans cette partie nous avons vu des exemples utilisant \  ``dataProvider.select()`` \et\  ``dataProvider.featureAtId()`` \. Utilisez le code ci-dessous comme guide pour écrire votre fonction::
++Dans cette partie nous avons vu des exemples utilisant \  ``dataProvider.getFeatures()``  \. Utilisez le code ci-dessous comme guide pour écrire votre fonction::
+ 
+         if self.selectList:
+ 
+@@ -48,14 +48,12 @@
+                 plutôt que d'utiliser la fonction dataProvider.select(), récupérer la vraie QgsFeature en utilisant dataProvider.featureAtId() '''
+             # Obtenir tous les indices des champs pour la feature
+             fields = self.provider.fields()
+-            # Obtenir la feature en passant une feature vide
+-            feat = QgsFeature()
+-            # On prend la premiere feature car il peut y en avoir plus d'une
+-            if self.provider.featureAtId(self.selectList[0], feat, True, fields.keys()):
+-                attMap = feat.attributeMap()
++            # going to get first feature since there could potentially be more than one
++            for feat in self.provider.getFeatures(QgsFeatureRequest(self.selectList[0])):
+                 output = "FEATURE ID: %i\n" % feat.id()
+-                for index,qgsfield in fields.items():
+-                    output += "\t" + str(qgsfield.name()) + " : " + str( (attMap[index]).toString() ) + "\n" 
++                for field in fields.toList():
++                    output += "\t" + field.name() + " : " + str( feat[field.name()].toString() ) + "\n"
++        
+                 self.dlg.setTextBrowser(output)
+ 
+ 

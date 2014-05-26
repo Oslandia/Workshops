@@ -1,0 +1,1429 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Le langage Python, bases &mdash; Plugins Python QGIS v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plugins Python QGIS v1.0 documentation" href="index.html" />
+    <link rel="next" title="Qt et PyQt" href="pyqt.html" />
+    <link rel="prev" title="Introduction à la programmation" href="programmation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="pyqt.html" title="Qt et PyQt"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="programmation.html" title="Introduction à la programmation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="le-langage-python-bases">
+<h1>Le langage Python, bases<a class="headerlink" href="#le-langage-python-bases" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="syntaxe-generale">
+<h2>Syntaxe générale<a class="headerlink" href="#syntaxe-generale" title="Permalink to this headline">¶</a></h2>
+<p>L&#8217;indentation délimite les blocs de code.</p>
+<p>Une ligne vide n&#8217;est pas interprétée.</p>
+<p>On peut placer des commentaires dans le code à l&#8217;aide du caractère <strong>#</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># this is the first comment</span>
+<span class="n">SPAM</span> <span class="o">=</span> <span class="mi">1</span>                 <span class="c"># and this is the second comment</span>
+<span class="n">STRING</span> <span class="o">=</span> <span class="s">&quot;# This is not a comment.&quot;</span>
+</pre></div>
+</div>
+<p>Les instructions simples sont écrites sur une seule ligne. Si besoin est, on peut forcer un retour chariot en placant un anti-slash ( <strong>\</strong> ) à la fin de la ligne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="mi">132</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> \
+<span class="gp">... </span><span class="mi">123</span>
+</pre></div>
+</div>
+<p>Une instruction simple peut être :</p>
+<ul class="simple">
+<li>Une expression, elle est alors simplement évaluée et sa valeur est retournée.</li>
+<li>Une affectation composée d&#8217;une variable et d&#8217;une expression. La valeur de l&#8217;expression est stockée dans la variable.</li>
+</ul>
+<p>Exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Ceci est une expression</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="mi">2</span><span class="o">+</span><span class="mi">7</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Ceci est une affectation</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="mi">2</span><span class="o">+</span><span class="mi">7</span>
+</pre></div>
+</div>
+<p>Les instructions complexes incluent d&#8217;autres instructions. Elles s&#8217;écrivent sur plusieurs lignes, la première ligne est terminée par &#8216;:&#8217; et les instructions imbriquées sont indentées:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">condition</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">if</span> <span class="n">condition</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="n">var</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="go">...else:</span>
+<span class="gp">... </span>  <span class="n">var</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span>
+<span class="go">   1</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">l&#8217;interpréteur Python s&#8217;appuie sur l&#8217;indentation pour déterminer la structure du code, une erreur d&#8217;indentation pourra faire échouer votre programme.</p>
+</div>
+</div>
+<div class="section" id="variables-et-typage">
+<h2>Variables et typage<a class="headerlink" href="#variables-et-typage" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="variables">
+<h3>Variables<a class="headerlink" href="#variables" title="Permalink to this headline">¶</a></h3>
+<p>En informatique, les variables associent un <strong>nom</strong> (le <em>symbole</em>) à une <strong>valeur</strong> ou un objet.</p>
+<ul class="simple">
+<li>Les variables permettent d&#8217;identifier et de stocker les informations à traiter.</li>
+<li>Pendant l&#8217;exécution du programme, la variable pourra prendre une valeur (et en changer). C&#8217;est l&#8217;opération d&#8217;affectation.</li>
+<li>Les variables sont abstraites alors que les valeurs sont concrètes.</li>
+</ul>
+<p>En Python, la portée des variables s&#8217;étend de leur première utilisation jusqu&#8217;à la fin du fichier (pour simplifier).</p>
+</div>
+<div class="section" id="affectation">
+<h3>Affectation<a class="headerlink" href="#affectation" title="Permalink to this headline">¶</a></h3>
+<p>L&#8217;affectation est l&#8217;instruction qui associe une valeur à une variable. Elle est symbolisée par le signe <strong>=</strong>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Attention à ne pas confondre l&#8217;affectation avec un test d&#8217;égalité !</p>
+</div>
+<p>L&#8217;affection <strong>x = 98</strong> se lit <strong>x reçoit 98</strong></p>
+<p>La partie droite est d&#8217;abord évaluée, son résultat est ensuite stocké dans la partie gauche.</p>
+<p>En Python, l&#8217;affectation est une instruction et non pas une opération, elle n&#8217;a donc pas de valeur.</p>
+</div>
+<div class="section" id="valeurs-litterales">
+<h3>Valeurs littérales<a class="headerlink" href="#valeurs-litterales" title="Permalink to this headline">¶</a></h3>
+<p>Une valeur littérale est une valeur donnée explicitement dans le code source d&#8217;un programme.</p>
+<p>Généralement, on utilise beaucoup les variables et peu les valeurs littérales car les programmes traitent des informations reçues en entrée, pas des informations figées dans le code.</p>
+</div>
+<div class="section" id="types-simples">
+<h3>Types simples<a class="headerlink" href="#types-simples" title="Permalink to this headline">¶</a></h3>
+<p>En Python, les variables ne sont pas explicitement typées. Pourtant, toute valeur a un type !</p>
+<p>Les types simples sont :</p>
+<dl class="docutils">
+<dt>int</dt>
+<dd>Numérique entier</dd>
+<dt>long</dt>
+<dd>Numérique entier long (rare)</dd>
+<dt>float</dt>
+<dd>Numérique décimal</dd>
+<dt>bool</dt>
+<dd>Booléen (valeur logique : vraislash faux)</dd>
+<dt>str</dt>
+<dd>Chaîne de caractère</dd>
+<dt>unicode</dt>
+<dd>Chaîne de caractère Unicode</dd>
+</dl>
+<p>Exemples de données de types simples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="mi">5</span>           <span class="c"># Littéral numérique entier</span>
+<span class="il">8768L</span>       <span class="c"># Littéral numérique entier long</span>
+<span class="mf">5.0</span>         <span class="c"># Littéral numérique flottant</span>
+<span class="o">.</span><span class="mi">5</span>          <span class="c"># Littéral numérique flottant</span>
+<span class="mf">5.</span>          <span class="c"># Littéral numérique flottant</span>
+<span class="s">&quot;Salut !&quot;</span>   <span class="c"># Chaîne littérale</span>
+<span class="s">&#39;Salut !&#39;</span>   <span class="c"># Chaîne littérale</span>
+<span class="s">u&quot;Salut !&quot;</span>  <span class="c"># Chaîne Unicode littérale</span>
+<span class="bp">True</span>        <span class="c"># Littéral booléen</span>
+<span class="bp">None</span>        <span class="c"># Absence de valeur !</span>
+</pre></div>
+</div>
+<p>Vous verrez couramment trois mots-clés :</p>
+<ul class="simple">
+<li>True : valeur litérale booléenne vraie</li>
+<li>False : valeur litérale booléenne fausse</li>
+<li>None : valeur nulle (c&#8217;est-à-dire absence de valeur)</li>
+</ul>
+</div>
+<div class="section" id="types-sequences">
+<h3>Types séquences<a class="headerlink" href="#types-sequences" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="chaines-de-caracteres">
+<h4>Chaînes de caractères<a class="headerlink" href="#chaines-de-caracteres" title="Permalink to this headline">¶</a></h4>
+<p>Les chaînes de caractères sont délimitées par des simple quote (apostrophes) ou des doubles quotes (guillemets):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Quelques exemples de chaînes de caractères</span>
+<span class="s">&#39;voici une chaîne&#39;</span>
+<span class="s">&quot;encore une&quot;</span>
+<span class="s">&quot;les guillemets permettent d&#39;utiliser l&#39;apostrophe&quot;</span>
+<span class="s">&#39;et inversement : &quot;&#39;</span>
+</pre></div>
+</div>
+<p>Le caractère permet d&#8217;introduire un caractère spécial:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&quot;voici une chaîne sur </span><span class="se">\</span>
+<span class="s">deux lignes&quot;</span>
+<span class="s">&#39;une chaine avec l</span><span class="se">\&#39;</span><span class="s">apostrophe&#39;</span>
+</pre></div>
+</div>
+<p>Deux types alternatifs existent:</p>
+<ul class="simple">
+<li>les chaînes Unicode permettent d&#8217;introduire toutes sortes de caractères étranges sans risque d&#8217;erreur d&#8217;encodage</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">u&#39;€ûßöæô&#39;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>à l&#8217;interieur d&#8217;une chaîne brute (<strong>raw</strong>), les conversions de fin de ligne sont désactivées</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">str</span> <span class="o">=</span> <span class="s">&quot;This is a rather long string containing</span><span class="se">\n\</span>
+<span class="s">several lines of text much as you would do in C.&quot;</span>
+<span class="k">print</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<p>produira:</p>
+<div class="highlight-python"><pre>This is a rather long string containing
+several lines of text much as you would do in C.</pre>
+</div>
+<p>mais:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">str</span> <span class="o">=</span> <span class="s">r&quot;This is a rather long string containing\n</span><span class="se">\</span>
+<span class="s">several lines of text much as you would do in C.&quot;</span>
+<span class="k">print</span> <span class="nb">str</span>
+</pre></div>
+</div>
+<p>produira:</p>
+<div class="highlight-python"><pre>This is a rather long string containing\n\
+several lines of text much as you would do in C.</pre>
+</div>
+<p>Enfin, il existe une syntaxe pour écrire directement des chaînes multi-lignes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">str</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This is a rather long</span>
+<span class="s">string containing several lines</span>
+<span class="s">of text much as you would do in C.&quot;&quot;&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="tuples-et-listes">
+<h4>Tuples et listes<a class="headerlink" href="#tuples-et-listes" title="Permalink to this headline">¶</a></h4>
+<p>Ces types sont utilisés pour grouper des valeurs, ce sont donc des agrégations d&#8217;autres types (simples ou complexes). Python autorise les tuples et listes à être formés d&#8217;éléments hétérogènes.</p>
+<p>Un tuple se présente comme une liste d&#8217;éléments séparés par des virgules et éventuellement entourée de parenthèse:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># un tuple :</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+<span class="c"># un autre :</span>
+<span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+<span class="c"># un tuple vide :</span>
+<span class="p">()</span>
+<span class="c"># un tuple à un élément :</span>
+<span class="p">(</span><span class="mi">4</span><span class="p">,)</span>
+</pre></div>
+</div>
+<p>Cette structure est principalement utilisée pour concentrer du code. On peut réaliser deux affectations en une seule instructions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>On peut accéder aux éléments d&#8217;un tuple en passant par leur indice:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">   3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="go">   9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+<span class="go">   (1, 3)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+<span class="go">   (3, 4)</span>
+</pre></div>
+</div>
+<p>Notez que les indices commencent à 0.</p>
+<p>Les listes ressemblent beaucoup aux tuples à première vue:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># une liste :</span>
+<span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">]</span>
+<span class="c"># une autre :</span>
+<span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">d</span><span class="p">]</span>
+<span class="c"># une liste vide :</span>
+<span class="p">[]</span>
+<span class="c"># une liste à un élément :</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>La principale différence est qu&#8217;on peut modifier une liste mais pas un tuple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="go">   &lt;type &#39;exceptions.TypeError&#39;&gt;: &#39;tuple&#39; object does not support item assignment</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">var</span>
+<span class="go">   [1, 4, 4, 9]</span>
+</pre></div>
+</div>
+<p>Selon la terminologie Python, les tuples sont <strong>immutables</strong> alors que les listes sont <strong>mutables</strong>.</p>
+<p>Dans d&#8217;autres langages, les listes portent souvent le nom de tableau (<strong>array</strong>).</p>
+<p>Notez que les chaînes de caractère se comportent comme des tuples, on peut accéder à chaque caractère par son indice mais on ne peut le modifier.</p>
+<p>La fonction range() permet de générer une liste d&#8217;entier:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="go">   [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="go">   [5, 6, 7, 8, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="go">   [0, 3, 6, 9]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">30</span><span class="p">)</span>
+<span class="go">   [-10, -40, -70]</span>
+</pre></div>
+</div>
+<p>Ceci pourra s&#8217;avérer utile dans les boucle <strong>for</strong>.</p>
+</div>
+<div class="section" id="ensembles">
+<h4>Ensembles<a class="headerlink" href="#ensembles" title="Permalink to this headline">¶</a></h4>
+<p>Un ensemble regroupe des éléments sans ordre et sans doublons. Les ensembles implémentent des opérations telles que la symétrie, la différence, etc... Les ensemble n&#8217;accepte que objets de types <strong>immutable</strong> (non modifiables)</p>
+</div>
+<div class="section" id="dictionnaires">
+<h4>Dictionnaires<a class="headerlink" href="#dictionnaires" title="Permalink to this headline">¶</a></h4>
+<p>Un dictionnaire est un ensemble de couples clé-valeur séparés par des virgules et encadrés par des accolades:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="mi">4098</span><span class="p">:</span> <span class="s">&#39;jack&#39;</span><span class="p">,</span> <span class="mi">4127</span><span class="p">:</span> <span class="s">&#39;sjoerd&#39;</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="operateurs">
+<h2>Opérateurs<a class="headerlink" href="#operateurs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="arithmetiques">
+<h3>Arithmétiques<a class="headerlink" href="#arithmetiques" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Addition</dt>
+<dd>x + y</dd>
+<dt>Soustraction</dt>
+<dd>x - y</dd>
+<dt>Multiplication</dt>
+<dd>x * y</dd>
+<dt>Division</dt>
+<dd>x / y</dd>
+<dt>Division entière</dt>
+<dd>x // y</dd>
+<dt>Modulo (reste de la division entière)</dt>
+<dd>x % y</dd>
+<dt>Opposé</dt>
+<dd>-x</dd>
+<dt>Valeur absolue</dt>
+<dd>abs(x)</dd>
+<dt>Forcer la conversion en entier simple ou long</dt>
+<dd><p class="first">int(x)</p>
+<p class="last">long(x)</p>
+</dd>
+<dt>Forcer la conversion en flottant</dt>
+<dd>float(x)</dd>
+<dt>Puissance</dt>
+<dd>x ** y</dd>
+</dl>
+</div>
+<div class="section" id="logiques">
+<h3>Logiques<a class="headerlink" href="#logiques" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Intersection</dt>
+<dd>x and y</dd>
+<dt>Union</dt>
+<dd>x or y</dd>
+<dt>Négation</dt>
+<dd>not x</dd>
+</dl>
+<p>Notez qu&#8217;une expression quelconque valant False, 0, None ou tout type complexe vide sera converti en False dans une expression logique.</p>
+</div>
+<div class="section" id="comparatifs">
+<h3>Comparatifs<a class="headerlink" href="#comparatifs" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Inférieur</dt>
+<dd>x &lt; y</dd>
+<dt>Inférieur ou égal</dt>
+<dd>x &lt;= y</dd>
+<dt>Supérieur</dt>
+<dd>x &gt; y</dd>
+<dt>Supérieur ou égal</dt>
+<dd>x &gt;= y</dd>
+<dt>Egal</dt>
+<dd>x == y</dd>
+<dt>Différent</dt>
+<dd><p class="first">x != y</p>
+<p class="last">x &lt;&gt; y</p>
+</dd>
+<dt>Identité (égalité sur des objets complexes)</dt>
+<dd>x is y</dd>
+<dt>Non identité (différence sur des objets complexes)</dt>
+<dd>x is not y</dd>
+</dl>
+</div>
+<div class="section" id="sequences">
+<h3>Séquences<a class="headerlink" href="#sequences" title="Permalink to this headline">¶</a></h3>
+<dl class="docutils">
+<dt>Vérifie si un objet est présent ou pas dans un séquence</dt>
+<dd><p class="first">x in s</p>
+<p class="last">x not in s</p>
+</dd>
+<dt>Concatène deux séquences</dt>
+<dd>s + t</dd>
+<dt>Produit n copies de la séquence s</dt>
+<dd><p class="first">s * n</p>
+<p class="last">n * s</p>
+</dd>
+<dt>Renvoie le ième élément de la séquence</dt>
+<dd>s[i]</dd>
+<dt>Renvoie les éléments d&#8217;indice compris entre i et j</dt>
+<dd>s[i:j]</dd>
+<dt>Renvoie la longeur de la séquence</dt>
+<dd>len(s)</dd>
+<dt>Renvoie le plus petit élement de la séquence</dt>
+<dd>min(s)</dd>
+<dt>Renvoie le plus grand élement de la séquence</dt>
+<dd>max(s)</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="structures-de-controle">
+<h2>Structures de contrôle<a class="headerlink" href="#structures-de-controle" title="Permalink to this headline">¶</a></h2>
+<p>Les structures de contrôle permettent de faire varier l&#8217;exécution du programme. Une instruction de contrôle englobe généralement un bloc d&#8217;instructions. C&#8217;est l&#8217;indentation qui délimite les blocs d&#8217;instructions.</p>
+<div class="section" id="structures-conditionnelles">
+<h3>Structures conditionnelles<a class="headerlink" href="#structures-conditionnelles" title="Permalink to this headline">¶</a></h3>
+<p>On peut exécuter un groupe d&#8217;instruction en fonction d&#8217;une condition:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>     <span class="k">print</span> <span class="s">&#39;X est négatif&#39;</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Notez que l&#8217;indentation est obligatoire et doit être la même pour toutes les instructions imbriquées.</p>
+<p>L&#8217;instruction <strong>if</strong> supporte les alternatives:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span> <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>     <span class="k">print</span> <span class="s">&#39;X est négatif&#39;</span>
+<span class="gp">... </span><span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>     <span class="k">print</span> <span class="s">&#39;X est nul&#39;</span>
+<span class="gp">... </span><span class="k">elif</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>     <span class="k">print</span> <span class="s">&#39;X est positif&#39;</span>
+<span class="gp">... </span><span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>     <span class="k">print</span> <span class="s">&#39;Hum...&#39;</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="structures-iteratives-boucles">
+<h3>Structures itératives (boucles)<a class="headerlink" href="#structures-iteratives-boucles" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="boucle-for">
+<h4>Boucle <em>for</em><a class="headerlink" href="#boucle-for" title="Permalink to this headline">¶</a></h4>
+<p>La boucle <strong>for</strong> permet de parcourir les éléments d&#8217;une séquence:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;window&#39;</span><span class="p">,</span> <span class="s">&#39;defenestrate&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">a</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">cat 3</span>
+<span class="go">window 6</span>
+<span class="go">defenestrate 12</span>
+</pre></div>
+</div>
+<p>Dans la plupart des langages, les boucles de type permettent d&#8217;itérer sur les indices des éléments d&#8217;une séquence. C&#8217;est un comportement que l&#8217;on peut facilement émuler:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;window&#39;</span><span class="p">,</span> <span class="s">&#39;defenestrate&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">)):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+<span class="gp">...</span>
+<span class="go">cat 3</span>
+<span class="go">window 6</span>
+<span class="go">defenestrate 12</span>
+</pre></div>
+</div>
+<p>On peut également utiliser enumerate pour récupérer et l&#8217;indice et l&#8217;élément:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;cat&#39;</span><span class="p">,</span> <span class="s">&#39;window&#39;</span><span class="p">,</span> <span class="s">&#39;defenestrate&#39;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="k">print</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">0 cat 3</span>
+<span class="go">1 window 6</span>
+<span class="go">2 defenestrate 12</span>
+</pre></div>
+</div>
+<p>Il peut être intéressant de noter que les boucles <strong>for</strong> peuvent s&#8217;utiliser sous forme abrégée lors de la définition des séquences:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="go">[1, 2, 4, 8, 16, 32, 64, 128, 256, 512]</span>
+</pre></div>
+</div>
+<p>Dans le cas des dictionnaires, on peut itérer avec une boucle for pour récupérer à la fois la clé et la valeur:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;couleur&quot;</span><span class="p">:</span><span class="s">&quot;bleu&quot;</span><span class="p">,</span> <span class="s">&quot;annee&quot;</span><span class="p">:</span><span class="mi">1985</span><span class="p">,</span> <span class="s">&quot;immatriculation&quot;</span><span class="p">:</span><span class="s">&quot;1337BB34&quot;</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">a</span><span class="o">.</span><span class="n">iteritems</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span>
+<span class="gp">...</span>
+<span class="go">couleur bleu</span>
+<span class="go">annee 1985</span>
+<span class="go">immatriculation 1337BB34</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="boucle-while">
+<h4>Boucle <em>while</em><a class="headerlink" href="#boucle-while" title="Permalink to this headline">¶</a></h4>
+<p>Une boucle <strong>while</strong> répète ses instructions tant qu&#8217;une condition est vraie, c&#8217;est à dire jusqu&#8217;à ce que cette même condition soit fausse:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Entrez un entier : &#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">while</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;trop petit...&#39;</span>
+<span class="gp">... </span>   <span class="n">x</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Entrez un entier : &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="fonctions">
+<h2>Fonctions<a class="headerlink" href="#fonctions" title="Permalink to this headline">¶</a></h2>
+<p>Une fonction est un ensemble d&#8217;instructions auquel on affecte un nom:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mult2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+   <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+</pre></div>
+</div>
+<p>Le rôle des fonctions est de factoriser le code ou, d&#8217;une manière plus générale, de grouper du code. Si, par exemple, vous devez faire des calculs d&#8217;aire à divers endroits de votre programme, vous avez intérêt à isoler les instructions de calcul d&#8217;aire dans une fonction.</p>
+<p>Lorsque votre programme devient trop gros, vous pouvez le décomposer en fonctions pour préserver la lisibilité du code.</p>
+<p>Une fonction est définie par sa signature : son <strong>nom</strong>, ses <strong>types d&#8217;arguments</strong> et son <strong>type de retour</strong>.
+En outre, une fonction possède un comportement sur lequel le programmeur de la fonction et ses utilisateurs se sont accordés. La signature de la fonction ainsi que son comportement forment une sorte de contrat qu&#8217;il ne faut pas rompre, sous peine de voir s&#8217;écrouler les programmes utilisant cette fonction.</p>
+<p>Le mot-clé <strong>def</strong> introduit la déclaration d&#8217;une fonction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Syntaxe générale d&#39;une fonction</span>
+<span class="k">def</span> <span class="nf">nom_de_la_fonction</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span> <span class="p">:</span>
+  <span class="k">pass</span>
+  <span class="o">...</span>
+  <span class="k">return</span> <span class="n">expression</span>
+</pre></div>
+</div>
+<p>Comme pour les structures de contrôle, le corps de la fonction est délimité par l&#8217;indentation.</p>
+<p>Comme dans l&#8217;exemple ci-dessus, une fonction prend généralement un ou plusieurs paramètres (ou arguments). Elle peut aussi avoir une valeur de retour. Les arguments sont accessibles dans le corps de la fonction, au même titre que des variables.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Le code d&#8217;une fonction est exécuté quand la fonction est appelée, pas quand elle est déclarée.</p>
+</div>
+<p>Pour appeler une fonction, insérez simplement son nom ainsi que ses paramètres entre parenthèses:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">n</span> <span class="o">=</span> <span class="mi">354</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mult2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+<span class="go">708</span>
+</pre></div>
+</div>
+<p>Toute fonction peut être utilisée pour former une expression:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">var</span> <span class="o">=</span> <span class="n">mult2</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span>
+</pre></div>
+</div>
+<p>Prenez garde aux <strong>éventuels effets de bord</strong> !</p>
+<p>Vous pouvez définir une valeur par défaut pour vos paramètres en plaçant des affectations dans la liste des paramètres:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">mult2</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="n">x</span><span class="o">*</span><span class="mi">2</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mult2</span><span class="p">()</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="les-modules-python">
+<h2>Les modules Python<a class="headerlink" href="#les-modules-python" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="import">
+<h3>Import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h3>
+<p>Les modules Python permettent d&#8217;organiser le code d&#8217;un logiciel en plusieurs fichiers et composants que l&#8217;on nomme <em>module</em>. Cela permet de se resservir d&#8217;un même code dans plusieurs programmes par exemple, ou juste de clarifier l&#8217;écriture du code.</p>
+<p>Un module consiste donc en un ensemble de définitions et d&#8217;instructions Python écrite dans un même fichier et réutilisables par ailleurs. Ces définitions peuvent être <strong>importées</strong> dans un autre module ou dans le module <strong>main</strong> (le script principal).</p>
+<p>Le nom du fichier est le nom du module, auquel on ajout le suffixe <em>.py</em>. Dans un module, le nom de ce module (une chaine, est dispnible dans la variable <strong>__name__</strong>. Par exemple créons un module avec des fonctions de calcul de la suite de Fibonacci. On appelle ce fichier <strong>fibo.py</strong>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Module pour la suite de Fibonacci</span>
+
+<span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>    <span class="c"># Ecrire la suite de Fibonacci de 1 a n</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">b</span><span class="p">,</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+
+<span class="k">def</span> <span class="nf">fib2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span> <span class="c"># Retourne la suite de Fibonacci de 1 a n</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="n">b</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">+</span><span class="n">b</span>
+    <span class="k">return</span> <span class="n">result</span>
+</pre></div>
+</div>
+<p>La gestion des modules se fait avec le mot clef <strong>import</strong>. <strong>import</strong> est un mot-clé permettant de faire appel à des éléments définis <strong>ailleurs</strong>.</p>
+<p>Si dans l&#8217;interpréteur Python on importe le module créé:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">fibo</span>
+</pre></div>
+</div>
+<p>Cela n&#8217;importe pas directement les noms des fonctions mais seulement le module. On peut ensuite accéder aux fonctions en les préfixant du nom du module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fibo</span><span class="o">.</span><span class="n">fib</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="go">1 1 2 3 5 8 13 21 34 55 89 144 233 377 610 987</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fibo</span><span class="o">.</span><span class="n">fib2</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+<span class="go">[1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fibo</span><span class="o">.</span><span class="n">__name__</span>
+<span class="go">&#39;fibo&#39;</span>
+</pre></div>
+</div>
+<p>On peut réassigner un nom local à une des fonctions du module si on s&#8217;en sert souvent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span> <span class="o">=</span> <span class="n">fibo</span><span class="o">.</span><span class="n">fib</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="go">1 1 2 3 5 8 13 21 34 55 89 144 233 377</span>
+</pre></div>
+</div>
+<p>On peut aussi importer des objets spécifiques de l&#8217;intérieur d&#8217;un module. On utilise pour cela le mot-clef <strong>from</strong></p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fibo</span> <span class="kn">import</span> <span class="n">fib</span><span class="p">,</span> <span class="n">fib2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="go">1 1 2 3 5 8 13 21 34 55 89 144 233 377</span>
+</pre></div>
+</div>
+<p>Dans ce cas les fonctions <em>fib</em> et <em>fib2</em> sont accessibles directement.
+Il est possible d&#8217;importer tous les éléments d&#8217;un module (sauf ceux qui commencent par &#8220;_&#8221;) en utilisant import *. Cela n&#8217;est cependant pas conseillé car cela peut poser des collisions de noms et créer des problèmes difficilement détectables:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">fibo</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fib</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="go">1 1 2 3 5 8 13 21 34 55 89 144 233 377</span>
+</pre></div>
+</div>
+<p>Des modules peuvent importer d&#8217;autres modules. On place en général les directives <strong>import</strong> au début d&#8217;un module (ou script).</p>
+</div>
+<div class="section" id="recherche-des-modules">
+<h3>Recherche des modules<a class="headerlink" href="#recherche-des-modules" title="Permalink to this headline">¶</a></h3>
+<p>Quand une directive <strong>import monmodule</strong> est utilisée, l&#8217;interpréteur Python recherche <strong>monmodule.py</strong> dans le répertoire contenant le script appelant, puis dans la liste des répertoires contenus dans la variable d&#8217;environnement <strong>PYTHONPATH</strong>, enfin dans des répertoires par défaut de Python (souvent <strong>.:/usr/local/lib/python</strong> ).</p>
+<p>Cette liste de répertoires de recherche est accessible par la variable <strong>sys.path</strong> (après avoir importé le module <a href="#id1"><span class="problematic" id="id2">**</span></a>sys).</p>
+</div>
+<div class="section" id="packages">
+<h3>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h3>
+<p>Les modules Python peuvent aussi être composés de plusieurs fichiers dans une arborescence de répertoires. Cela permet de structurer l&#8217;organisation des fichiers, y compris à l&#8217;intérieur d&#8217;un module, tout en utilisant la notation &#8220;.&#8221; pour accéder au contenu des modules.</p>
+<p>La syntaxe pour importer un package est la même que pour importer un module, et le fonctionnement est transparent.</p>
+<p>Pour qu&#8217;un répertoire soit considéré comme un package, il faut qu&#8217;il contienne un fichier <strong>__init__.py</strong> dans lequel sont données les instructions d&#8217;initialisation du package (il est souvent vide mais doit être présent).</p>
+<p>Un package peut contenir des sous-modules ou sous-package, avec dans ce cas un fichier <strong>__init__.py</strong> par répertoire.</p>
+<p>Les packages sont recherchés dans les mêmes endroits que les modules, le fonctionnement est ici aussi totalement identique.</p>
+<p>Un exemple de structure de package:</p>
+<div class="highlight-python"><pre>sound/                      Package principal
+  __init__.py               Initialisation du package sound
+  formats/                  Sous-package pour les formats
+          __init__.py
+          wavread.py
+          wavwrite.py
+          aiffread.py
+          aiffwrite.py
+          auread.py
+          auwrite.py
+          ...
+  effects/                  Sous-package pour les effets
+          __init__.py
+          echo.py
+          surround.py
+          reverse.py
+          ...
+  filters/
+          __init__.py
+          equalizer.py
+          vocoder.py
+          karaoke.py
+          ...</pre>
+</div>
+<p>Exemples d&#8217;imports pour ce package:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import du sous-module sound.effect.echo. Il doit ensuite etre reference completement</span>
+<span class="kn">import</span> <span class="nn">sound.effects.echo</span>
+<span class="n">sound</span><span class="o">.</span><span class="n">effects</span><span class="o">.</span><span class="n">echo</span><span class="o">.</span><span class="n">echofilter</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">atten</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Une autre façon d&#8217;importer le sous module:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># import du sous-module echo qui rentre dans l&#39;espace de nom courant</span>
+<span class="kn">from</span> <span class="nn">sound.effects</span> <span class="kn">import</span> <span class="n">echo</span>
+<span class="n">echo</span><span class="o">.</span><span class="n">echofilter</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">atten</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On peut aussi importer une variable ou une fonction directement:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">sound.effects.echo</span> <span class="kn">import</span> <span class="n">echofilter</span>
+<span class="n">echofilter</span><span class="p">(</span><span class="nb">input</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">delay</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">atten</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="exercices-python-1">
+<h1>Exercices Python 1<a class="headerlink" href="#exercices-python-1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="interpreteur-python">
+<h2>interpréteur Python<a class="headerlink" href="#interpreteur-python" title="Permalink to this headline">¶</a></h2>
+<p>Lancez la console, tapez simplement la commande suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">ipython</span>
+</pre></div>
+</div>
+<p>L&#8217;interpréteur Python se lance et attends vos instructions.</p>
+<p>Dans un premier temps, essayez diverses expressions :</p>
+<ul class="simple">
+<li>Calculez des sommes, des divisions...</li>
+<li>Que se passe-t-il si l&#8217;on saisit deux nombres séparés par un espace ?</li>
+<li>Que se passe-t-il si l&#8217;on saisit deux chaînes de caractères séparées par un espace ?</li>
+<li>Que se passe-t-il si l&#8217;on essaye de concaténer une chaîne normale et une chaîne Unicode ?</li>
+<li>Essayez de passer à <strong>print</strong> le résultat de cette concaténation.</li>
+<li>Que produit l&#8217;instruction suivante ?</li>
+</ul>
+<div class="highlight-python"><pre>print a = 10</pre>
+</div>
+<ul class="simple">
+<li>Quelle est la différence entre les deux instructions suivantes ?</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">print</span> <span class="s">&quot;Python &quot;</span> <span class="o">+</span> <span class="s">&quot;Plugin&quot;</span>
+<span class="k">print</span> <span class="s">&quot;Python &quot;</span><span class="p">,</span> <span class="s">&quot;Plugin&quot;</span>
+</pre></div>
+</div>
+<p>Vous pouvez tester tout ce qui vous passe par la tête, même en cas d&#8217;erreur de syntaxe, la console ne vous mangera pas.</p>
+<p>Essayez maintenant de travailler avec des listes :</p>
+<ul class="simple">
+<li>Créez une liste de 6 éléments, modifiez la valeur du premier élément,</li>
+<li>extrayez les éléments 1, 3, 5 dans une nouvelle liste.</li>
+<li>Faites de même avec un tuple.</li>
+<li>Créez une liste ne contenant que des valeurs numériques.</li>
+<li>Sachant que la fonction sum() permet d&#8217;obtenir la somme des éléments du tableau, quelle formule utilisera-t-on pour calculer la moyenne de la liste ?</li>
+<li>Testez les différents opérateurs associés aux séquences.</li>
+</ul>
+</div>
+<div class="section" id="creez-des-scripts-python">
+<h2>Créez des scripts Python<a class="headerlink" href="#creez-des-scripts-python" title="Permalink to this headline">¶</a></h2>
+<p>Un script Python est simplement un fichier texte contenant du code Python.</p>
+<p>En utilisant l&#8217;éditeur de code, créez un fichier portant le nom que vous voulez avec l&#8217;extension <strong>.py</strong>.</p>
+<p>Dans ce fichier, écrivez un code très simple, par exemple un convertisseur euro-franc:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">a</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Votre somme en euros : &#39;</span><span class="p">)</span>
+<span class="k">print</span> <span class="nb">float</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">*</span> <span class="mf">6.55957</span>
+</pre></div>
+</div>
+<p>Enregistrez votre script.</p>
+<p>Pour exécuter ce script, tapez simplement dans la console:</p>
+<div class="highlight-python"><pre>python script.py</pre>
+</div>
+<p>(en supposant que votre script s&#8217;appelle script.py).</p>
+<p>Vous savez maintenant écrire des scripts Python :) Organisez-vous un répertoire pour stocker vos scripts et passez à la suite.</p>
+<div class="section" id="ameliorez-vos-scripts-optionnel">
+<h3>Améliorez vos scripts (optionnel)<a class="headerlink" href="#ameliorez-vos-scripts-optionnel" title="Permalink to this headline">¶</a></h3>
+<p>Si vous voulez disposer de votre script comme d&#8217;une commande Shell, vous devez :</p>
+<ul class="simple">
+<li>spécifier l&#8217;adresse de l&#8217;interpréteur et l&#8217;encodage du fichier sur les deux premières lignes</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>attribuer les droits d&#8217;exécution à votre script. Pour ce faire, vous pouvez passer par la fenêtre &#8220;Propriétés&#8221; du fichier ou taper cette commande dans une console</li>
+</ul>
+<div class="highlight-python"><pre>chmod u+x script.py</pre>
+</div>
+<ul class="simple">
+<li>vous assurer que votre script se situe bien dans le PATH.</li>
+</ul>
+<p>Notez que l&#8217;utilisation de l&#8217;extension <strong>.py</strong> n&#8217;est absolument pas obligatoire, c&#8217;est une simple convention. Vous pouvez l&#8217;enlever si vous en jugez bon.</p>
+</div>
+</div>
+<div class="section" id="lecture-de-script-1">
+<h2>Lecture de script 1<a class="headerlink" href="#lecture-de-script-1" title="Permalink to this headline">¶</a></h2>
+<p>Lire (et comprendre) du code Python est généralement un premier pas dans l&#8217;apprentissage du langage.</p>
+<p>En lisant et en testant le script dans le fichier <strong>convertisseur.py</strong>, qu&#8217;apprenez-vous sur la fonction <strong>raw_input()</strong> ?. Quels sont ses paramètres ? sa valeur de retour ? que <strong>fait</strong>-elle ? Pour plus d&#8217;information, vous pouvez consulter l&#8217;aide dans ipython:</p>
+<div class="highlight-python"><pre>raw_input?</pre>
+</div>
+<p>En vous appuyant sur les exemples vu en cours, pouvez-vous modifier ce script pour qu&#8217;il continue à s&#8217;exécuter tant que l&#8217;utilisateur saisit un montant non nul ?</p>
+</div>
+<div class="section" id="lecture-de-script-2">
+<h2>Lecture de script 2<a class="headerlink" href="#lecture-de-script-2" title="Permalink to this headline">¶</a></h2>
+<p>Analysez le code suivant ( fichier <strong>stat-fichiers.py</strong> ):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
+<span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">home_directory</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="s">&#39;~&#39;</span><span class="p">)</span> <span class="c"># &#39;~&#39; est un raccourci pour désigner le répertoire utilisateur.</span>
+<span class="n">file_list</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">home_directory</span><span class="p">)</span>
+
+<span class="n">count_dir</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count_file</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count_hidden</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count_others</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">file_list</span><span class="p">:</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;.&#39;</span><span class="p">:</span>
+        <span class="n">count_hidden</span> <span class="o">=</span> <span class="n">count_hidden</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">home_directory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">count_file</span> <span class="o">=</span> <span class="n">count_file</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">home_directory</span> <span class="o">+</span> <span class="s">&#39;/&#39;</span> <span class="o">+</span> <span class="n">node</span><span class="p">):</span>
+        <span class="n">count_dir</span> <span class="o">=</span> <span class="n">count_dir</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">count_others</span> <span class="o">=</span> <span class="n">count_others</span> <span class="o">+</span> <span class="mi">1</span>
+
+<span class="k">print</span> <span class="s">&#39;Le répertoire utilisateur contient :&#39;</span>
+<span class="k">print</span> <span class="s">&#39;    - &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_file</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39; fichiers réguliers&#39;</span>
+<span class="k">print</span> <span class="s">&#39;    - &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_dir</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39; répertoires&#39;</span>
+<span class="k">print</span> <span class="s">&#39;    - &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_others</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39; autres fichiers&#39;</span>
+<span class="k">print</span> <span class="s">&#39;Notez que &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">count_hidden</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;</span><span class="si">% d</span><span class="s">es fichiers sont masqués&#39;</span>
+</pre></div>
+</div>
+<p>Pouvez-vous dire ce qu&#8217;il fait ? Commentez le code pour décrire le comportement du script.</p>
+<p>N&#8217;hésitez pas à consulter l&#8217;aide dans ipython pour comprendre le rôle de telle ou telle instruction.</p>
+<p>En vous appuyant sur ce que vous avez appris à l&#8217;étape précédente, modifiez ce script pour qu&#8217;il demande à l&#8217;utilisateur quel répertoire analyser.</p>
+</div>
+<div class="section" id="definition-de-fonctions">
+<h2>Définition de fonctions<a class="headerlink" href="#definition-de-fonctions" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Ecrivez une première fonction affichant simplement une ligne vide (l&#8217;instruction <strong>print</strong> sans argument devrait produire cet effet).</li>
+<li>Ecrivez une deuxième fonction affichant 3 lignes vides successives. Cette nouvelle fonction utilisera la première fonction ci-dessus.</li>
+<li>Modifiez votre fonction pour qu&#8217;elle affiche <strong>n</strong> lignes vides successives, <strong>n</strong> étant un paramètre.</li>
+<li>Modifiez votre fonction pour que son argument prenne la valeur 3 par défaut.</li>
+</ul>
+</div>
+<div class="section" id="algorithmique">
+<h2>Algorithmique<a class="headerlink" href="#algorithmique" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="la-surface-d-un-rectangle">
+<h3>La surface d&#8217;un rectangle<a class="headerlink" href="#la-surface-d-un-rectangle" title="Permalink to this headline">¶</a></h3>
+<p>Vous souhaitez calculer la surface d&#8217;un rectangle.</p>
+<ul class="simple">
+<li>Quelles sont les informations dont vous avez besoin en entrée ?</li>
+<li>Quelle est l&#8217;information que vous souhaitez en sortie ?</li>
+<li>Quel est le traitement à réaliser ?</li>
+<li>Ecrivez-le en Python.</li>
+</ul>
+</div>
+<div class="section" id="calcul-statistique">
+<h3>Calcul statistique<a class="headerlink" href="#calcul-statistique" title="Permalink to this headline">¶</a></h3>
+<p>Vous souhaitez calculer une moyenne coefficientée.</p>
+<ul class="simple">
+<li>Quelles sont les informations dont vous avez besoin en entrée ?</li>
+<li>Quelle est l&#8217;information que vous souhaitez en sortie ?</li>
+<li>Quel est le traitement à réaliser ?</li>
+<li>Ecrivez-le en Python.</li>
+</ul>
+</div>
+<div class="section" id="calcul-entier">
+<h3>Calcul entier<a class="headerlink" href="#calcul-entier" title="Permalink to this headline">¶</a></h3>
+<p>Vous disposez d&#8217;une somme de monnaie en euros. Pour simplifier, disons que c&#8217;est une somme ronde (pas de centimes).</p>
+<p>Vous souhaitez déterminer combien de pièces et billets sont nécessaires pour représenter cette somme. Vous cherchez le nombre minimal de billets et de pièces.</p>
+<p>Concevez le programme réalisant ce calcul en utilisant le division entière et l&#8217;opérateur de modulo.</p>
+<p>Vous détaillerez les étapes suivies pour aboutir à ce programme.</p>
+</div>
+<div class="section" id="iterations">
+<h3>Itérations<a class="headerlink" href="#iterations" title="Permalink to this headline">¶</a></h3>
+<p>Ecrivez une fonction qui affiche la suite de Padovan jusqu&#8217;à l&#8217;indice <strong>n</strong>.</p>
+<p>La suite de Padovan est définie par:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Fn</span><span class="o">+</span><span class="mi">3</span> <span class="o">=</span> <span class="n">Fn</span><span class="o">+</span><span class="mi">2</span> <span class="o">+</span> <span class="n">Fn</span>
+<span class="n">F2</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">F1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">F0</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="import-de-modules">
+<h2>Import de modules<a class="headerlink" href="#import-de-modules" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Importez le module <strong>math</strong>.</li>
+<li>Utilisez l&#8217;introspection pour voir ce qui est fourni par le module math.</li>
+<li>Utilisez la fonction <strong>sqrt</strong> du module <strong>math</strong> pour calculer le nombre d&#8217;or. Le nombre d&#8217;or se définit comme &#8220;1 plus racine de 5, le tout divisé par 2&#8221;.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="python-notions-avancees">
+<h1>Python, notions avancées<a class="headerlink" href="#python-notions-avancees" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gestion-des-erreurs">
+<h2>Gestion des erreurs<a class="headerlink" href="#gestion-des-erreurs" title="Permalink to this headline">¶</a></h2>
+<p>Pour l&#8217;instant, nous avons créé des programmes simples. Ceux-ci fonctionnaient bien mais seulement dans le cas où ils étaient censés fonctionner.</p>
+<p>Malheureusement, dans la vraie vie, un programme est souvent confronté à des situations inattendues. Lorsqu&#8217;un cas non supporté se présente, un programme peut simplement &#8220;planter&#8221; en libérant de nombreux messages incompréhensibles, ceci est généralement désagréable pour les utilisateur.</p>
+<p>Si vous avez un peu d&#8217;estime pour l&#8217;utilisateur, vous chercherez par tous les moyens à anticiper ces cas particuliers d&#8217;une part pour empêcher l&#8217;arrêt brutal du programme et d&#8217;autre part pour rétablir une situation normale en informant l&#8217;utilisateur de <strong>la solution à apporter au problème</strong>.</p>
+<div class="section" id="erreurs-et-exceptions">
+<h3>Erreurs et exceptions<a class="headerlink" href="#erreurs-et-exceptions" title="Permalink to this headline">¶</a></h3>
+<p>En matière de programmation, on parle souvent d&#8217;erreur et d&#8217;exception. De manière simple, disons que les erreurs sont le fait du programmeur alors que les exceptions correspondent à des cas non supportés par le programme.</p>
+<p>Par exemple, lorsque vous oubliez d&#8217;indenter le corps d&#8217;une boucle, il s&#8217;agit d&#8217;une erreur. A l&#8217;inverse, lorsque l&#8217;utilisateur saisit &#8220;arthur&#8221; quand on lui demande son age, il s&#8217;agit d&#8217;une exception.</p>
+<p>Les erreurs peuvent être dues à une mauvaise conception du programme. Cela arrive souvent à tous les programmeurs. Dans ce cas, seuls des tests pourront vous aider à éliminer les erreurs. Python vous aide en signalant les erreurs de syntaxe. Lorsque le programme s&#8217;arrête brutalement et signale une <strong>SyntaxError</strong>, relisez calmement votre code, vous avez fait une erreur quelque part, il suffit de la trouver.</p>
+<p>Tous les autres cas d&#8217;arrêt brutal du programme correspondent à des exceptions. Il peut s&#8217;agir d&#8217;une division par zéro, d&#8217;une opération arithmétiques sur une valeur non numérique, etc. Dans tous les cas, l&#8217;interpréteur affichera une erreur qui vous permettra de trouver la source du problème.</p>
+</div>
+<div class="section" id="intercepter-une-exception">
+<h3>Intercepter une exception<a class="headerlink" href="#intercepter-une-exception" title="Permalink to this headline">¶</a></h3>
+<p>Notez que l&#8217;arrêt brutal du programme peut être normal. Lorsque l&#8217;utilisateur saisit &#8220;arthur&#8221; quand on lui demande son age, le programme ne peut plus décemment calculer la moyenne d&#8217;age des utilisateurs par exemple. Il s&#8217;agit d&#8217;une exception, d&#8217;un cas non supporté par le programme.</p>
+<p>Cela dit, vous pouvez tout de même réagir lorsqu&#8217;une exception se produit. Vous pouvez <strong>intercepter</strong> cette exception et réagir pour rétablir la situation. Ceci se fait avec le couple d&#8217;instruction <strong>try</strong> et <strong>except</strong>. Voici un exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mi">9876</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">/</span> <span class="n">b</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&quot;Problème : On ne peut pas diviser par 0. On considère que &#39;c&#39; vaut 0.&quot;</span>
+<span class="gp">...</span>
+<span class="go">Problème : On ne peut pas diviser par 0. On considère que &#39;c&#39; vaut 0.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span>
+<span class="go">9876 0 0</span>
+</pre></div>
+</div>
+<p>Dans l&#8217;exemple ci-dessus, nous savons que le cas d&#8217;une division par 0 peut arriver. Nous interceptons donc cette erreur et préparons une riposte. Cette riposte se compose de deux actions :</p>
+<ul class="simple">
+<li>affecter à <strong>c</strong> une valeur par défaut pour permettre à la suite du programme de s&#8217;exécuter normalement,</li>
+<li>prévenir l&#8217;utilisateur qu&#8217;un cas particulier s&#8217;est produit.</li>
+</ul>
+<p>L&#8217;interception des exceptions peut vous permettre de :</p>
+<ol class="arabic simple">
+<li>rétablir la situation lorsque c&#8217;est possible,</li>
+<li>amorcer la fin du programme de manière propre (avec un message d&#8217;erreur digne de ce nom) lorsque la situation n&#8217;est pas récupérable.</li>
+</ol>
+<p>Toute exception se produisant en dehors d&#8217;un bloc <strong>try</strong> entrainera l&#8217;arrêt brutal du programme. Ceci est parfaitement normal et même positif en période de développement ou test. A l&#8217;inverse, il serait vraiment regrettable que cela arrive en phase de production.</p>
+<p>Il est possible de traiter plusieurs cas particuliers (plusieurs exceptions donc) en une seule fois:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="o">/</span><span class="mi">0</span>
+<span class="gp">... </span><span class="k">except</span> <span class="p">(</span><span class="ne">ZeroDivisionError</span><span class="p">,</span> <span class="ne">NameError</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;Erreur !&#39;</span>
+<span class="gp">...</span>
+<span class="go">Erreur !</span>
+</pre></div>
+</div>
+<p>Attention, les <strong>parenthèses sont obligatoires ici</strong></p>
+<p>Il est aussi possible de traiter individuellement chaque cas particulier:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">/</span> <span class="mi">0</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">ZeroDivisionError</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;Erreur: division par zéro !&#39;</span>
+<span class="gp">... </span><span class="k">except</span> <span class="ne">NameError</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&quot;Erreur: la variable n&#39;existe pas&quot;</span>
+<span class="gp">...</span>
+<span class="go">Erreur: la variable n&#39;existe pas</span>
+</pre></div>
+</div>
+<p>Enfin, il est aussi possible d&#8217;intercepter toutes les exceptions possibles (et même les autres) si l&#8217;on ne spécifie pas le type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span>
+<span class="gp">... </span><span class="k">except</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="s">&#39;Une erreur s</span><span class="se">\&#39;</span><span class="s"> est produit mais on ne sait pas bien laquelle...&#39;</span>
+<span class="gp">...</span>
+<span class="go">Une erreur s&#39; est produit mais on ne sait pas bien laquelle...</span>
+</pre></div>
+</div>
+<p>Il n&#8217;est pas du tout recommandé d&#8217;utiliser cette dernière construction car cela masquerait les bugs du programme et empêcherait donc leur correction.</p>
+<p>Il existe deux autres instructions que l&#8217;on peut combiner avec <strong>try</strong> et <strong>except</strong>. Il s&#8217;agit de <strong>else</strong> et de <strong>finally</strong>. On les utilise de la manière suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="n">c</span> <span class="o">=</span> <span class="bp">None</span>
+<span class="gp">... </span>   <span class="k">try</span><span class="p">:</span>
+<span class="gp">... </span>      <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">/</span><span class="n">b</span>
+<span class="gp">... </span>   <span class="k">except</span><span class="p">:</span>
+<span class="gp">... </span>      <span class="k">print</span> <span class="s">&#39;Une erreur s</span><span class="se">\&#39;</span><span class="s">est produite&#39;</span>
+<span class="gp">... </span>   <span class="k">else</span><span class="p">:</span>
+<span class="gp">... </span>      <span class="k">print</span> <span class="s">&#39;Aucune erreur ne s</span><span class="se">\&#39;</span><span class="s">est produite&#39;</span>
+<span class="gp">... </span>   <span class="k">finally</span><span class="p">:</span>
+<span class="gp">... </span>      <span class="k">print</span> <span class="s">&#39;Une erreur s</span><span class="se">\&#39;</span><span class="s">est produite... ou pas !&#39;</span>
+<span class="gp">... </span>   <span class="k">return</span> <span class="n">c</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="go">Aucune erreur ne s&#39;est produite</span>
+<span class="go">Une erreur s&#39;est produite... ou pas !</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">test</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">Une erreur s&#39;est produite</span>
+<span class="go">Une erreur s&#39;est produite... ou pas !</span>
+</pre></div>
+</div>
+<p>L&#8217;exemple ci-dessous nous montre que les blocs <strong>except</strong> ne sont exécutés qu&#8217;en cas d&#8217;erreur. Le bloc <strong>else</strong> n&#8217;est exécuté que lorsqu&#8217;il n&#8217;y a pas d&#8217;exception. Enfin, le bloc <strong>finally</strong> est exécuté dans tout les cas.</p>
+</div>
+<div class="section" id="declencher-une-exception">
+<h3>Déclencher une exception<a class="headerlink" href="#declencher-une-exception" title="Permalink to this headline">¶</a></h3>
+<p>L&#8217;instruction <strong>raise</strong> permet de déclencher une exception &#8220;de force&#8221;. Imaginez par exemple que vous écriviez une fonction prennant un entier positif en paramètre. Si jamais le paramètre donné est négatif, vous pourrez informer le <strong>code appelant</strong> de son erreur en <strong>déclenchant</strong> une exception.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">ma_fonction</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+<span class="gp">... </span>   <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+<span class="gp">... </span>      <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">,</span> <span class="s">&#39;i doit être positif&#39;</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ma_fonction</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ma_fonction</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">3</span>, in <span class="n">ma_fonction</span>
+<span class="gr">ValueError</span>: <span class="n">i doit être positif</span>
+</pre></div>
+</div>
+<p>Lorsque <strong>i</strong> est négatif, une exception est déclenchée et l&#8217;exécution de la fonction s&#8217;arrête. Il en va de même pour le code appelant et pour celui qui l&#8217;a appelé et ainsi de suite. L&#8217;exception se <strong>propage</strong> de proche en proche jusqu&#8217;à ce qu&#8217;elle soit interceptée ou que le programme s&#8217;arrête.</p>
+<p>La syntaxe de <strong>raise</strong> permet non seulement de spécifier le type de l&#8217;exception mais aussi d&#8217;ajouter un message personnalisé pour aiguiller le programmeur dans la résolution du problème.</p>
+</div>
+</div>
+<div class="section" id="prevenir-l-erreur">
+<h2>Prévenir l&#8217;erreur<a class="headerlink" href="#prevenir-l-erreur" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="obtenir-des-donnees-de-la-part-de-l-utilisateur">
+<h3>Obtenir des données de la part de l&#8217;utilisateur<a class="headerlink" href="#obtenir-des-donnees-de-la-part-de-l-utilisateur" title="Permalink to this headline">¶</a></h3>
+<p>Le meilleur moyen d&#8217;obtenir des donnnées valides est de les demander correctement. Ainsi, lorsque l&#8217;on pose des conditions particulière sur le format des données, il faut en informer l&#8217;utilisateur au moment où il saisit les données. Par exemple la première ligne est préférable à la seconde:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">num_tel</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Numéro de téléphone (10 chiffres sans espaces ni séparateurs) : &#39;</span><span class="p">)</span>
+<span class="n">num_tel</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Numéro de téléphone : &#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Normalement, vous connaissez déjà la fonction <strong>input()</strong>. Celle-ci prend en paramètre un message qu&#8217;elle affiche à l&#8217;écran et attend une saisie de l&#8217;utilisateur. La capture de la saisie s&#8217;arrête lorsque l&#8217;utilisateur appuie sur la touche &#8220;entrée&#8221;. Cette fonction a l&#8217;inconvénient d&#8217;exiger une saisie ayant une syntaxe Python valide, c&#8217;est-à-dire que pour saisir une chaîne de caractère, l&#8217;utilisateur devrait l&#8217;encadrer de guillemets, ce qui est peu intuitif.</p>
+<p>Il est donc recommandé d&#8217;utiliser la fonction <strong>raw_input()</strong> à la place. Contrairement à <strong>input()</strong>, cette fonction produit toujours une chaîne de caractère, même si l&#8217;utilisateur n&#8217;a saisi que des chiffres. Vous pouvez ensuite utiliser les fonctions de conversion pour obtenir une valeur du type souhaité:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">reponse</span> <span class="o">=</span> <span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Votre age : &#39;</span><span class="p">)</span>
+<span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">reponse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="valider-les-entrees">
+<h3>Valider les entrées<a class="headerlink" href="#valider-les-entrees" title="Permalink to this headline">¶</a></h3>
+<p>Même si vous avez pris soin d&#8217;expliciter correctement votre demande, vous ne pouvez pas considérer les données provenant de l&#8217;utilisateur comme valides. Une vérification s&#8217;impose au risque de voir l&#8217;équilibre du programme s&#8217;effondrer.</p>
+<p>Lorsque vous recevez des données depuis une source gérant différents types de données compatibles avec Python, vous pouvez utiliser la fonction <strong>type()</strong> qui donne le type d&#8217;une variable ou d&#8217;une valeur. Faîtes simplement un test sur le résultat de la fonction comme ceci:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">876</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&#39;du texte&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mi">876</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="s">&#39;du texte&#39;</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">876.987</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="mf">876.987</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">float</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Lorsque vous lisez des valeurs dans un fichier ou que obtenez une saisie de l&#8217;utilisateur via <strong>raw_input()</strong>, vous ne pouvez pas utilisez <strong>type()</strong> car le résultat serait toujours <strong>str</strong>. La solution consiste à utiliser les fonctions de conversion et à intercepter les éventuelles exceptions <strong>ValueError</strong>. Par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">try</span><span class="p">:</span>
+   <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Votre age : &#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+   <span class="k">print</span> <span class="s">&#39;Valeur incorrecte, entrez un nombre entier.&#39;</span>
+<span class="k">try</span><span class="p">:</span>
+   <span class="n">taille</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Votre taille : &#39;</span><span class="p">))</span>
+<span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+   <span class="k">print</span> <span class="s">&#39;Valeur incorrecte, entrez un nombre décimal.&#39;</span>
+</pre></div>
+</div>
+<p>Dans la plupart des cas, on souhaite redemander à l&#8217;utilisateur de saisir tant que la valeur n&#8217;est pas correcte. Une manière succinte d&#8217;écrire ceci est:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+   <span class="k">try</span><span class="p">:</span>
+      <span class="n">age</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">raw_input</span><span class="p">(</span><span class="s">&#39;Votre age : &#39;</span><span class="p">))</span>
+      <span class="k">break</span>
+   <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+      <span class="k">print</span> <span class="s">&#39;Valeur incorrecte, entrez un nombre entier.&#39;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="date-mesure-du-temps">
+<h2>Date, mesure du temps<a class="headerlink" href="#date-mesure-du-temps" title="Permalink to this headline">¶</a></h2>
+<p>A travers le module <strong>datetime</strong>, Python fournit un moyen efficace de traiter les données temporelles. On peut représenter les dates, les formater mais aussi réaliser des opérations dessus:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Formatage des dates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">date</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">today</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span>
+<span class="go">datetime.date(2003, 12, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">now</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s">&quot;%m-</span><span class="si">%d</span><span class="s">-%y. </span><span class="si">%d</span><span class="s"> %b %Y is a %A on the </span><span class="si">%d</span><span class="s"> day of %B.&quot;</span><span class="p">)</span>
+<span class="go">&#39;12-02-03. 02 Dec 2003 is a Tuesday on the 02 day of December.&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Calculs sur les dates</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">birthday</span> <span class="o">=</span> <span class="n">date</span><span class="p">(</span><span class="mi">1964</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">31</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age</span> <span class="o">=</span> <span class="n">now</span> <span class="o">-</span> <span class="n">birthday</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">age</span><span class="o">.</span><span class="n">days</span>
+<span class="go">14368</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gestion-des-entrees-sorties">
+<h2>Gestion des entrées/sorties<a class="headerlink" href="#gestion-des-entrees-sorties" title="Permalink to this headline">¶</a></h2>
+<p>Une utilisation de Python est de transformer des données et à les faire passer d&#8217;un support vers un autre. Nous voyons ici comment accéder en lecture et en écriture à des fichiers.</p>
+<p>Pour traiter un fichier, vous devez en premier lieu l&#8217;ouvrir avec la fonction <strong>open()</strong>. Cette fonction renvoit un <strong>descripteur</strong> de fichier qui constitue votre lien avec le fichier ouvert. Une fois que vous avez fini de traiter ce fichier, penser à le fermer avec la fonction <strong>close()</strong>.</p>
+<p>La fonction <strong>open()</strong> prend en premier argument le chemin d&#8217;accès au fichier et en deuxième argument le mode qui peut être :</p>
+<ul class="simple">
+<li>&#8216;r&#8217; pour lire dans le fichier,</li>
+<li>&#8216;w&#8217; pour écrire à partir du début du fichier (écrase le contenu précédent),</li>
+<li>&#8216;a&#8217; pour écrire à la fin du fichier (en ajoutant au contenu précédent).</li>
+</ul>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/workfile&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="go">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>La lecture dans le fichier s&#8217;appuie sur un <strong>curseur</strong>. Celui-ci est positionné sur le début du fichier par défaut (c&#8217;est-à-dire à l&#8217;ouverture). A chaque fois que vous lisez des données, le curseur se déplace jusqu&#8217;à la fin des données lues. En général, on lit dans un fichier texte ligne par ligne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/workfile&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>A chaque fois qu&#8217;on appelle <strong>readline()</strong>, le curseur se déplace vers le début de la ligne suivante. On peut aussi utiliser <strong>read()</strong> qui prend en argument le nombre de caractère à lire. Cela dit, il existe une syntaxe rapide et efficace pour lire dans un fichier ligne par ligne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/workfile&#39;</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+<span class="gp">... </span>   <span class="k">print</span> <span class="n">line</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Inversemment, pour écrire dans le fichier, on utilisera la méthode <strong>write()</strong> de la manière suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;/tmp/workfile&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;This is a test</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Notez que les opérations autorisées dans le fichier dépendent du mode dans lequel le fichier est ouvert.</p>
+</div>
+</div>
+<div class="section" id="exercices-python-2">
+<h1>Exercices Python 2<a class="headerlink" href="#exercices-python-2" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="gestion-d-exception-1">
+<h2>Gestion d&#8217;exception 1<a class="headerlink" href="#gestion-d-exception-1" title="Permalink to this headline">¶</a></h2>
+<p>Exécutez le code suivant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">operande_1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">operande_2</span> <span class="o">=</span> <span class="s">&#39;quatre&#39;</span>
+<span class="n">somme</span> <span class="o">=</span> <span class="n">operande_1</span> <span class="o">+</span> <span class="n">operande_2</span>
+</pre></div>
+</div>
+<p>Que s&#8217;est-il passé ? En supposant que vous ayez reçu un message d&#8217;erreur de Python (ce qui devrait être le cas), pouvez-vous expliquer cette erreur en langage naturel ?</p>
+<p>Supposons maintenant que vous ne maîtrisiez pas le contenu des deux opérandes, quels solutions s&#8217;offrent à vous pour éviter l&#8217;arrêt brutal du programme ? Mettez en œuvre la solution qui vous semble la plus adaptée.</p>
+<p>Que se passe-t-il maintenant si l&#8217;on exécute le code suivant ?</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">operande_1</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">operande_2</span> <span class="o">=</span> <span class="s">&#39;quatre&#39;</span>
+<span class="n">somme</span> <span class="o">=</span> <span class="p">(</span> <span class="n">operande_1</span> <span class="o">+</span> <span class="n">operande_2</span> <span class="p">)</span> <span class="o">/</span> <span class="n">cinq</span>
+</pre></div>
+</div>
+<p>Pouvez-vous expliquer cette erreur ?</p>
+<p>Améliorez la solution mise en œuvre précédemment pour traiter cette nouvelle erreur. Vous apporterez une réponse différente pour les deux types d&#8217;erreur.</p>
+<p>Enfin, complétez ce code pour afficher la somme si et seulement si elle a été calculée.</p>
+</div>
+<div class="section" id="gestion-d-exception-2">
+<h2>Gestion d&#8217;exception 2<a class="headerlink" href="#gestion-d-exception-2" title="Permalink to this headline">¶</a></h2>
+<p>Ecrivez la fonction <strong>somme_sequence_positive(s)</strong> produisant ce résultat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">7.1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">somme_sequence_positive</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">14.1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mf">7.1</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">somme_sequence_positive</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">5</span>, in <span class="n">somme_sequence_positive</span>
+<span class="gr">ValueError</span>: <span class="n">Nombres négatifs interdits !</span>
+</pre></div>
+</div>
+<p>La fonction doit simplement faire la somme des éléments de la séquence. On suppose que tous les éléments sont de type numérique. Au cours du calcul, si un élément est négatif, déclenchez une exception de type ValueError avec le message : &#8220;Nombres négatifs interdits !&#8221;.</p>
+</div>
+<div class="section" id="validation-des-donnees-1">
+<h2>Validation des données 1<a class="headerlink" href="#validation-des-donnees-1" title="Permalink to this headline">¶</a></h2>
+<p>Reprenez la fonction de calcul de la suite de Padovan vu dans la première série d&#8217;exercice. Améliorez-la en vérifiant le type et la valeur du paramètre. Selon le cas, vous pourrez déclencher des exceptions de type <strong>TypeError</strong> ou <strong>ValueError</strong>.</p>
+</div>
+<div class="section" id="validation-des-donnees-2">
+<h2>Validation des données 2<a class="headerlink" href="#validation-des-donnees-2" title="Permalink to this headline">¶</a></h2>
+<p>Ecrivez une fonction <strong>input_int()</strong> qui permet d&#8217;obtenir une valeur entière saisie au clavier par l&#8217;utilisateur.</p>
+<p>Cette fonction utilisera <strong>raw_input()</strong> pour afficher la question et recueillir la saisie. Ensuite la fonction <strong>int()</strong> permettra de convertir la saisie en entier. Pensez à afficher une erreur et reposer la question si la saisie n&#8217;est pas valide.</p>
+</div>
+<div class="section" id="validation-des-donnees-3">
+<h2>Validation des données 3<a class="headerlink" href="#validation-des-donnees-3" title="Permalink to this headline">¶</a></h2>
+<p>Ecrivez une fonction <strong>input_float()</strong>. Celle-ci fonctionne de la même manière que <strong>input_int()</strong> mais vise à obtenir une valeur flottante.</p>
+</div>
+<div class="section" id="manipulation-des-chaines-de-caractere-2">
+<h2>Manipulation des chaines de caractère 2<a class="headerlink" href="#manipulation-des-chaines-de-caractere-2" title="Permalink to this headline">¶</a></h2>
+<p>Vous recevez une chaîne saisie par l&#8217;utilisateur représentant une date. Le format de cette chaîne est &#8216;JJ/MM/AAAA&#8217; impérativement. Ecrivez une fonction <strong>decompose_date(s)</strong> qui transforme cette chaîne en un tuple de trois entiers représentant le jour le mois et l&#8217;année.</p>
+<p>Par exemple, cette fonction produirait:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s">&#39;06/11/2005&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decompose_date</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="go">(6, 11, 2005)</span>
+</pre></div>
+</div>
+<p>Vous gérerez les cas particuliers et notamment les chaines invalides (ne correspondant pas au format donné ci-dessus).</p>
+</div>
+<div class="section" id="manipulation-des-chaines-de-caractere-3">
+<h2>Manipulation des chaines de caractère 3<a class="headerlink" href="#manipulation-des-chaines-de-caractere-3" title="Permalink to this headline">¶</a></h2>
+<p>A l&#8217;aide de la méthode <strong>join()</strong>, affichez la date au format &#8216;JJ-MM-AAAA&#8217; à partir du tuple produit par la fonction decompose_date(s).</p>
+</div>
+<div class="section" id="acces-aux-fichiers">
+<h2>Accès aux fichiers<a class="headerlink" href="#acces-aux-fichiers" title="Permalink to this headline">¶</a></h2>
+<p>Prenez le fichier <strong>exemple.csv</strong> et mettez le dans votre répertoire de travail.</p>
+<p>Dans un premier temps, accédez à ce fichier en lecture en Python. Lisez chaque ligne du fichier et affichez-les simplement à l&#8217;écran. Vous avez donc maintenant la structure générale d&#8217;un programme lisant séquentiellement un fichier.</p>
+<p>Pour chaque ligne, construisez une séquence à l&#8217;aide de la fonction <strong>split()</strong>. Ceci vous permettra de découper chaque ligne en plusieurs champs. Lorsque les champs d&#8217;origine sont de type chaîne, ils sont encadrés par des guillemets, vous pouvez les &#8220;nettoyer&#8221; à l&#8217;aide de la fonction <strong>strip()</strong>. Enfin, convertissez chaque champs dans le type approprié. Pour chaque ligne, vous aurez donc une séquence avec un premier élément de type entier et un élément de type chaîne et un autre de type date.</p>
+<p>Enfin, utilisez la fonction <strong>join()</strong> pour afficher chaque ligne du fichier sous la forme:</p>
+<div class="highlight-python"><pre>&lt;date&gt; - &lt;ville&gt;
+**&lt;date&gt;** représente le deuxième champs et **&lt;ville&gt;** est le troisième.</pre>
+</div>
+</div>
+</div>
+<div class="section" id="programmation-orientee-objet-en-python">
+<h1>Programmation orientée-objet en Python<a class="headerlink" href="#programmation-orientee-objet-en-python" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction-a-poo">
+<h2>Introduction à POO<a class="headerlink" href="#introduction-a-poo" title="Permalink to this headline">¶</a></h2>
+<p>Jusqu&#8217;à maintenant nous avons vu que, pour traiter de l&#8217;information, un programme :</p>
+<ul class="simple">
+<li>gère des structures de données représentant l&#8217;information en s&#8217;appuyant sur le concept de <strong>variable</strong>,</li>
+<li>implémente un traitement de ces données en s&#8217;appuyant sur le concept de <strong>fonction</strong>.</li>
+</ul>
+<p>En cherchant à améliorer l&#8217;architecture des programmes, le besoin de rapprocher ces deux concepts est apparu. En effet, une fonction ne peut pas s&#8217;appliquer à toutes les variables et inversemment. Il existe donc des relations entre les variables et les fonctions qui rendent valide ou non leur association : on ne calcule pas l&#8217;aire d&#8217;un point ni le périmètre d&#8217;une ligne par exemple, ce serait absurde.</p>
+<p>La notions d&#8217;<strong>objet</strong> fait apparaître ce lien en <strong>encapsulant</strong> variables et fonctions dans une même structure. On parle alors de <strong>propriétés</strong> et de <strong>méthodes</strong> de l&#8217;objet (on dit parfois que ce sont les membres de l&#8217;objet). L&#8217;ensemble des informations et comportements relatifs à un concept peuvent donc interagir en toute cohérence.</p>
+<p>Imaginez, par exemple, un objet de type <strong>Voiture</strong>. Cet objet peut avoir les propriétés <strong>immatriculation</strong>, <strong>couleur</strong> et <strong>cylindrée</strong>. On pourra implémenter les méthodes <strong>charger()</strong> et <strong>décharger()</strong> ainsi que <strong>accélerer()</strong> et <strong>freiner()</strong> par exemple. Il est aussi possible d&#8217;imaginer que la méthode <strong>accélerer()</strong> se comporte différement en fonction de la <strong>cylindrée</strong>.</p>
+<p>Notez qu&#8217;il s&#8217;agit d&#8217;une <strong>modélisation</strong> d&#8217;un objet réel que nous connaissons tous. En tant que tel, son périmètre se limite à ce que nous jugeons utile en fonction de nos besoins. Une <strong>modélisation</strong> est une représentation simplifiée de la réalité, cette représentation est construite avec des objectifs particuliers. Nous n&#8217;avons dans cet exemple que trois propriétés et quatre méthodes pour représenter une voiture, vous pouvez imaginez que la notion de voiture dans le système d&#8217;information d&#8217;un constructeur automobile est bien plus complexe.</p>
+<p>Vous savez déjà qu&#8217;une variable possède toujours un type. Il en va de même pour les objets. La description de ce type, c&#8217;est-à-dire de la structure de l&#8217;objet est appelée une <strong>classe</strong>. Une <strong>classe</strong> possède un nom ainsi qu&#8217;un ensemble de propriétés et de méthodes. Les <strong>objets</strong> sont précisemment des <strong>instances de classe</strong>. On dit d&#8217;ailleurs qu&#8217;on <strong>instancie</strong> une classe en créant un <strong>objet</strong>.</p>
+<p>Dans l&#8217;exemple de la voiture, nous décrivions la représentation qu&#8217;on peut faire d&#8217;une voiture, il s&#8217;agit donc d&#8217;une classe. On peut ensuite manipuler plusieurs objets issue de cette classe. Par exemple, la voiture d&#8217;Arthur est bleue, immatriculée &#8220;2222 AGH 83&#8221; et a une cylindrée de 1,5l. Celle de Gabriel est jaune, immatriculée &#8220;986 TR 29&#8221; et n&#8217;a qu&#8217;un litre de cylindrée. Ces deux objets sont différents mais possèdent la même structure et le même comportement car ils sont deux instances différentes de la même classe.</p>
+<p>Dans certains cas, la similarité dans la structure de deux objets peut être partielle. Imaginez une moto par exemple, elle a bien une couleur, une immatriculation et une cylindrée. La moto peut accélerer et freiner mais ne peut pas être chargée ou déchargée puisqu&#8217;elle n&#8217;a pas de coffre. Prenons l&#8217;exemple d&#8217;un vélo maintenant, il se comporte approximativement comme une moto mais n&#8217;a pas de cylindrée ni d&#8217;immatriculation. Pour simplifier, disons que :</p>
+<ul class="simple">
+<li>un véhicule a une couleur et peut accélerer ou freiner,</li>
+<li>un vélo est un véhicule,</li>
+<li>un véhicule motorisé est un véhicule qui a une cylindrée et une immatriculation,</li>
+<li>une moto est un véhicule motorisée,</li>
+<li>une voiture est un véhicule motorisée qui a un coffre et peut donc être charger ou décharger.</li>
+</ul>
+<p>Ainsi, si tout le monde est d&#8217;accord sur la description d&#8217;un véhicule motorisé, il est plus simple de s&#8217;appuyer sur cette définition pour décrire une voiture. C&#8217;est la relation d&#8217;<strong>héritage</strong>. Nous définirons donc d&#8217;abord une classe pour décrire le véhicule motorisé, puis la classe décrivant la voiture héritera de toutes les propriétés et méthodes du véhicule motorisé.</p>
+</div>
+<div class="section" id="les-objets-en-python">
+<h2>Les objets en Python<a class="headerlink" href="#les-objets-en-python" title="Permalink to this headline">¶</a></h2>
+<p>En Python comme dans de nombreux langages de script, à peu près tout est un objet. Vous manipulez donc déjà des objets sans le savoir.</p>
+<p>Prenons l&#8217;exemple d&#8217;une chaîne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">chaine</span> <span class="o">=</span> <span class="s">&#39;du texte du texte du texte&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">chaine</span>
+<span class="go">du texte du texte du texte</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">chaine</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+<span class="go">DU TEXTE DU TEXTE DU TEXTE</span>
+</pre></div>
+</div>
+<p>Bravo, vous venez d&#8217;instancier un objet de la classe <strong>str</strong> nommé <strong>chaine</strong>. Vous avez ensuite appelé la méthode <strong>upper()</strong> de cet objet. Au passage, vous avez découvert qu&#8217;on utilise la notation pointée pour accéder aux propriétés et méthodes d&#8217;un objet.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Dans le cas des types de base (<strong>built-in types</strong>), il est un peu abusif de parler d&#8217;objet mais le comportement est similaire. Nous utilisons ainsi <strong>str</strong> pour les exemples car c&#8217;est un élément simple et bien connu.</p>
+</div>
+<p>Pour créer un nouvel objet, utilisez simplement le nom de la classe suivi d&#8217;une paire de parenthèses:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">chaine</span> <span class="o">=</span> <span class="nb">str</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Cette fonction portant le même nom que la classe est appelé <strong>constructeur</strong> de la classe, son rôle est d&#8217;initialiser l&#8217;objet. Dans certains cas, le constructeur peut prendre des paramètres:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">chaine</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="s">&#39;du texte du texte du texte&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Les éléments de base à retenir pour utiliser les objets en Python sont :</p>
+<ul class="simple">
+<li>un objet est composé de propriétés et de méthodes,</li>
+<li>vous utilisez le point pour accéder aux membres d&#8217;un objet,</li>
+<li>par convention, un nom de classe commence par une majuscule,</li>
+<li>les propriétés/méthodes d&#8217;un objets dont le nom commence par un underscore sont réservées au système</li>
+</ul>
+<p>Pour créer vos propres classes, vous devrez au moins maitriser :</p>
+<ul class="simple">
+<li>la création de classe avec le mot-clé <strong>class</strong></li>
+<li>l&#8217;utilisation de l&#8217;auto-référence (propriété spéciale <strong>self</strong>)</li>
+<li>la création de propriétés</li>
+<li>la création de méthodes</li>
+<li>gestion de l&#8217;initialisation et de la destruction de l&#8217;objet (méthodes spéciales <strong>__init__()</strong> et <strong>__del__()</strong>)</li>
+</ul>
+</div>
+<div class="section" id="definir-une-classe">
+<h2>Définir une classe<a class="headerlink" href="#definir-une-classe" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="creation-et-utilisation-d-une-classe">
+<h2>Création et utilisation d&#8217;une classe<a class="headerlink" href="#creation-et-utilisation-d-une-classe" title="Permalink to this headline">¶</a></h2>
+<p>La syntaxe générale de création d&#8217;une classe est la suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MaClasse</span><span class="p">:</span>
+    <span class="n">instruction1</span>
+    <span class="o">...</span>
+    <span class="n">instructionN</span>
+</pre></div>
+</div>
+<p>Les instructions dans la définition de la classe sont en général des définitions de fonctions, même si d&#8217;autres instructions peuvent éventuellement y être placées.</p>
+<p>Lorsqu&#8217;on a défini une classe on peut l&#8217;instancier en appelant son constructeur avec la syntaxe déjà vue ci dessus:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mybag</span> <span class="o">=</span> <span class="n">Bag</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>La définition de cette classe Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Bag</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Une classe pour stocker des choses&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">addtwice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On voit ici qu&#8217;à l&#8217;intérieur de la classe on a des définitions de <strong>méthodes</strong> qui utilisent des <strong>propriétés</strong> de la classe. Lorsqu&#8217;on veut faire référence à un élément de la classe, propriété ou méthode, on utilise le mot-clef <strong>self</strong>. Ce mot clef est également le premier argument dans la définition des méthodes.</p>
+<p>On peut une fois qu&#8217;on a une instance de la classe appeler une de ses méthodes:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">mybag</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s">&quot;Sandwich&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On ajoute ici un sandwich dans le sac, en appelant la <strong>méthode</strong> <em>add</em> de la classe <em>Bag</em>. Lorsqu&#8217;on appelle cette méthode, on passe l&#8217;argument <em>x</em>. L&#8217;argument <strong>self</strong> de la fonction <em>add</em> est en fait l&#8217;instance de la classe elle même.</p>
+<p>La fonction <strong>__init__(self)</strong> est une méthode particulière. C&#8217;est le constructeur. C&#8217;est cette méthode qui est appelée lors de l&#8217;instanciation de la classe. On y place en général les initialisations des propriétés, ou certains traitements spécifiques à réaliser à la création de l&#8217;objet. Ici on initialise la propriété <em>data</em> à la séquence vide. Ce faisant, on crée cette nouvelle propriété de la classe, puisqu&#8217;elle est préfixée par le mot-clef <em>self</em>.</p>
+<p>Lors de l&#8217;appel à la méthode <em>add</em> on agit donc sur la propriété <em>data</em> en lui ajoutant l&#8217;argument donné à <em>add</em>.</p>
+<p>Il faut noter que le constructeur peut aussi avoir des arguments:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Complex</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">realpart</span><span class="p">,</span> <span class="n">imagpart</span><span class="p">):</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="n">realpart</span>
+<span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">i</span> <span class="o">=</span> <span class="n">imagpart</span>
+<span class="gp">...</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">Complex</span><span class="p">(</span><span class="mf">3.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">r</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">i</span>
+<span class="go">(3.0, -4.5)</span>
+</pre></div>
+</div>
+<p>Il existe quelques autres méthodes spéciales pouvant être définis dans une classe. Elles sont détaillées ici : <a class="reference external" href="http://docs.python.org/reference/datamodel.html#basic-customization">http://docs.python.org/reference/datamodel.html#basic-customization</a></p>
+</div>
+<div class="section" id="heritage">
+<h2>Héritage<a class="headerlink" href="#heritage" title="Permalink to this headline">¶</a></h2>
+<p>Il est donc possible pour une classe d&#8217;hériter d&#8217;une autre classe. La syntaxe générale dans ce cas est:</p>
+<div class="highlight-python"><pre>class DerivedClassName(BaseClassName):
+    &lt;statement-1&gt;
+    .
+    .
+    .
+    &lt;statement-N&gt;</pre>
+</div>
+<p>La recherche des attributs et méthodes se fait dans la classe dérivée puis dans les classes parentes si ils ne sont pas trouvés dans la classe dérivée.</p>
+<p>Il est possible de surcharger dans une classe dérivée une méthode définie dans une classe parente. Si on veut appeler spécifiquement la méthode de la classe parente on peut le faire avec la syntaxe au point:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">BaseClassName</span><span class="o">.</span><span class="n">methodname</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arguments</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Le constructeur de la classe parente n&#8217;est pas automatiquement appelé lors de l&#8217;instanciation de la classe dérivée, il faut donc l&#8217;appeler explicitement avec cette syntaxe si besoin.</p>
+</div>
+<div class="section" id="exercice-sur-les-classes">
+<h2>Exercice sur les classes<a class="headerlink" href="#exercice-sur-les-classes" title="Permalink to this headline">¶</a></h2>
+<p>Référez-vous à la documentation Python si vous voulez plus de détails sur l&#8217;utilisation des classes : <a class="reference external" href="http://docs.python.org/tutorial/classes.html">http://docs.python.org/tutorial/classes.html</a></p>
+<p>Vous souhaitez manipuler des dates, créez pour cela une classe ayant les spécificités suivantes :</p>
+<ul class="simple">
+<li>Aucune propriété n&#8217;est visible.</li>
+<li>Le constructeur peut prendre en paramètre une chaîne qui sera traitée par la méthode set_date_ymd(date_string).</li>
+<li>La méthode set_date(year, month, day) ré-initialise la date.</li>
+<li>La méthode set_date_ymd(date_string) ré-initialise la date en analysant la chaine de caractère passée en argument. Cette chaîne doit être au format &#8220;YYYY-MM-DD&#8221; sinon une exception est lancée.</li>
+<li>La méthode get_date_ymd() affiche la date au format YYYY/MM/DD.</li>
+<li>La méthode get_date_dmy() affiche la date au format DD/MM/YYYY.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Pour créer la date à partir d&#8217;une chaîne de caractère, vous aurez probablement besoin de la méthode <strong>split()</strong> des objets <strong>str</strong>. Pour valider la chaînes vous pouvez vous appuyez sur les exceptions ou utiliser une expression régulière.</p>
+</div>
+<p>Ecrivez également un petit programme de test qui instancie des objets de votre classe avec diverses valeurs (valides ou non).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Le langage Python, bases</a><ul>
+<li><a class="reference internal" href="#syntaxe-generale">Syntaxe générale</a></li>
+<li><a class="reference internal" href="#variables-et-typage">Variables et typage</a><ul>
+<li><a class="reference internal" href="#variables">Variables</a></li>
+<li><a class="reference internal" href="#affectation">Affectation</a></li>
+<li><a class="reference internal" href="#valeurs-litterales">Valeurs littérales</a></li>
+<li><a class="reference internal" href="#types-simples">Types simples</a></li>
+<li><a class="reference internal" href="#types-sequences">Types séquences</a><ul>
+<li><a class="reference internal" href="#chaines-de-caracteres">Chaînes de caractères</a></li>
+<li><a class="reference internal" href="#tuples-et-listes">Tuples et listes</a></li>
+<li><a class="reference internal" href="#ensembles">Ensembles</a></li>
+<li><a class="reference internal" href="#dictionnaires">Dictionnaires</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operateurs">Opérateurs</a><ul>
+<li><a class="reference internal" href="#arithmetiques">Arithmétiques</a></li>
+<li><a class="reference internal" href="#logiques">Logiques</a></li>
+<li><a class="reference internal" href="#comparatifs">Comparatifs</a></li>
+<li><a class="reference internal" href="#sequences">Séquences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#structures-de-controle">Structures de contrôle</a><ul>
+<li><a class="reference internal" href="#structures-conditionnelles">Structures conditionnelles</a></li>
+<li><a class="reference internal" href="#structures-iteratives-boucles">Structures itératives (boucles)</a><ul>
+<li><a class="reference internal" href="#boucle-for">Boucle <em>for</em></a></li>
+<li><a class="reference internal" href="#boucle-while">Boucle <em>while</em></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fonctions">Fonctions</a></li>
+<li><a class="reference internal" href="#les-modules-python">Les modules Python</a><ul>
+<li><a class="reference internal" href="#import">Import</a></li>
+<li><a class="reference internal" href="#recherche-des-modules">Recherche des modules</a></li>
+<li><a class="reference internal" href="#packages">Packages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercices-python-1">Exercices Python 1</a><ul>
+<li><a class="reference internal" href="#interpreteur-python">interpréteur Python</a></li>
+<li><a class="reference internal" href="#creez-des-scripts-python">Créez des scripts Python</a><ul>
+<li><a class="reference internal" href="#ameliorez-vos-scripts-optionnel">Améliorez vos scripts (optionnel)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#lecture-de-script-1">Lecture de script 1</a></li>
+<li><a class="reference internal" href="#lecture-de-script-2">Lecture de script 2</a></li>
+<li><a class="reference internal" href="#definition-de-fonctions">Définition de fonctions</a></li>
+<li><a class="reference internal" href="#algorithmique">Algorithmique</a><ul>
+<li><a class="reference internal" href="#la-surface-d-un-rectangle">La surface d&#8217;un rectangle</a></li>
+<li><a class="reference internal" href="#calcul-statistique">Calcul statistique</a></li>
+<li><a class="reference internal" href="#calcul-entier">Calcul entier</a></li>
+<li><a class="reference internal" href="#iterations">Itérations</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#import-de-modules">Import de modules</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#python-notions-avancees">Python, notions avancées</a><ul>
+<li><a class="reference internal" href="#gestion-des-erreurs">Gestion des erreurs</a><ul>
+<li><a class="reference internal" href="#erreurs-et-exceptions">Erreurs et exceptions</a></li>
+<li><a class="reference internal" href="#intercepter-une-exception">Intercepter une exception</a></li>
+<li><a class="reference internal" href="#declencher-une-exception">Déclencher une exception</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prevenir-l-erreur">Prévenir l&#8217;erreur</a><ul>
+<li><a class="reference internal" href="#obtenir-des-donnees-de-la-part-de-l-utilisateur">Obtenir des données de la part de l&#8217;utilisateur</a></li>
+<li><a class="reference internal" href="#valider-les-entrees">Valider les entrées</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#date-mesure-du-temps">Date, mesure du temps</a></li>
+<li><a class="reference internal" href="#gestion-des-entrees-sorties">Gestion des entrées/sorties</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#exercices-python-2">Exercices Python 2</a><ul>
+<li><a class="reference internal" href="#gestion-d-exception-1">Gestion d&#8217;exception 1</a></li>
+<li><a class="reference internal" href="#gestion-d-exception-2">Gestion d&#8217;exception 2</a></li>
+<li><a class="reference internal" href="#validation-des-donnees-1">Validation des données 1</a></li>
+<li><a class="reference internal" href="#validation-des-donnees-2">Validation des données 2</a></li>
+<li><a class="reference internal" href="#validation-des-donnees-3">Validation des données 3</a></li>
+<li><a class="reference internal" href="#manipulation-des-chaines-de-caractere-2">Manipulation des chaines de caractère 2</a></li>
+<li><a class="reference internal" href="#manipulation-des-chaines-de-caractere-3">Manipulation des chaines de caractère 3</a></li>
+<li><a class="reference internal" href="#acces-aux-fichiers">Accès aux fichiers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#programmation-orientee-objet-en-python">Programmation orientée-objet en Python</a><ul>
+<li><a class="reference internal" href="#introduction-a-poo">Introduction à POO</a></li>
+<li><a class="reference internal" href="#les-objets-en-python">Les objets en Python</a></li>
+<li><a class="reference internal" href="#definir-une-classe">Définir une classe</a></li>
+<li><a class="reference internal" href="#creation-et-utilisation-d-une-classe">Création et utilisation d&#8217;une classe</a></li>
+<li><a class="reference internal" href="#heritage">Héritage</a></li>
+<li><a class="reference internal" href="#exercice-sur-les-classes">Exercice sur les classes</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="programmation.html"
+                        title="previous chapter">Introduction à la programmation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pyqt.html"
+                        title="next chapter">Qt et PyQt</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/python.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="pyqt.html" title="Qt et PyQt"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="programmation.html" title="Introduction à la programmation"
+             >previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Vincent Picavet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

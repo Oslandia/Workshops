@@ -1,0 +1,602 @@
+########################
+Qt et PyQt
+########################
+
+*********************
+Qt
+*********************
+
+Généralités
+===========
+
+* LGPL C++/java application framework
+* Orienté vers la création d'interfaces
+* multiplateforme
+* TrollTech puis Nokia
+* > 300 classes, > 6000 fonctions
+
+On y trouve des composants principalement pour réaliser des interfaces graphiques, mais aussi pour :
+
+* la gestion et l'interrogation des bases de données
+* la gestion et la manipulation de données XML
+* Le graphisme et le multimédia
+* Le réseau et la navigation web
+
+Bases
+=====
+
+* modèle objet
+* Tous les objets Qt héritent de QObject
+* Tous les objets liés à l'interface héritent de QWidget
+
+par exemple on peut trouver::
+
+    # une case à cocher
+    checkbox = QCheckBox("C&ase à cocher")
+    # une combobox
+    combo = QComboBox()
+    combo.addItem("Premier Choix")
+    # une spinbox
+    spinbox = QSpinBox()
+
+Boucle évènementielle
+=====================
+
+Dans Qt comme dans la plupart des frameworks d'interface graphique, une application consiste en un ensemble de définition de composants, puis du lancement d'une boucle évènementielle. L'application communique avec le système par des évènements.
+
+* on ne gère pas l'ensemble des évènements par nous-même
+* On demande à l'application d'entrer dans une boucle évènementielle
+* Cette boucle contrôle l'exécution de l'application
+* On donne le contrôle à la boucle, mais celle ci appelle des fonctions et des méthodes que l'on a écrites
+
+.. note::
+
+    Une application ne fonctionnera pas tant que l'on aura pas démarré la boucle évènementielle en appelant la méthode **exec_()** de l'objet **QApplication**.
+
+Layouts et parenté
+==================
+
+Les *widgets* peuvent être utilisés comme conteneurs pour gérer d'autres widgets::
+
+    window = QWidget()
+    label = QLabel("Name:")
+    editor = QLineEdit()
+    layout = QHBoxLayout(window)
+    layout.addWidget(label)
+    layout.addWidget(editor)
+    window.show()
+
+* Le label, l'éditeur de ligne et la fenêtre sont créés de la même façon
+* Le layout met le label et l'éditeur de ligne dans le widget
+* la fenêtre est parente du label et de l'éditeur de ligne
+
+Les conteneurs sont les parents des widgets qui sont à l'intérieur:
+
+* les fenêtres n'ont pas de parent
+* Les widgets enfant peuvent avoir leurs propres enfants
+* les enfants d'un widget ne sont visibles que si leur parent l'est
+
+Les widgets parents sont propriétaires de leurs enfants::
+
+    def create_window():
+        window = QWidget()
+        editor = QLineEdit()
+        layout = QHBoxLayout(window)
+        layout.addWidget(editor)
+        return window
+
+Dans ce cas, l'éditeur et le layout appartiennent à la fenêtre. On ne peut plus y accéder directement mais ils ne sont pas supprimés et on pourra y accéder à travers la fenêtre.        
+
+Signals / Slots
+===============
+
+Les signaux et slots sont la base de la programmation évènementielle dans Qt. Chaque fois qu'un évènement se produit un **signal** est émis. Pour pouvoir réagir à un signal, on utilise un **slot** qu'on branche sur ce signal. Le slot est une fonction, qui va être exécutée quand le signal auquel il est connecté est émis.
+
+* Le signal est diffusé lors d'un évènement
+* le slot reçoit le signal et agit
+
+
+*******************
+PyQt
+*******************
+
+PyQT est le wrapper autour de la bibliothèque Qt. Il permet d'accéder à quasiment l'intégralité de la bibliothèque Qt avec le langage Python. PyQt fait aussi le lien entre les types de données Qt et les types de données natifs de Python, en faisant une solution intégrée pour le développement d'application graphiques.
+
+PyQt a été développé par Phil Thompson de Riverbank Computing Limited. PyQt est sous licence **General Public Licence**.
+
+.. warning::
+
+    PyQt est sous la licence GPL. Ce qui signifie que tout programme réalisant un import de ce module devra être sous une licence compatible GPL.
+
+Les principaux composants de PyQt sont:
+
+* QtGui - tout ce qui est relatif à l'interface graphique
+* QtCore - Le reste
+* Le Namespace Qt - les types et les identifiants
+* Les outils Qt - pour diverses taches
+
+On importe le module principal avec::
+
+    import PyQt4
+
+QtCore
+======
+
+On y trouve toutes les classes de bases qui sont utilisées dans les applications PyQt. Traitement des chaines de caractère, des I/Os, fichiers, etc. Entre autres:
+
+* QString - chaines de caractères
+* QFile - Les fichiers
+* QProcess - lancer des programmes externes
+* QPoint - Un point
+* QDate - fonctions de dates
+* QEvent : communication par signaux
+
+Import du core::
+
+    from PyQt4 import QtCore
+
+QtGui
+=====
+
+Ce sont tous les éléments d'interface graphique de Qt, des plus simples aux plus complexes. On y trouve boutons, cases à cocher, vues arborescentes... Tous les éléments graphiques de PyQt sont nommés **widgets**.
+
+On trouve par exemple:
+
+* QLabel - un widget pour afficher du texte
+* QLineEdit - pour entrer une ligne de texte
+* QPushButton - un bouton à appuyer
+* QCheckbox - une case à cocher
+* QCombobox - une liste déroulante
+
+On trouve aussi quelques composants liés à l'interface graphique qui ne sont pas des widgets:
+
+* QApplication - encapsule une application GUI
+* QPainter - système d'affichage
+
+Import du module::
+
+    from PyQt4 import QtGui
+
+Les outils Qt
+=============
+
+QtDesigner
+    Un outil pour créer des interfaces graphiques de façon visuelle. On génère un fichier XML qu'on peut ensuite transformer en code Python.
+
+QtAssistant
+    Un outil qui permet de faire des recherches dans la référence
+
+QtLinguist
+    Un outil dédié à la traduction et l'internationalisation des applications
+
+
+
+
+
+*******************
+Ressources
+*******************
+
+Introduction à PyQt:
+    http://riverbankcomputing.co.uk/software/pyqt/intro
+
+Wiki PyQt:
+     http://www.diotavelli.net/PyQtWiki
+
+Référence de Qt:
+    http://doc.qt.nokia.com/4.7/
+
+Référence de QtCore:    
+    http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtcore.html
+
+Référence de QtGui:    
+    http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qtgui.html
+
+Référence du Namespace Qt:    
+    http://riverbankcomputing.co.uk/static/Docs/PyQt4/html/qt.html
+
+Livre sur PyQt:    
+    http://www.commandprompt.com/community/pyqt/?page=pyqtbook
+
+
+########################
+Pratique de PyQt
+########################
+
+*******************************
+Vérification de l'installation
+*******************************
+
+On peut vérifier que PyQt est bien installé et vérifier la version en important le module::
+
+    from PyQt4.QtCore import QT_VERSION_STR
+    print QT_VERSION_STR
+
+***********
+Hello World
+***********
+
+Voici un programme minimal qui crée une application Qt::
+
+    import sys
+    # import des modules PyQt necessaires
+    from PyQt4.QtGui import QApplication, QPushButton
+    # on ne lance les commandes suivantes que si on est dans un script
+    if __name__=='__main__':
+        # Tous les programmes Qt ont besoin d'une
+        # instance de QApplication
+        # On passe les arguments de la ligne de commande car Qt
+        # sait en interpreter certain
+        app = QApplication(sys.argv)
+        # On cree un bouton avec un texte dessus
+        button = QPushButton("Hello World !")
+        # on doit explicitement demander l'affichage du bouton
+        button.show()
+        # On lance la boucle evenementielle
+        sys.exit(app.exec_())
+
+Ce programme effectue quatre actions:
+
+* création d'un objet d'application Qt
+* Création d'un bouton
+* Affichage du bouton
+* Lancement de la boucle évènementielle
+
+*******
+Widgets
+*******
+
+Création d'un widget de niveau supérieur::
+
+    window = QWidget()
+    window.resize(800, 600)
+    window.show
+
+Création d'un Widget enfant::
+
+    button = QPushButton("Cliquer ici", window)
+    button.move(200, 200)
+    batton.show()
+
+Placement des widgets dans les layouts::
+
+    button = QPushButton("&OK")
+    cancelButton = QPushButton("&Annuler")
+    layout = QVBoxLayout()
+    layout.addWidget(okButton)
+    layout.addWidget(cancelButton)
+    window.setLayout(layout)
+
+Il y a différents types de layout qui permettent d'agencer finement et/ou automatiquement les widgets dans une fenêtre.
+
+***************
+Signals / slots
+***************
+
+Voici un exemple de connexion de signal à un slot. On crée une fenêtre avec un bouton, qui fermera la fenêtre lors du clic::
+
+    # import des modules Qt
+    from PyQt4 import QtGui, QtCore
+    import sys
+     
+    if __name__=='__main__':
+
+        # creation de l'application 
+        app = QtGui.QApplication(sys.argv)
+     
+        # creation d'une fenetre principale
+        window = QtGui.QWidget()
+        # changeons le titre de la fenetre
+        window.setWindowTitle("Signal")
+        # ajout d'un bouton dans la fenetre
+        # Le bouton sera enfant de la fenetre
+        button = QtGui.QPushButton("Cliquer ici", window)
+        # redimensionnons le bouton
+        button.resize(150, 50)
+        # connectons le signal de clic au slot quit() de l'application
+        button.connect(button, QtCore.SIGNAL("clicked()"),\
+            app, QtCore.SLOT("quit()"))
+        # affichons la fenetre
+        window.show()
+        # lancons la boucle evenementielle
+        app.exec_()
+
+Il existe deux façons de créer des connexions entre les signaux et les slots. La première utilise la fonction connect présente dans n'importe quel objet de type QObject:: 
+
+    object.connect(Signal_Widget, Signal, Slot_Widget, Slot)
+
+On spécifie donc les deux objets entre lesquels on fait une connexion, et les deux éléments signal/slot pour lesquels ont effectue la connexion.
+
+Pour spécifier le signal, on utilise la syntaxe **SIGNAL(QString)**. Par exemple::
+
+    SIGNAL("triggered()")
+
+Pour spécifier le slot, on peut utiliser la syntaxe\ **SLOT(QSTRING)** \ .Par exemple::
+
+    SLOT("quit()")
+
+Un slot peut être n'importe quelle fonction de l'application. On peut alors spécifier la fonction directement sans passer l'objet où se trouve le slot. Par exemple::
+
+    button.connect(button, QtCore.SIGNAL("clicked()"), mafonction)
+
+Notez qu'on ne met pas les parenthèses lorsqu'on spécifie la fonction slot car on n'appelle pas la fonction, on en donne juste une référence.
+
+La fonction **connect** est disponible dans la classe **QtCore.QObject**. Comme toutes les classes sont dérivées de **QObject** on peut les utiliser pour appeler cette méthode. On utilise souvent **self.connect()**.
+
+La seconde façon de créer un signal est d'utiliser la méthode **connect()** de l'objet **signal** lui même, en lui spécifiant la fonction slot directement::
+
+    signal_widget.signal.connect(slot)
+    # par exemple :
+    button.clicked.connect(mafonction)
+
+Il y a énormément de signaux et slots définis dans Qt. En général tous ceux que vous pourrez imaginer et dont vous pourrez avoir besoin existent déjà.
+
+##########
+Exercice 1
+##########
+
+* Créez une nouvelle fenêtre avec un bouton et une case à cocher
+* Faites en sorte que lorsque l'on clique sur le bouton, cela coche/décoche la case
+* Ajoutez un bouton "quitter" qui ferme la fenêtre
+
+
+#########################
+Utiliser Qt Designer
+#########################
+
+Qt Designer est un outil permettant de réaliser des interfaces graphiques visuellement, à la souris. Qt Designer crée et sauve des fichiers **.ui**. Ce sont des fichiers XML de description de l'interface réalisée.
+
+Pour pouvoir utiliser les interfaces que nous avons créées avec PyQt, il est nécessaire de transformer les fichiers XML en fichiers de code Python. PyQt fournit un outil dont le rôle est exactement celui là. Il s'agit de **pyuic4**. Il s'utilise ainsi::
+
+    pyuic4 ui_testapp.ui -o ui_testapp.py
+
+Le code Python généré est une classe qui contient notre interface. Il ne faut **JAMAIS** modifier à la main les fichiers Python générés, car toutes les modifications seraient perdues lors de la prochaine génération.
+
+Pour modifier notre interface, ou ajouter la partie logique par exemple on va instancier la classe qui a été générée et utiliser sa méthode **setupUi()** pour ajouter les composants définis dans le designer.
+
+Si on utilise l'option **-x** de pyuic4, on génère également la partie de code Python qui permet de lancer directement l'interface générée. C'est rarement le but recherché, mais peut être très pratique pour tester si tout va bien.
+
+Il existe un second utilitaire associé à QtDesigner qui permet de transformer les fichiers de ressource de Qt designer **.qrc** en fichiers python. Il s'agit de **pyrcc4**. La syntaxe est la même que pour **pyuic4**::
+
+    pyrcc4 ressources.qrc -o ressources.py
+
+###########
+Exercice 2
+###########
+
+Nous allons faire une petite application de TODO-List. Cette application est composée d'un éditeur de ligne, avec un bouton "ajouter". 
+En dessous de l'éditeur, on trouve une vue sous forme de liste. Lorsqu'on clique sur le bouton ajouter, le contenu de l'éditeur de ligne s'ajoute dans la liste.
+Notre application présente également un bouton "supprimer" qui enlève l'item couramment sélectionné de la liste.
+
+* Réalisez avec QtDesigner le formulaire principal de cette application.
+* Générez le code Python correspondant
+* Testez l'interface avec l'option **-x** de *pyuic4*
+* Complétez le code suivant pour réaliser l'application complète
+
+
+::
+
+    # import des modules Qt
+    from PyQt4 import QtGui, QtCore
+    # import de la classe generee
+    from ui_todoform import Ui_TodoForm
+    import sys
+
+
+    # notre classe herite de QWidget
+    class TodoForm(QtGui.QWidget):
+        def __init__(self):
+            # On lance le constructeur de la classe widget
+            super(TodoForm, self).__init__()
+            # On cree une instance de notre classe d'interface generee
+            self.ui = Ui_TodoForm()
+            # On appelle la methode setupUi
+            # cette methode est la methode generee qui ajoute tous les
+            # elements d'interface dans l'objet self.ui
+            self.ui.setupUi(self)
+            # On connecte tous les signaux necessaires
+            # la methode (privee) appelee est creee ci dessous
+            self._connectSlots()
+            # Par defaut la liste est vide donc on ne peut rien supprimer
+            # on desactive le bouton delete
+            # tous les objets graphiques fait avec qt designer
+            # sont dans l objet ui qui est
+            # une instance de notre classe generee
+            # trouver la méthode du bouton delete qui le desactive
+            # et remplacer la ligne suivante
+            pass
+
+        def _connectSlots(self):
+            # On connecte les signaux des boutons a nos methodes definies ci dessous
+            # connexion du signal du bouton d'ajout
+            self.connect(self.ui.add_button, QtCore.SIGNAL('clicked()'), self._slotAddClicked)
+            # on connecte maintenant le bouton delete a notre slot dedie
+            pass
+            # connexion du bouton quitter a la methode qui ferme le widget (cette classe)
+            pass
+
+        # la methode appelee lorsque le bouton d ajout est clique
+        def _slotAddClicked(self):
+            # On lit le texte du LineEdit
+            # remplacer None par la recuperation du texte du QLineEdit
+            text = None
+            # Si le texte n'est pas vide
+            if text:
+                # On insere un nouveau listviewitem
+                # avec le texte du LineEdit
+                # Trouver la méthode pour ajouter un element dans le ListViewItem
+                pass
+                # On vide le LineEdit
+                pass
+                # On active le bouton de suppression car on est surs
+                # que le listview contient au moins un element
+                pass
+
+        # la methode appelee lorsque le bouton delete est clique
+        def _slotDeleteClicked(self):
+            # On enleve l'item courant du listview (takeItem)
+            pass
+            # On verifie si la liste est vide ( count() )
+            # remplacer le False par le vrai test
+            # si oui on desactive le bouton de suppression
+            if not False: 
+                pass
+
+    if __name__=='__main__':
+        # creation de l'application
+        app = QtGui.QApplication(sys.argv)
+        # creation d'une fenetre principale
+        window = TodoForm()
+        # changeons le titre de la fenetre window
+        pass
+        # affichons la fenetre
+        window.show()
+        # lancons la boucle evenementielle
+        app.exec_()
+
+
+##########################
+Exemple : navigateur web
+##########################
+
+
+La bibliothèque Qt est très complète et permet d'implémenter simplement des applications complexes. Par exemple le programme ci dessous est un navigateur web. Vous pouvez reprendre le code complet avec les fichiers *.ui* dans le répertoire *web-browser*::
+
+
+    #!/usr/bin/env python
+
+    import sys
+    from PyQt4 import QtCore, QtGui, QtWebKit
+
+    from ui_mainwindow import Ui_MainWindow
+
+
+    class MainWindow(QtGui.QMainWindow, Ui_MainWindow):
+        # Maintain the list of browser windows so that they do not get garbage
+        # collected.
+        _window_list = []
+
+        def __init__(self):
+            QtGui.QMainWindow.__init__(self)
+
+            MainWindow._window_list.append(self)
+
+            self.setupUi(self)
+
+            # Qt Designer (at least to v4.2.1) can't handle arbitrary widgets in a
+            # QToolBar - even though uic can, and they are in the original .ui
+            # file.  Therefore we manually add the problematic widgets.
+            self.lblAddress = QtGui.QLabel("Address", self.tbAddress)
+            self.tbAddress.insertWidget(self.actionGo, self.lblAddress)
+            self.addressEdit = QtGui.QLineEdit(self.tbAddress)
+            self.tbAddress.insertWidget(self.actionGo, self.addressEdit)
+
+            self.connect(self.addressEdit, QtCore.SIGNAL("returnPressed()"),
+                         self.actionGo, QtCore.SLOT("trigger()"))
+            
+            self.connect(self.actionBack, QtCore.SIGNAL("triggered()"),
+                         self.WebBrowser, QtCore.SLOT("back()"))
+            
+            self.connect(self.actionForward, QtCore.SIGNAL("triggered()"),
+                         self.WebBrowser, QtCore.SLOT("forward()"))
+            
+            self.connect(self.actionStop, QtCore.SIGNAL("triggered()"),
+                         self.WebBrowser, QtCore.SLOT("stop()"))
+            
+            self.connect(self.actionRefresh, QtCore.SIGNAL("triggered()"),
+                         self.WebBrowser, QtCore.SLOT("reload()"))
+            
+            #self.connect(self.actionHome, QtCore.SIGNAL("triggered()"),
+            #    self.WebBrowser, QtCore.SLOT("load(QtCore.QUrl("http://www.google.com"))"))
+            
+            self.connect(self.actionHome, QtCore.SIGNAL("triggered()"),
+                         self.WebBrowser, QtCore.SLOT("trigger()"))
+
+            self.pb = QtGui.QProgressBar(self.statusBar())
+            self.pb.setTextVisible(False)
+            self.pb.hide()
+            self.statusBar().addPermanentWidget(self.pb)
+            self.WebBrowser.load(QtCore.QUrl("http://www.google.com"))
+
+        @QtCore.pyqtSignature("")
+        def on_actionHome_triggered(self):
+            print "on_actionHome_triggered"
+            self.WebBrowser.load(QtCore.QUrl("http://www.google.com"))
+
+        def closeEvent(self, e):
+            MainWindow._window_list.remove(self)
+            e.accept()
+
+        def on_WebBrowser_TitleChange(self, title):
+            self.setWindowTitle("Qt WebBrowser - " + title)
+
+        def on_WebBrowser_ProgressChange(self, a, b):
+            if a <= 0 or b <= 0:
+                self.pb.hide()
+                return
+
+            self.pb.show()
+            self.pb.setRange(0, b)
+            self.pb.setValue(a)
+
+        def on_WebBrowser_CommandStateChange(self, cmd, on):
+            if cmd == 1:
+                self.actionForward.setEnabled(on)
+            elif cmd == 2:
+                self.actionBack.setEnabled(on)
+
+        def on_WebBrowser_BeforeNavigate(self):
+            self.actionStop.setEnabled(True)
+
+        def on_WebBrowser_NavigateComplete(self, _):
+            self.actionStop.setEnabled(False)
+
+        @QtCore.pyqtSignature("")
+        def on_actionGo_triggered(self):
+            print "on_actionGo_triggered", self.addressEdit.text()
+            self.WebBrowser.load(QtCore.QUrl(self.addressEdit.text()))
+
+        @QtCore.pyqtSignature("")
+        def on_actionNewWindow_triggered(self):
+            
+            print "on_actionNewWindow_triggered"
+            window = MainWindow()
+            window.show()
+            if self.addressEdit.text().isEmpty():
+                return;
+
+            window.addressEdit.setText(self.addressEdit.text())
+            window.actionStop.setEnabled(True)
+            window.on_actionGo_triggered()
+
+        @QtCore.pyqtSignature("")
+        def on_actionAbout_triggered(self):
+            QtGui.QMessageBox.about(self, self.tr("About WebBrowser"),
+                    self.tr("This Example has been created using the ActiveQt integration into Qt Designer.\n"
+                            "It demonstrates the use of QAxWidget to embed the Internet Explorer ActiveX\n"
+                            "control into a Qt application."))
+
+        @QtCore.pyqtSignature("")
+        def on_actionAboutQt_triggered(self):
+            QtGui.QMessageBox.aboutQt(self, self.tr("About Qt"))
+
+
+    if __name__ == "__main__":
+        a = QtGui.QApplication(sys.argv)
+        w = MainWindow()
+        w.show()
+        sys.exit(a.exec_())
+
+
+########
+Exercice
+########
+
+Déterminons ensemble une interface à implémenter, qui pourra être utile par la suite.
+
+* Dessinez à la main l'interface à réaliser
+* Dessinez la logique liée à l'interface
+* Réalisez l'interface sous Qt Designer
+* Générez le code Python (avec *-x* pour tester, puis sans)
+* Ajoutez la logique en Python
+

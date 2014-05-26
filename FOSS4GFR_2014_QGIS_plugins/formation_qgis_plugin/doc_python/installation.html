@@ -1,0 +1,160 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation des logiciels sous Ubuntu &mdash; Plugins Python QGIS v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Plugins Python QGIS v1.0 documentation" href="index.html" />
+    <link rel="next" title="Environnement de développement" href="environnement.html" />
+    <link rel="prev" title="Programme de la formation" href="programme.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="environnement.html" title="Environnement de développement"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="programme.html" title="Programme de la formation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation-des-logiciels-sous-ubuntu">
+<h1>Installation des logiciels sous Ubuntu<a class="headerlink" href="#installation-des-logiciels-sous-ubuntu" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-de-qgis">
+<h2>Installation de QGIS<a class="headerlink" href="#installation-de-qgis" title="Permalink to this headline">¶</a></h2>
+<p>On ajoute le dépôt <em>ubuntugis</em> et on installe QGIS:</p>
+<div class="highlight-python"><pre>sudo apt-get install python-software-properties
+sudo add-apt-repository ppa:ubuntugis/ubuntugis-unstable
+sudo apt-get update
+sudo apt-get install qgis</pre>
+</div>
+<p>Le support de Python est automatiquement ajouté.</p>
+<p>On installe également la documentation de l&#8217;API:</p>
+<div class="highlight-python"><pre>sudo apt-get install qgis-api-doc</pre>
+</div>
+</div>
+<div class="section" id="installation-des-outils-python">
+<h2>Installation des outils Python<a class="headerlink" href="#installation-des-outils-python" title="Permalink to this headline">¶</a></h2>
+<p>On installe iPython, l&#8217;interpreteur Python interactif évolué:</p>
+<div class="highlight-python"><pre>sudo apt-get install ipython python-matplotlib</pre>
+</div>
+</div>
+<div class="section" id="installation-de-git">
+<h2>Installation de git<a class="headerlink" href="#installation-de-git" title="Permalink to this headline">¶</a></h2>
+<p>On installe git, l&#8217;outil de gestion de versionnement de code source distribué:</p>
+<div class="highlight-python"><pre>sudo apt-get install git</pre>
+</div>
+</div>
+<div class="section" id="installation-de-qt">
+<h2>Installation de Qt<a class="headerlink" href="#installation-de-qt" title="Permalink to this headline">¶</a></h2>
+<p>On installe l&#8217;environnement de développement Qt pour Python:</p>
+<div class="highlight-python"><pre>sudo apt-get install python-qt4 qt4-doc qt4-doc-html qt4-demos qt4-dev-tools qt4-designer</pre>
+</div>
+</div>
+<div class="section" id="configuration-des-plugins-qgis">
+<h2>Configuration des plugins QGIS<a class="headerlink" href="#configuration-des-plugins-qgis" title="Permalink to this headline">¶</a></h2>
+<p>Lancer QGIS.</p>
+<p>Aller dans le menu <strong>Extensions-&gt;Installeur d&#8217;extensions Python</strong>. Ajouter les dépôts tiers et activer les plugins expérimentaux.</p>
+<ul class="simple">
+<li>Rechercher et installer le plugin &#8220;Plugin Builder&#8221;.</li>
+<li>Rechercher et installer le plugin &#8220;Plugin reloader&#8221;.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation des logiciels sous Ubuntu</a><ul>
+<li><a class="reference internal" href="#installation-de-qgis">Installation de QGIS</a></li>
+<li><a class="reference internal" href="#installation-des-outils-python">Installation des outils Python</a></li>
+<li><a class="reference internal" href="#installation-de-git">Installation de git</a></li>
+<li><a class="reference internal" href="#installation-de-qt">Installation de Qt</a></li>
+<li><a class="reference internal" href="#configuration-des-plugins-qgis">Configuration des plugins QGIS</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="programme.html"
+                        title="previous chapter">Programme de la formation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="environnement.html"
+                        title="next chapter">Environnement de développement</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="environnement.html" title="Environnement de développement"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="programme.html" title="Programme de la formation"
+             >previous</a> |</li>
+        <li><a href="index.html">Plugins Python QGIS v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Vincent Picavet.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.1.
+    </div>
+  </body>
+</html>

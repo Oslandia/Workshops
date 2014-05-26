@@ -1,0 +1,45 @@
+# envoyer un message dans le systeme de log QGIS
+QgsMessageLog.logMessage('texte', 'Mon Plugin')
+
+# envoyer un message dans la barre d'info de QGIS (ici message de warning pendant 3 secondes)
+# il faut importer qgis.gui auparavant
+iface.messageBar().pushMessage('Titre', 'Message', QgsMessageBar.WARNING, 3)
+
+# afficher un message dans une fenetre
+QMessageBox.information(iface.mainWindow(), 'Titre', 'message')
+QMessageBox.warning(iface.mainWindow(), 'Titre', 'message')
+
+
+# --- Plugins ---
+
+# recuperer la liste des plugins
+qgis.utils.plugins
+# un plugin en particulier :
+qgis.utils.plugins['selectidplugin']
+# un objet dans l'instance du plugin :
+qgis.utils.plugins['selectidplugin'].dlg.ui.del_button
+
+# --- Sélection ---
+
+# supprimer la selection d'un layer
+iface.activeLayer().removeSelection()
+
+# --- Outil de clic sur le canvas ---
+from qgis.gui import QgsMapToolEmitPoint
+maptool = QgsMapToolEmitPoint(iface.mapCanvas())
+iface.mapCanvas().setMapTool(maptool)
+# recuperer le maptool en cours
+iface.mapCanvas().mapTool()
+
+# --- recuperer une valeur de raster
+# layer est un layer raster
+# pos est un QgsPoint
+# res est un dictionnaire
+# QgsRaster.IdentifyFormatValue est une constante indiquant le format
+res = layer.dataProvider().identify(pos, QgsRaster.IdentifyFormatValue).results()
+
+# --- ouvrir une couche PostGIS qui est un resultat de requete
+uri = QgsDataSourceURI()
+uri.setConnection("lsnpgt01", "5432", "voiriegeo", "voiriegeo_adm", "Ls3Qt6msjmok")
+uri.setDataSource("", "(select * from geo_bati_pol where type = "BAT")", "the_geom", "", "id")
+iface.addVectorLayer(uri.uri(), "test_requete", "postgres")

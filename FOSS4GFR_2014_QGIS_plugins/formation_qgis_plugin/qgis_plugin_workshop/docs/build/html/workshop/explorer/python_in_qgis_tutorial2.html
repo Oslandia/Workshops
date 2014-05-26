@@ -1,0 +1,502 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Tutoriel #2 – Exploration de la Console Python QGIS &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="1ere partie - Exploration de l’utilisation de Python dans QGIS" href="index.html" />
+    <link rel="next" title="Exercice" href="python_in_qgis_exercises.html" />
+    <link rel="prev" title="Tutorial #1 – Installation de Plugins QGIS" href="python_in_qgis_tutorial1.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python_in_qgis_tutorial1.html"
+                        title="previous chapter">Tutorial #1 &#8211; Installation de Plugins QGIS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="python_in_qgis_exercises.html"
+                        title="next chapter">Exercice</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/explorer/python_in_qgis_tutorial2.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="tutoriel-2-exploration-de-la-console-python-qgis">
+<h1>Tutoriel #2 &#8211; Exploration de la Console Python QGIS<a class="headerlink" href="#tutoriel-2-exploration-de-la-console-python-qgis" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="mise-en-place">
+<h2>Mise en place<a class="headerlink" href="#mise-en-place" title="Permalink to this headline">¶</a></h2>
+<p> <strong>1.</strong> Pour commencer, ouvrir une nouvelle session QGIS en cliquant sur l&#8217;icône de QGIS dans la barre de menu, ou en lançant QGIS à partir d&#8217;un terminal. Les données que nous utiliserons sont situées dans le répertoire<tt class="docutils literal"><span class="pre">natural_earth_50m</span></tt> dans votre espace personnel:</p>
+<div class="highlight-python"><pre>/home/formation/natural_earth_50m</pre>
+</div>
+<p> <strong>2.</strong> Ajouter les fichiers raster et vecteur suivant à QGIS:</p>
+<div class="highlight-python"><pre>/home/formation/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif
+
+# Désactiver la couche tif pour qu'elle ne ralentisse pas l'affichage
+
+/home/formation/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp</pre>
+</div>
+<p> <strong>3.</strong> Ouvrir la Console Python en sélectionnant le menu:</p>
+<div class="highlight-python"><pre>Extensions &gt; Console Python</pre>
+</div>
+<a class="reference internal image-reference" href="../../_images/python_console.png"><img alt="../../_images/python_console.png" class="align-center" src="../../_images/python_console.png" style="width: 552.0px; height: 392.0px;" /></a>
+</div>
+<hr class="docutils" />
+<div class="section" id="acceder-aux-couches">
+<h2>Accéder aux couches<a class="headerlink" href="#acceder-aux-couches" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Les liens qui suivent référencent tous la <a class="reference external" href="http://doc.qgis.org">documentation de l&#8217;API QGIS</a> . Cliquer dessus pour voir les classes et les méthodes que nous utiliserons ci-dessous.</p>
+</div>
+<p>Il y a plusieurs manières d&#8217;accéder aux couches dans QGIS. Chaque foçon commence par une référence à la <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html">classe QgisInterface</a> qui est appelée<strong>iface</strong> dans les bindings Python. À partir de la Console Python on peut accéder à\ <strong>iface</strong> en appelant la commande suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span>
+</pre></div>
+</div>
+<p>Entrer la commande suivante dans la Console Python et vous devriez voir ce résultat:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span>
+<span class="go">&lt;qgis.gui.QgisInterface object at 0x925266c&gt;</span>
+</pre></div>
+</div>
+<p>Exécuter la commande précédente donne le nom réel de la classe QGIS avec laquelle nous travaillons &#8211; en effet iface est en réalité l&#8217;objet QgisInterface.</p>
+<div class="section" id="methode-1">
+<h3>Methode 1<a class="headerlink" href="#methode-1" title="Permalink to this headline">¶</a></h3>
+<p>Dans la classe iface, une fonction utile qui retourne une référence à la couche selectionnée dans la liste des couches, s&#8217;appelle <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html#231f32fbf95004aebb067cb98f3a391c">activeLayer()</a> .</p>
+<p> <strong>1.</strong> Exécuter la commande suivante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span>
+<span class="go">&lt;qgis.core.QgsRasterLayer object at 0x99ea6ec&gt;</span>
+</pre></div>
+</div>
+<p>Selon quelle couche est selectionnée dans la liste de couche, vous allez voir soit un résultat en couche raster soit en couche vecteur. Ici la couche raster était selectionnée.</p>
+<p> <strong>2.</strong> Quel est le nom de la couche active?:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;SR_50M&#39;)</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> Comment peut on avoir une idée de quelles fonctions cet objet Python propose ? Il y a deux manières:</p>
+<blockquote>
+<p>1) La façon la plus agréable de naviguer dans les attributs des classes est d&#8217;aller sur la <a class="reference external" href="http://doc.qgis.org">documentation de l&#8217;API QGIS</a> et de chercher la classe avec laquelle vous travaillez.</p>
+<p>2) La façon Python (moins visuelle) est de lancer la commande suivante sur un objet pour lequel vous voulez avoir des informations:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">help</span><span class="p">(</span><span class="n">aLayer</span><span class="p">)</span>
+
+<span class="go"> # Sortie tronquée pour la démo</span>
+<span class="go"> ...</span>
+<span class="go"> |  extent = &lt;built-in function extent&gt;</span>
+<span class="go"> |</span>
+<span class="go"> |  getLayerID = &lt;built-in function getLayerID&gt;</span>
+<span class="go"> |</span>
+<span class="go"> |  getTransparency = &lt;built-in function getTransparency&gt;</span>
+<span class="go"> ...</span>
+<span class="go"> # Sortie tronquée pour la démo</span>
+</pre></div>
+</div>
+</blockquote>
+<p>La pile de texte sortie sur le shell est difficile à naviguer. Ci dessus est représenté quelques un des attributs que vous pouvez voir. Il est certainement mieux d&#8217;utiliser le lien proposé auparavant.</p>
+</div>
+<div class="section" id="methode-2">
+<h3>Methode 2<a class="headerlink" href="#methode-2" title="Permalink to this headline">¶</a></h3>
+<p> <strong>1.</strong> Un autre moyen classique d&#8217;accéder à la couche sélectionnée dans la liste des couches est de la récupérer en utilisant <a class="reference external" href="http://doc.qgis.org/head/classQgsMapCanvas.html">QgsMapCanvas</a> . La classe mapCanvas a de nombreuses fonctions utiles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;SR_50M&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="methode-3">
+<h3>Methode 3<a class="headerlink" href="#methode-3" title="Permalink to this headline">¶</a></h3>
+<p> <strong>1.</strong> Avec la classe map canvas, on peut récupérer plus que juste la couche active &#8211; en fait on peut tout récupérer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">allLayers</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">layers</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">allLayers</span><span class="p">:</span> <span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="go">50m_populated_places_simple</span>
+</pre></div>
+</div>
+<p><strong>Une seconde!</strong> Nous avons deux couches dans notre liste de couche. Pourquoi est ce qu&#8217;on ne récupère qu&#8217;un seul nom ? (en assumant que vous avez suivi les instructions et que vous avez bien désactivé l&#8217;affichage de la couche raster. Sinon vous aurez les deux noms)</p>
+<p>Il s&#8217;avère qu&#8217;en utilisant la méthode <tt class="docutils literal"><span class="pre">QgsMapCanvas.layers()</span></tt> , on ne récupère que les couches<strong>visibles</strong> , c&#8217;est à dire celles qui sont cochées comme telles dans la liste des couches.</p>
+<p> <strong>2.</strong> Cocher la couche raster dans la liste des couches. Relancer les mêmes instructions dans la Console Python:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">allLayers</span> <span class="o">=</span> <span class="n">canvas</span><span class="o">.</span><span class="n">layers</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">allLayers</span><span class="p">:</span> <span class="k">print</span> <span class="n">i</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="gp">...</span>
+<span class="go">50m_populated_places_simple</span>
+<span class="go">SR_50M</span>
+</pre></div>
+</div>
+<p>Maintenant nous devrions voir les deux noms de couches affichés.</p>
+</div>
+<div class="section" id="methode-4">
+<h3>Methode 4<a class="headerlink" href="#methode-4" title="Permalink to this headline">¶</a></h3>
+<p>Il est parfois utile d&#8217;accéder aux couches dans l&#8217;ordre dans lequel ils sont listés dans la liste des couches. Les couches sont empilées de haut en bas et accédées à l&#8217;aide d&#8217;un index à base 0. Cela signifie que la première couche (celle la plus haute) commence à l&#8217;indice 0.</p>
+<p> <strong>1.</strong> On accède aux couches en utilisant la fonction <a class="reference external" href="http://doc.qgis.org/head/classQgsMapCanvas.html#de2251f2227bc0f0efefd09810a193cd">QgsMapCanvas.layer()</a> et on lui passe l&#8217;entier désignant l&#8217;indice de la couche que nous voulons:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">&lt;qgis.core.QgsVectorLayer object at 0x99eaeec&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">canvas</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;50m_populated_places_simple&#39;)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="autres-exercices">
+<h3>Autres exercices<a class="headerlink" href="#autres-exercices" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Régler la couche active en utilisant <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html#c42281407013002b56ff7ed422c77336">qgis.utils.iface.setActiveLayer()</a></li>
+<li>Régler la couche courant en utilisant <a class="reference external" href="http://doc.qgis.org/head/classQgsMapCanvas.html#001c20fe97f844542895e718ee166926">qgis.utils.iface.mapCanvas().setCurrentLayer()</a></li>
+<li>Pouvez vous trouver la classe QgsMapLayer dans la documentation et identifier comment obtenir l&#8217;étendue d&#8217;une couche ?</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Il y a d&#8217;autres moyens d&#8217;accéder aux couches de la liste de couche QGIS. Donc gardez l&#8217;oeil ouvert pour identifier d&#8217;autres méthodes.</p>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="charger-des-couches-dans-qgis">
+<h2>Charger des couches dans QGIS<a class="headerlink" href="#charger-des-couches-dans-qgis" title="Permalink to this headline">¶</a></h2>
+<p>Vous avez peut-être remarqué en cherchant QgisInterface qu&#8217;il y avait quelques méthodes addLayer ? Utilisons les pour charger des couches dans QGIS.</p>
+<p> <strong>1.</strong> Commencez par désactiver toutes les couches actuellement dans QGIS en les décochant. Ensuite avec une carte vide, ré-ajoutez SR_50M et les données de lieux peuplés avec un nom différent:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addVectorLayer</span><span class="p">(</span><span class="s">&quot;/home/formation/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp&quot;</span><span class="p">,</span> <span class="s">&quot;pop2&quot;</span><span class="p">,</span> <span class="s">&quot;ogr&quot;</span><span class="p">)</span>
+<span class="go">&lt;qgis.core.QgsVectorLayer object at 0xca0feac&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addRasterLayer</span><span class="p">(</span><span class="s">&quot;/home/formation/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif&quot;</span><span class="p">,</span> <span class="s">&quot;raster&quot;</span><span class="p">)</span>
+<span class="go">&lt;qgis.core.QgsRasterLayer object at 0xca0fe6c&gt;</span>
+</pre></div>
+</div>
+<p>La méthode <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html#39be50fe9974de17177861ad89e7f36e">addVectorLayer</a> prend trois arguments:</p>
+<blockquote>
+<ul class="simple">
+<li>le premier argument est le chemin vers la source de données &#8211; le shapefile dans notre cas</li>
+<li>le second argument est le nom &#8211; le nom que la couche prend dans la liste de couche</li>
+<li>Le troisième argument est la clé de la source. La fonction veut savoir quel driver il faut utiliser pour charger la donnée. Pour nos besoins, &#8220;ogr&#8221; sera utilisé la plupart du temps avec les données vectorielles.</li>
+</ul>
+</blockquote>
+<p>Remarquez que <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html#808a34b507a8c4204d607a5857d62748">addRasterLayer</a> prend seulement deux arguments &#8211; le chemin est le nom de la couche.</p>
+<p>Si vous regardez la définition de la fonction<strong>addRasterLayer</strong> dans la page ci dessus vous remarquerez qu&#8217;il y a deux définitions de fonctions surchargées pour ajouter des rasters. Une des définitions prend deux arguments (celle utilisée). L&#8217;autre prend des arguments supplémentaires.</p>
+<div class="section" id="ajouter-une-couche-postgis">
+<h3>Ajouter une couche PostGIS<a class="headerlink" href="#ajouter-une-couche-postgis" title="Permalink to this headline">¶</a></h3>
+<p>Vous pouvez vous demander comment ajouter des données qui sont stockées dans PostGIS. Il vous faudra disposer d&#8217;une installation de PostGIS avec quelques donnés vecteur déjà chargées pour faire cette partie.</p>
+<p>Accéder à des données vecteur PostGIS utilise la même fonction déjà utilisée ci dessu &#8211; <a class="reference external" href="http://doc.qgis.org/head/classQgisInterface.html#39be50fe9974de17177861ad89e7f36e">addVectorLayer</a> . La spécification du chemin par contre est un peu différente.</p>
+<p>QGIS supporte le concept d&#8217;URIs (Uniform Resource Identifier) comme description de source de données pour gérer les entrées à partir de bases de données, CSVs et fichiers GPX. L&#8217;URI que l&#8217;on passe pour la base de données contient des paramètres tels que le nom de la base de donnée, le nom d&#8217;utilisateur, le mot de passe et le port sur lequel elle tourne (entre autres).</p>
+<p> <strong>1.</strong> Chargeons les polygones de pays à partir de PostgreSQL:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">uri</span> <span class="o">=</span> <span class="n">QgsDataSourceURI</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uri</span><span class="o">.</span><span class="n">setConnection</span><span class="p">(</span><span class="s">&quot;localhost&quot;</span><span class="p">,</span> <span class="s">&quot;5432&quot;</span><span class="p">,</span> <span class="s">&quot;qgis_workshop&quot;</span><span class="p">,</span> <span class="s">&quot;qgis&quot;</span><span class="p">,</span> <span class="s">&quot;qgis&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uri</span><span class="o">.</span><span class="n">setDataSource</span><span class="p">(</span><span class="s">&quot;public&quot;</span><span class="p">,</span> <span class="s">&quot;countries&quot;</span><span class="p">,</span> <span class="s">&quot;the_geom&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">uri</span><span class="o">.</span><span class="n">uri</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;dbname=\&#39;qgis_workshop\&#39; host=localhost port=5432 user=\&#39;qgis\&#39; password=\&#39;qgis\&#39; table=&quot;public&quot;.&quot;countries&quot; (the_geom) sql=&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">addVectorLayer</span><span class="p">(</span><span class="n">uri</span><span class="o">.</span><span class="n">uri</span><span class="p">(),</span> <span class="s">&quot;all_these_countries&quot;</span><span class="p">,</span> <span class="s">&quot;postgres&quot;</span><span class="p">)</span>
+<span class="go">&lt;qgis.core.QgsVectorLayer object at 0xca0feac&gt;</span>
+</pre></div>
+</div>
+<p>On devrait maintenant avoir la couche de pays chargée dans QGIS.</p>
+<a class="reference internal image-reference" href="../../_images/postgres_countries_layer.png"><img alt="../../_images/postgres_countries_layer.png" class="align-center" src="../../_images/postgres_countries_layer.png" style="width: 825.6px; height: 464.4px;" /></a>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="acceder-a-la-geometrie-des-vecteurs">
+<h2>Accéder à la géométrie des vecteurs<a class="headerlink" href="#acceder-a-la-geometrie-des-vecteurs" title="Permalink to this headline">¶</a></h2>
+<p>Nous pouvons maintenant commencer à faire des choses amusantes &#8211; jouer avec les géométries</p>
+<p>La classe <a class="reference external" href="http://doc.qgis.org/head/classQgsGeometry.html">QgsGeometry</a> est une des plus importantes à étudier dans l&#8217;API QGIS. Elle contient les prédicats spatiaux de base et les opérations sur les données vecteur auxquelles nous sommes tous habitués.</p>
+<dl class="docutils">
+<dt>Par exemple, avec la référence à la géométrie d&#8217;un objet, on peut accéder à ces opérations spatiales (non exhaustif):</dt>
+<dd><ul class="first last simple">
+<li>buffer</li>
+<li>intersection</li>
+<li>combine</li>
+<li>difference</li>
+</ul>
+</dd>
+</dl>
+<div class="section" id="geometrie-d-une-couche-vecteur">
+<h3>Géométrie d&#8217;une couche vecteur<a class="headerlink" href="#geometrie-d-une-couche-vecteur" title="Permalink to this headline">¶</a></h3>
+<p>Il y a plusieurs façons d&#8217;accéder aux features d&#8217;une couche et à la géométrie d&#8217;une feature unique. Nous n&#8217;allons<strong>PAS</strong> les détailler toutes.</p>
+<p>Une des façons d&#8217;accéder aux features d&#8217;une couche se fait au moyen de la classe <a class="reference external" href="http://doc.qgis.org/head/classQgsVectorDataProvider.html">QgsVectorDataProvider</a> . Vous pouvez obtenir une référence à une source de données directement à partir de la classe <a class="reference external" href="http://doc.qgis.org/head/classQgsVectorLayer.html">QgsVectorLayer</a> .</p>
+<p> <strong>1.</strong> Premièrement, supprimez toutes les couches de QGIS</p>
+<p> <strong>2.</strong> Ensuite ajoutez la couche <tt class="docutils literal"><span class="pre">50m_admin_0_countries.shp</span></tt> située ici:</p>
+<div class="highlight-python"><pre>/home/formation/natural_earth_50m/cultural/50m_cultural/50m_admin_0_countries.shp</pre>
+</div>
+<p> <strong>3.</strong> Ouvrez la Console Python. Récupérez une référence à la couche courante:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">currentLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;50m_admin_0_countries&#39;)</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> Récupérez une référence à la source de données (data provider):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">provider</span> <span class="o">=</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">provider</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;ogr&#39;)</span>
+</pre></div>
+</div>
+<p>Si il s&#8217;agissait d&#8217;une couche vecteur de postgresql alors le <tt class="docutils literal"><span class="pre">provider.name()</span></tt> &#8220;postgres&#8221; serait retourné.</p>
+<p> <strong>5.</strong> Maintenant récupérons un itérateur sur une feature et sa géométrie:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span> <span class="o">=</span> <span class="n">QgsFeature</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Ci dessus on a une QgsFeature vide</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">=</span><span class="n">cLayer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">it</span><span class="o">.</span><span class="n">nextFeature</span><span class="p">(</span><span class="n">feat</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">id</span><span class="p">()</span>
+<span class="go">0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span>
+<span class="go">&lt;qgis.core.QgsGeometry object at 0xca0fdec&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span><span class="o">.</span><span class="n">setSelectedFeatures</span><span class="p">([</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>Le code précédent récupère la première feature depuis notre source de données &#8211; une feature avec un featureID à 0.</p>
+<p>On a ensuite utilisé <a class="reference external" href="http://doc.qgis.org/head/classQgsFeature.html#b0a934a1b173ce5ad8d13363c20ef3c8">QgsFeature.geometry()</a> pour obtenir sa géométrie.</p>
+<p>Finalement, on a utilisé la référence à la couche courante pour sélectionner cette feature dans QGIS.</p>
+<p> <strong>6.</strong> Ouvrons la table des attributs de la couche et cliquons sur l&#8217;icone &#8216;zoomer sur l&#8217;entité selectionnée&#8217; en bas à gauche.</p>
+<a class="reference internal image-reference" href="../../_images/zoom_to_selected_feature.png"><img alt="../../_images/zoom_to_selected_feature.png" class="align-center" src="../../_images/zoom_to_selected_feature.png" style="width: 725.0px; height: 374.0px;" /></a>
+<p>Il semble que l&#8217;ile d&#8217;Aruba a un featureID à 0.</p>
+<a class="reference internal image-reference" href="../../_images/get_geometry_select_aruba.png"><img alt="../../_images/get_geometry_select_aruba.png" class="align-center" src="../../_images/get_geometry_select_aruba.png" style="width: 825.6px; height: 464.4px;" /></a>
+<p>Bien que nous ne l&#8217;ayons pas utilisé ci dessus, nous allons utiliser souvent <tt class="docutils literal"><span class="pre">QgsVectorDataProvider</span></tt> avec une instruction <tt class="docutils literal"><span class="pre">while</span></tt> pour boucler sur toutes les features d&#8217;une couche. Dans ces cas le traitement à effectuer concernera probablement toutes les features.</p>
+</div>
+<div class="section" id="types-de-geometrie">
+<h3>Types de Geometrie<a class="headerlink" href="#types-de-geometrie" title="Permalink to this headline">¶</a></h3>
+<p> <strong>2.</strong> Avec une référence à une géométrie, on peut faire des contrôle de qualité pour être sur que l&#8217;on veut utiliser cette géométrie dans les traitements futurs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">asPolygon</span><span class="p">()</span>
+<span class="go">[[(-69.8991,12.452), (-69.8957,12.423), (-69.9422,12.4385), (-70.0041,12.5005), (-70.0661,12.547), (-70.0509,12.5971), (-70.0351,12.6141), (-69.9731,12.5676), (-69.9118,12.4805), (-69.8991,12.452)]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">length</span><span class="p">()</span>
+<span class="go">0.53411147802819525</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
+<span class="go">0.012862549465307641</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">isGeosValid</span><span class="p">()</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">isGeosEmpty</span><span class="p">()</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">isMultipart</span><span class="p">()</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+<p>Cette géométrie est valide, non vide, et a l&#8217;air d&#8217;être un Polygon simple (par opposition à un MultiPolygon).</p>
+<p> <strong>3.</strong> Pour être sur que cette géométrie est du &#8216;type&#8217; que nous attendons on peut utiliser ces méthodes pour faire le contrôle qualité:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">wkbType</span><span class="p">()</span>
+<span class="go">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">QGis</span><span class="o">.</span><span class="n">WKBPolygon</span>
+<span class="go">3</span>
+</pre></div>
+</div>
+<p>Notons quelques détails. Les types de géométrie renvoient un entier (en fait un identifiant) qui détaille quelle géométrie ils représentent. Il y a deux façons de vérifier les types de géométrie:</p>
+<blockquote>
+<p>A. Ci dessus on utilise la fonction <a class="reference external" href="http://doc.qgis.org/head/classQGis.html#8da456870e1caec209d8ba7502cceff7">QGis.WkbType()</a> pour comparer les types well-known-binary</p>
+<p>B. Ou on peut utiliser la fonction <a class="reference external" href="http://doc.qgis.org/head/classQGis.html#09947eb19394302eeeed44d3e81dd74b">QGis.type()</a> pour comparer avec les types basiques de QGIS:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">type</span><span class="p">()</span>
+<span class="go">2</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">QGis</span><span class="o">.</span><span class="n">Polygon</span>
+<span class="go">2</span>
+</pre></div>
+</div>
+</blockquote>
+<p> <strong>4.</strong> Maintenant faisons une opération spatiale très simple comme un buffer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">buff_geom</span> <span class="o">=</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">buffer</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">buff_geom</span><span class="o">.</span><span class="n">asPolygon</span><span class="p">()</span>
+<span class="go">[[(-78.2223,4.28234), (-81.4729,8.82057), (-81.5448,16.0456), (-81.5295,16.0957), (-78.8639,20.7414), (-78.8482,20.7585), (-71.1219,24.5648), (-62.8358,22.2146), (-62.7738,22.1681), (-60.16,19.4743), (-60.0987,19.3872), (-58.9469,17.356), (-58.9342,17.3275), (-57.9838,13.875), (-57.9804,13.8461), (-59.6758,6.13379), (-65.7966,1.14483), (-73.6923,1.03945), (-73.7388,1.05495), (-77.0515,3.10271), (-77.2035,2.90002), (-77.2655,2.94651), (-77.6363,3.46418), (-78.4274,3.95324), (-78.4894,4.01522), (-78.2223,4.28234)]]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">buff_geom</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
+<span class="go">430.95305806853509</span>
+</pre></div>
+</div>
+<p>Nous avons fait un buffer de 12 degrés. On peut voir que cela a créé plus de point dans la liste des coordonnées du polygone. En calculant l&#8217;aire on peut aussi vérifier qu&#8217;on a bien étendu notre polygone. Pour en être surs:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">buff_geom</span><span class="o">.</span><span class="n">area</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">area</span><span class="p">()</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p> <strong>5.</strong> En dernier exemple, testons la géométrie d&#8217;Aruba par rapport à un point d&#8217;intersection géométrique QgsPoint:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># Est ce qu&#39;Aruba a une intersection avec Seattle (-122.361,47.642) -- espérons que non !</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">QgsPoint</span><span class="p">(</span><span class="o">-</span><span class="mf">122.361</span><span class="p">,</span><span class="mf">47.642</span><span class="p">)))</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Est ce qu&#39;Aruba a une intersection avec un point situé à l&#39;intérieur ? -- le vrai test</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">feat</span><span class="o">.</span><span class="n">geometry</span><span class="p">()</span><span class="o">.</span><span class="n">intersects</span><span class="p">(</span><span class="n">QgsGeometry</span><span class="o">.</span><span class="n">fromPoint</span><span class="p">(</span><span class="n">QgsPoint</span><span class="p">(</span><span class="o">-</span><span class="mf">69.953</span><span class="p">,</span><span class="mf">12.512</span><span class="p">)))</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="acceder-aux-attributs-des-donnees">
+<h2>Accéder aux attributs des données<a class="headerlink" href="#acceder-aux-attributs-des-donnees" title="Permalink to this headline">¶</a></h2>
+<p>Ici nous allons couvrir la récupération des données attributaire pour les couches raster et vecteur. Les exercices suivants vont nous aider à répondre aux questions:</p>
+<blockquote>
+<p>1) Quel est le nom de la feature selectionnée ?</p>
+<p>2) Quelle est la valeur de ce pixel raster ?</p>
+<p>3) Combien de features correspondent à ce filtre attributaire ?</p>
+</blockquote>
+<div class="section" id="vecteur">
+<h3>Vecteur<a class="headerlink" href="#vecteur" title="Permalink to this headline">¶</a></h3>
+<p>On utilise notre couche <tt class="docutils literal"><span class="pre">50m_admin_0_countries.shp</span></tt> :</p>
+<p> <strong>1.</strong> Obtenons le data provider pour ce shapefile:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">provider</span> <span class="o">=</span> <span class="n">aLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">aLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;50m_admin_0_countries&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">provider</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;ogr&#39;)</span>
+</pre></div>
+</div>
+<p> <strong>2.</strong> Récupérons une liste des champs attributaires:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">columns</span> <span class="o">=</span> <span class="n">provider</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+<span class="go">&lt;class &#39;qgis.core.QgsFields&#39;&gt;</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> La fonction <tt class="docutils literal"><span class="pre">provider.fields()</span></tt> retourne l&#8217;indice positionnel (à base 0) des objets colonne de gauche à droite. Cela signifie que la colonne (le champs attributaire) le plus à gauche commence à 0. Chaque indice entier pointe vers un objet <a class="reference external" href="http://doc.qgis.org/head/classQgsField.html">QgsField object</a> Par exemple:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">columns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="go">&lt;qgis.core.QgsField object at 0xd8df66c&gt;</span>
+</pre></div>
+</div>
+<p>Le résultat ci dessous ne nous aide pas beaucoup pour le moment. Pour avoir des informations utiles sur les colonnes il faut accéder aux attributs et aux fonctions de l&#8217;objet QgsField lui même (nous ferons cela en deux étapes).</p>
+<p> <strong>4.</strong> Maintenant récupérons des sorties intéressantes à partir de l&#8217;objet QgsField:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">columns</span><span class="o">.</span><span class="n">size</span><span class="p">()):</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">())</span>
+<span class="gp">...</span>
+<span class="go">0 = scalerank</span>
+<span class="go">1 = featurecla</span>
+<span class="go">2 = labelrank</span>
+<span class="go">3 = sovereignt</span>
+<span class="go">4 = sov_a3</span>
+<span class="go">5 = adm0_dif</span>
+<span class="go">6 = level</span>
+<span class="go">7 = type</span>
+<span class="go">8 = admin</span>
+<span class="go">9 = adm0_a3</span>
+<span class="go">10 = geou_dif</span>
+
+<span class="go"># SORTIE COUPEE</span>
+</pre></div>
+</div>
+<p> <strong>5.</strong> On peut ajouter un autre attribut QgsField à l&#8217;itération ci dessus:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">value</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">columns</span><span class="o">.</span><span class="n">size</span><span class="p">()),</span><span class="n">columns</span><span class="p">):</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">name</span><span class="p">())</span> <span class="o">+</span> <span class="s">&quot; | &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">typeName</span><span class="p">())</span> <span class="o">+</span> <span class="s">&quot; | &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">length</span><span class="p">())</span>
+<span class="go">0 = scalerank | Integer | 4</span>
+<span class="go">1 = featurecla | String | 30</span>
+<span class="go">2 = labelrank | Real | 16</span>
+<span class="go">3 = sovereignt | String | 254</span>
+<span class="go">4 = sov_a3 | String | 254</span>
+<span class="go">5 = adm0_dif | Real | 16</span>
+<span class="go">6 = level | Real | 16</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Le point important est que l&#8217;objet QgsField nous donne les noms et types de données des colonnes attributaires mais <strong>PAS</strong> les valeurs individuelles des attributs des features. Celles ci devront être accédées à travers des features elles-mêmes.</p>
+<p> <strong>6.</strong> Nous avons déjà vu comment récupérer des features à l&#8217;aide d&#8217;un itérateur. L&#8217;exemple ci-dessous montre comment récupérer des features et ajoute également les étapes nécessaires pour ne sélectionner que certains attributs en utilisant  <tt class="docutils literal"><span class="pre">QgsFeatureRequest</span></tt> . Des commentaires sur chaque étape sont donnés dans le code suivant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="c"># On crée une requète à partir d&#39;un rectangle de bounding box que nous utiliserons comme filtre pour ne récupérer que les features qui sont en intersection</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">featureRequest</span> <span class="o">=</span> <span class="n">QgsFeatureRequest</span><span class="p">(</span><span class="n">QgsRectangle</span><span class="p">(</span><span class="n">QgsPoint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="n">QgsPoint</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">34</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># On modifie la requète qui ne va récupérer que les indices des colonnes que nous souhaitons (ici &#39;NAME&#39;)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">featureRequest</span><span class="o">.</span><span class="n">setSubsetOfAttributes</span><span class="p">([</span><span class="mi">17</span><span class="p">]))</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Récupérer la référence de la couche</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="c"># Boucle sur toutes les features pour obtenir un attribut</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">featureRequest</span><span class="p">):</span> <span class="k">print</span> <span class="n">feat</span><span class="p">[</span><span class="s">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span>
+</pre></div>
+</div>
+<p> <strong>7.</strong> Cet exemple est un peu plus compliqué a comprendre. L&#8217;objectif est de montrer comment créer des dictionnaires. Nous allons créer une structure de données de table &#8211; un dictionnaire Python qui représente une table dans une base de données. La table est un dictionnaire où les clés sont les featureID pour chaque feature et les valeurs sont des dictionnaires imbriqués qui ont les noms de colonne comme clé et les valeur de la colonne comme valeur. En retravaillant l&#8217;exemple précédent cela donne:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># Récupérer la référence de la couche</span>
+<span class="n">cLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">activeLayer</span><span class="p">()</span>
+<span class="n">table</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="n">cLayer</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">():</span>
+    <span class="n">table</span><span class="p">[</span><span class="n">feat</span><span class="o">.</span><span class="n">id</span><span class="p">()]</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&#39;LEVEL&#39;</span>    <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="s">&#39;LEVEL&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">())</span> \
+                       <span class="p">,</span> <span class="s">&#39;NAME&#39;</span>     <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="s">&#39;NAME&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">())</span> \
+                       <span class="p">,</span> <span class="s">&#39;TYPE&#39;</span>     <span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">feat</span><span class="p">[</span><span class="s">&#39;TYPE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">toString</span><span class="p">())</span> \
+                        <span class="p">}</span>
+
+<span class="k">for</span> <span class="nb">id</span><span class="p">,</span> <span class="n">record</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; --&gt; &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="raster">
+<h3>Raster<a class="headerlink" href="#raster" title="Permalink to this headline">¶</a></h3>
+<p>Dans cet exemple nous allons interroger les valeurs des pixels d&#8217;un raster avec un QgsPoint en utilisant la fonction <a class="reference external" href="http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b">QgsRasterLayer.identify()</a> . Bien que l&#8217;API C++ montre que la fonction identify() prenne deux arguments, le binding Python ne nécessite en réalité qu&#8217;un QgsPoint() passé en argument.</p>
+<p> <strong>1.</strong> Chargez le relief suivant dans QGIS:</p>
+<div class="highlight-python"><pre>/home/formation/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif</pre>
+</div>
+<p> <strong>2.</strong> La première chose dont on a besoin est de créer des points en WGS84 (EPSG:4326) que nous pouvons utiliser pour interroger cette couche raster. On a choisi ici Dar-Es-Salaam en Tanzanie et Assam en Inde comme exemples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">DarEsSalaam</span> <span class="o">=</span> <span class="n">QgsPoint</span><span class="p">(</span><span class="mf">39.268</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.80</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">DarEsSalaam</span>
+<span class="go">(39.268,-6.8)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Assam</span> <span class="o">=</span> <span class="n">QgsPoint</span><span class="p">(</span><span class="mf">91.76</span><span class="p">,</span><span class="mf">26.144</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Assam</span>
+<span class="go">(91.76,26.144)</span>
+</pre></div>
+</div>
+<p> <strong>3.</strong> On s&#8217;assure d&#8217;avoir une référence à la couche raster <tt class="docutils literal"><span class="pre">SR_50M.tif</span></tt> ::</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rLayer</span> <span class="o">=</span> <span class="n">qgis</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">iface</span><span class="o">.</span><span class="n">mapCanvas</span><span class="p">()</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rLayer</span><span class="o">.</span><span class="n">name</span><span class="p">()</span>
+<span class="go">PyQt4.QtCore.QString(u&#39;SR_50M&#39;)</span>
+</pre></div>
+</div>
+<p> <strong>4.</strong> La fonction  <a class="reference external" href="http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b">QgsRasterLayer.identify()</a> retourne une valeur booléenne True ou False pour indiquer si elle a fonctionné ou pas. La donnée est renvoyée dans un dictionnaire avec le numéro de bande comme clé et la valeur pour cette bande comme valeur:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">rLayer</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">Assam</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">Assam</span><span class="p">,</span> <span class="n">QgsRaster</span><span class="o">.</span><span class="n">IdentifyFormatText</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<span class="go">{}</span>
+<span class="go"># DEVRAIT ETRE (True, {PyQt4.QtCore.QString(u&#39;Band 1&#39;): PyQt4.QtCore.QString(u&#39;218&#39;)})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rLayer</span><span class="o">.</span><span class="n">dataProvider</span><span class="p">()</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">DarEsSalaam</span><span class="p">,</span> <span class="n">QgsRaster</span><span class="o">.</span><span class="n">IdentifyFormatText</span><span class="p">)</span><span class="o">.</span><span class="n">results</span><span class="p">()</span>
+<span class="go">{}</span>
+<span class="go"># DEVRAIT ETRE (True, {PyQt4.QtCore.QString(u&#39;Band 1&#39;): PyQt4.QtCore.QString(u&#39;202&#39;)})</span>
+</pre></div>
+</div>
+<p> <strong>5.</strong> Pour extraire la donnée renvoyée par identify et la rendre un peu plus présentable on peut faire le traitement suivant:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">success</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">rLayer</span><span class="o">.</span><span class="n">identify</span><span class="p">(</span><span class="n">DarEsSalaam</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">band</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span> <span class="k">print</span> <span class="nb">str</span><span class="p">(</span><span class="n">band</span><span class="p">)</span> <span class="o">+</span> <span class="s">&quot; = &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+<span class="gp">...</span>
+<span class="go">Band 1 = 202</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>

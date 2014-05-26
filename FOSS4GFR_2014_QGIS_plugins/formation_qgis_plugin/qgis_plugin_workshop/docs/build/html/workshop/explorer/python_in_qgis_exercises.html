@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Exercice &mdash; QGIS Workshop v1.0.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/linfiniti.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="QGIS Workshop v1.0.0 documentation" href="../../index.html" />
+    <link rel="up" title="1ere partie - Exploration de l’utilisation de Python dans QGIS" href="index.html" />
+    <link rel="next" title="2e partie - Construire un plugin Python" href="../construire/index.html" />
+    <link rel="prev" title="Tutoriel #2 – Exploration de la Console Python QGIS" href="python_in_qgis_tutorial2.html" /> 
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="span3">
+      <div class="well sidebar-nav">
+          <a class="brand" href="http://qgis.org">
+          <br />
+          <center>QGIS Workshop</center></a>
+            <h4>Contents</h4>
+            <hr />
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Tutoriel</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="python_in_qgis_tutorial2.html"
+                        title="previous chapter">Tutoriel #2 &#8211; Exploration de la Console Python QGIS</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../construire/index.html"
+                        title="next chapter">2e partie - Construire un plugin Python</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/workshop/explorer/python_in_qgis_exercises.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+            
+            
+            
+          <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/"><img
+            alt="Creative Commons License" style="border-width:0"
+            src="http://i.creativecommons.org/l/by-sa/3.0/80x15.png" /></a><br
+          /><span xmlns:dct="http://purl.org/dc/terms/"
+            property="dct:title">Linfiniti Sphinx Theme</span> by <a
+            xmlns:cc="http://creativecommons.org/ns#"
+            href="http://linfiniti.com" property="cc:attributionName"
+            rel="cc:attributionURL">Linfiniti Consulting CC.</a> is licensed
+          under a <a rel="license"
+            href="http://creativecommons.org/licenses/by-sa/3.0/">Creative
+            Commons Attribution-ShareAlike 3.0 Unported License</a>.<br />Based
+          on a work at <a xmlns:dct="http://purl.org/dc/terms/"
+            href="https://github.com/timlinux/linfiniti-sphinx-theme"
+            rel="dct:source">github.com</a>.
+      </div>
+        </div><!-- span9 -->
+        <div class="span9">
+              
+  <div class="section" id="exercice">
+<h1>Exercice<a class="headerlink" href="#exercice" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="afficher-dans-un-textbrowser-les-attributs-d-une-couche-vecteur">
+<h2>Afficher dans un TextBrowser les attributs d&#8217;une couche vecteur<a class="headerlink" href="#afficher-dans-un-textbrowser-les-attributs-d-une-couche-vecteur" title="Permalink to this headline">¶</a></h2>
+<p>À partir du plugin <tt class="docutils literal"><span class="pre">foss4g2011_example1_starter</span></tt> vous allez modifier une fonction. Dans cette fonction vous pourrez écrire la logique qui lit les attributs d&#8217;une couche de données vecteur et qui les affiche dans un TextBrowser.</p>
+<div class="section" id="objectif">
+<h3>Objectif<a class="headerlink" href="#objectif" title="Permalink to this headline">¶</a></h3>
+<p> <strong>1.</strong> Ouvrez le plugin <tt class="docutils literal"><span class="pre">foss4g2011_example1_starter</span></tt> avec une couche vecteur chargée dans QGIS</p>
+<a class="reference internal image-reference" href="../../_images/ex1_openplugin.png"><img alt="../../_images/ex1_openplugin.png" class="align-center" src="../../_images/ex1_openplugin.png" style="width: 549.0px; height: 210.0px;" /></a>
+<p> <strong>2.</strong> Cliquer quelque part sur la carte et vous verrez une sortie générique dans le TextBrowser</p>
+<a class="reference internal image-reference" href="../../_images/ex1_exoutput.png"><img alt="../../_images/ex1_exoutput.png" class="align-center" src="../../_images/ex1_exoutput.png" style="width: 497.0px; height: 578.0px;" /></a>
+<p> <strong>3.</strong> En utilisant gedit, aller à  <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins/foss4g2011_example1_starter/</span></tt> et ouvrir le module <tt class="docutils literal"><span class="pre">foss4g2011_example1_starter.py</span></tt> . Trouver la fonction <tt class="docutils literal"><span class="pre">updateTextBrowser()</span></tt> . C&#8217;est le code que vous allez changer:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">updateTextBrowser</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c"># vérification pour être sur que nous avons une feature sélectionnée dans notre selectList -- il peut y en avoir plus d&#39;une</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">:</span>
+
+        <span class="c"># ***************EXAMPLE 1 EDITER ICI********************</span>
+        <span class="sd">&#39;&#39;&#39; Ecrire du code qui affiche dans le TextBrowser tous les attributs pour une unique feature selectionnee</span>
+<span class="sd">            plutôt que d&#39;utiliser la fonction dataProvider.select(), récupérer la vraie QgsFeature en utilisant dataProvider.featureAtId() &#39;&#39;&#39;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">setTextBrowser</span><span class="p">(</span><span class="s">&quot;Exemple de sortie texte</span><span class="se">\n</span><span class="s"> dans le TextBrowser&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Essayez de développer cette fonction par vous même. Si vous n&#8217;y arrivez pas, vous pouvez utiliser les conseils ou la solution.</p>
+</div>
+<div class="section" id="conseils">
+<h3>Conseils<a class="headerlink" href="#conseils" title="Permalink to this headline">¶</a></h3>
+<p>Dans cette partie nous avons vu des exemples utilisant  <tt class="docutils literal"><span class="pre">dataProvider.getFeatures()</span></tt>  . Utilisez le code ci-dessous comme guide pour écrire votre fonction:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">:</span>
+
+    <span class="c"># ############ EXAMPLE 1 EDITER ICI ####################</span>
+    <span class="sd">&#39;&#39;&#39; Ecrire du code qui affiche dans le TextBrowser tous les attributs pour une unique feature selectionnee</span>
+<span class="sd">        plutôt que d&#39;utiliser la fonction dataProvider.select(), récupérer la vraie QgsFeature en utilisant dataProvider.featureAtId() &#39;&#39;&#39;</span>
+    <span class="c"># Obtenir tous les indices des champs pour la feature</span>
+    <span class="n">fields</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span><span class="o">.</span><span class="n">fields</span><span class="p">()</span>
+    <span class="c"># going to get first feature since there could potentially be more than one</span>
+    <span class="k">for</span> <span class="n">feat</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">provider</span><span class="o">.</span><span class="n">getFeatures</span><span class="p">(</span><span class="n">QgsFeatureRequest</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">selectList</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;FEATURE ID: </span><span class="si">%i</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">feat</span><span class="o">.</span><span class="n">id</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="o">.</span><span class="n">toList</span><span class="p">():</span>
+            <span class="n">output</span> <span class="o">+=</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span> <span class="o">+</span> <span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">()</span> <span class="o">+</span> <span class="s">&quot; : &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span> <span class="n">feat</span><span class="p">[</span><span class="n">field</span><span class="o">.</span><span class="n">name</span><span class="p">()]</span><span class="o">.</span><span class="n">toString</span><span class="p">()</span> <span class="p">)</span> <span class="o">+</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">dlg</span><span class="o">.</span><span class="n">setTextBrowser</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="solution">
+<h3>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h3>
+<p>Il y a un plugin solution pour cet outil. Ouvrez ce plugin et utilisez le ou regardez le code source dans <tt class="docutils literal"><span class="pre">/home/formation/.qgis/python/plugins/foss4g2011_example1_solution/foss4g2011_example1_solution.py</span></tt>pour vous aider:</p>
+<a class="reference internal image-reference" href="../../_images/ex1_solutionset.png"><img alt="../../_images/ex1_solutionset.png" class="align-center" src="../../_images/ex1_solutionset.png" style="width: 409.0px; height: 214.0px;" /></a>
+</div>
+</div>
+</div>
+
+
+        </div><!-- span9 -->
+      </div><!-- row -->
+    </div> <!-- container -->
+    <div class="alert alert-info">
+          &copy; Copyright 2011, Greg Corradini and Aaron Racicot.
+    </div>
+  </body>
+</html>
